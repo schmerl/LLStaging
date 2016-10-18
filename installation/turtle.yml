@@ -1,0 +1,50 @@
+---
+- hosts: localhost
+  tasks:
+
+   # - name: Add Local Packages
+   #   command: sh -c ./update.sh
+   #   become: yes
+   #   become_method: sudo
+
+   - name: Add apt-key
+     command: apt-key adv --keyserver hkp://ha.pool.sks-keyservers.net --recv-key 0xB01FA116
+     become: yes
+     become_method: sudo
+
+   - name: Install ROS Indigo Desktop Full
+     apt: pkg=ros-indigo-desktop-full state=installed update_cache=true
+
+   - name: Install Rosinstall
+     apt: pkg=python-rosinstall state=installed
+
+   - name: Install Ros-Indigo-Turtlebot
+     apt: pkg=ros-indigo-turtlebot state=installed
+
+   - name: Install Turtlebot apps
+     apt: pkg=ros-indigo-turtlebot-apps state=installed
+
+   - name: Install Turtlebot interactions
+     apt: pkg=ros-indigo-turtlebot-interactions state=installed
+
+   - name: Install turtlebot simulator
+     apt: pkg=ros-indigo-turtlebot-simulator state=installed
+
+   - name: Install Kobuki
+     apt: pkg=ros-indigo-kobuki-ftdi state=installed
+
+   - name: Install Rocon
+     apt: pkg=ros-indigo-rocon-remocon state=installed
+
+   - name: Install Rocon-Qt
+     apt: pkg=ros-indigo-rocon-qt-library state=installed
+
+   - name: Install Ros-Ar-Track
+     apt: pkg=ros-indigo-ar-track-alvar-msgs state=installed
+     
+   - name: Python Ply
+     apt: pkg=python-ply state=installed
+     
+
+   # - name: Clone InstructionGraphs |  clone  git
+   #   git: repo=https://github.com/anuragkanungo/instructiongraphs.git dest=~/

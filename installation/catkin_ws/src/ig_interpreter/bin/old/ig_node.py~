@@ -1,0 +1,17 @@
+import rospy
+import parse_and_execute
+
+rospy.init_node ('instruction_graph_interpreter')
+
+ig = rospy.get_param('~ig_file')
+
+print ('Got ig_file as ' + ig)
+
+try:
+  parse_and_execute(ig)
+except Exception as e:
+  print "Could not open file '" + ig + "' for reading"
+  exit(1)
+
+
+rospy.spin();
