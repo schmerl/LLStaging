@@ -59,27 +59,30 @@ def moveTo(x, y):
 
   state = move_base_client.get_state()
   success = False
+  msg = ""
 
   if result and state == GoalStatus.SUCCEEDED:
     success = True
 
   if success:
     rospy.loginfo("Reached the destination")
+    msg = "Reached the destination"
   else:
     rospy.loginfo("Unable to reach destination")
+    msg = "Unable to reach destination"
 
   # Sleep to give the last log messages time to be sent
   rospy.sleep(1)
 
   publisher.close_move_base_action_client()
-
+  return success,msg;
  
 
 
 
 def move(distance, angular, speed, delta_y, rotation):
-  moveAllAtOnce(distance, angular, speed, delta_y, rotation)
-  return
+  return moveAllAtOnce(distance, angular, speed, delta_y, rotation)
+  
   if not SETUP_DONE: setup()
   cmd_vel = rospy.Publisher("cmd_vel_mux/input/navi", Twist, queue_size=10)
   rospy.sleep(1)
@@ -159,10 +162,12 @@ def moveAllAtOnce(distance, angular, speed, delta_y, rotation):
 #        if state == GoalStatus.SUCCEEDED:
 #          continue
     publisher.close_move_base_action_client()
+    return success, ""
   # create a twist message, fill it in to turn
   else:
     twist.angular.z = radians(45)*rotation #0.785398*2*rotation    # 90 deg/s
     for i in range(0,int(10*angular)):
       cmd_vel.publish(twist)
       rospy.sleep(0.2)
+    return True, ""
 

@@ -21,3 +21,4 @@ TURNREL = 19
 TERMINATED = 11
 WAITING =    12
 STEP =       13
+FAIL =       14

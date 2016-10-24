@@ -29,14 +29,15 @@ def shutdown(self):
   rospy.sleep(1)
 
 def initialize():
-  global IS_INIT
-  global PUB
-  if not IS_INIT:
-     IS_INIT = True
-     rospy.init_node('InstructionGraphs', anonymous=False)
-     rospy.on_shutdown(shutdown)
+  pass
+  # global IS_INIT
+  # global PUB
+  # if not IS_INIT:
+  #   IS_INIT = True
+  #   rospy.init_node('InstructionGraphs', anonymous=False)
+  #   rospy.on_shutdown(shutdown)
      # PUB = rospy.Publisher('instructiongraphs_status',String, queue_size=10)
-     PUB.publish("Initialized")
+  #   PUB.publish("Initialized")
 
 def publish(msg):
   global IS_INIT

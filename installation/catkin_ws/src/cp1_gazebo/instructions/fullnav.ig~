@@ -1,8 +1,0 @@
-P(V(1, do Locate(1,23.5) then2),
-  V(2, do Move(8, 0, 1, 0, 0) then 7)::
-  V(3, do Move(0,-1,0,0,1) then 4)::
-  V(4, do Move(2,0,1,0,0) then 5)::
-  V(5, do Move(0,-1,0,0,1) then 6)::
-  V(6, do Move(3, 0, 1, 0, 0) then 7)::
-  V(7, end)::
-  nil)

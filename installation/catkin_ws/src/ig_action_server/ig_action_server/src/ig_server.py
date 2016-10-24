@@ -79,7 +79,7 @@ class IGServer(object):
 			self.eval(ast)
 		
 		# end core code
-		r.sleep()
+		#r.sleep()
 
 		# On success setting results topic
 		if self._success:
@@ -102,37 +102,80 @@ class IGServer(object):
 
 	def doaction(self, action):
 		# we currently only support moving and saying in this simulation
+		status = True
+		msg = ""
 		if action.operator == MOVE:
 			(distance, angular, speed, delta_y, rotation) = action.params
 			print "Moving for distance %s at rotation %s with a speed of %s %s %s" \
 			%(distance, angular, speed, delta_y, rotation)
 			self.publish_feedback("Moving for distance %s at rotation %s with a speed of %s %s %s" \
 			%(distance, angular, speed, delta_y, rotation))
-			turtlebot.move(distance, angular, speed, delta_y, rotation)
+			status,msg = turtlebot.move(distance, angular, speed, delta_y, rotation)
+			if status:
+				self.publish_feedback("Move(%s,%s,%s,%s,%s): SUCCESS" %(distance, angular, speed, delta_y, rotation))
+				return True
+			else:
+				self.publish_feedback("Move(%s,%s,%s,%s,%s): FAILED: %s" %(distance, angular, speed, delta_y, rotation, msg))
+				return False
+				
 		elif action.operator == SAY:
 			(s,) = action.params
 			turtlebot.say(s)
+			self.publish_feedback("Say(\"%s\"): SUCCESS" %s)
+			return True
 		elif action.operator == LOCATE:
 			(x,y) = action.params
 			self.publish_feedback("Locating inital pose of robot to (%s, %s)" %(x,y))
 			turtlebot.locate(x,y)
+			self.publish_feedback("Locate(%s,%s): SUCCESS" %(x,y))
+			return True
 		elif action.operator == MOVETO:
 			(x,y) = action.params
 			self.publish_feedback("Moving to pose of (%s, %s)" %(x,y))
-			turtlebot.moveTo (x,y)
+			status, msg = turtlebot.moveTo (x,y)
+			if status:
+				self.publish_feedback("MoveTo(%s,%s): SUCCESS" %(x,y))
+				return True
+			else:
+				self.publish_feedback("Move(%s,%s): FAILED: %s" %(x,y, msg))
+				return False
 		elif action.operator == MOVEABS:
 			print str(self._yaw_with_drift)
 			(x,y,v) = action.params # x,y coordinates on the map and velocity for movement.
-			turtlebot2.moveAbs(x,y,v)
+			status,msg = turtlebot2.moveAbs(x,y,v)
+			if status:
+				self.publish_feedback("MoveAbs(%s,%s,%s): SUCCESS" %(x,y,v))
+				return True
+			else:
+				self.publish_feedback("MoveAbs(%s,%s, %s): FAILED: %s" %(x,y,v,msg))
+				return False
 		elif action.operator == MOVEREL:
 			(x,y,v) = action.params # x,y distance forward on the map and velocity for movement.
-			turtlebot2.moveRel(x,y,v)
+			status,msg = turtlebot2.moveRel(x,y,v)
+			if status:
+				self.publish_feedback("MoveRel(%s,%s,%s): SUCCESS" %(x,y,v))
+				return True
+			else:
+				self.publish_feedback("MoveRel(%s,%s, %s): FAILED: %s" %(x,y,v,msg))
+				return False
 		elif action.operator == TURNABS:
 			(d,r) = action.params # direction and rotational velocity. d = N, S, E, W (North, South, East, West)
-			turtlebot2.turnAbs(d, r, self._init_time, self._init_yaw, self._yaw_with_drift_time, self._yaw_with_drift)
+			status,msg = turtlebot2.turnAbs(d, r, self._init_time, self._init_yaw, self._yaw_with_drift_time, self._yaw_with_drift)
+			if status:
+				self.publish_feedback("TurnAbs(%s,%s): SUCCESS" %(d,r))
+				return True
+			else:
+				self.publish_feedback("TurnAbs(%s,%s): FAILED: %s" %(d,r,msg))
+				return False
 		elif action.operator == TURNREL:
 			(a,r) = action.params # Angle and rotational velocity.
-			turtlebot2.turnRel(a,r)
+			status, msg = turtlebot2.turnRel(a,r)
+			if status:
+				self.publish_feedback("TurnRel(%s,%s): SUCCESS" %(a,r))
+				return True
+			else:
+				self.publish_feedback("TurnRel(%s,%s): FAILED: %s" %(a,r,msg))
+				return False
 		else:
 			self.publish_feedback("Runtime Error: Unsupported action!");
 			self._success = False
@@ -161,16 +204,18 @@ class IGServer(object):
 			return (WAITING, None)
 		elif c.operator == DOONCE:
 			(a, n2) = c.params
-			self.doaction(a)
-			return (STEP, (n2, vs, I, [a] + O))
+			self._success = self.doaction(a)
+			result = STEP if self._success else FAIL
+			return (result, (n2, vs, I, [a] + O))
 		elif c.operator == DOUNTIL:
 			(a, cnd, n2) = c.params
 			b = checkcond(cnd)
-			self.doaction(a)
+			self._sucess = self.doaction(a)
+			result = STEP if self._success else FAIL
 			if b:
-		  		return (STEP, (n2, vs, I, [a] + O))
+		  		return (result, (n2, vs, I, [a] + O))
 			else:
-		  		return (STEP, (n, vs, I, [a] + O))
+		  		return (result, (n, vs, I, [a] + O))
 		elif c.operator == IFELSE:
 			(cnd, n2, n3) = c.params
 			b = checkcond(cnd)
@@ -197,6 +242,10 @@ class IGServer(object):
 			elif status == TERMINATED:
 			  print "Finished!"
 			  self.publish_feedback("Finished!");
+			  break
+			elif status == FAIL:
+			  print "Failed!"
+			  self.publish_feedback("Terminating because of failure")
 			  break
 			else:
 			  config = config2
