@@ -1,3 +1,8 @@
+#! /usr/bin/env python
+
+import roslib  ##; roslib.load_manifest('ig_action_msgs') ## this is maybe not needed any more for modern versions of ros?
+import rospy
+
 from flask import Flask , request , abort
 from enum import Enum
 app = Flask(__name__)
@@ -28,13 +33,6 @@ def int_out_of_range(x,upper,lower) :
 
 ## todo: this could be a horrible concurrency bug; i don't know yet.
 start_percentage = -1
-
-
-
-### debugging:
-@app.route('/', methods=['GET'])
-def debug():
-    return "hello, world!\n"
 
 ## subroutines for the first deliverable
 
