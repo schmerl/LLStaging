@@ -31,6 +31,11 @@ start_percentage = -1
 
 
 
+### debugging:
+@app.route('/', methods=['GET'])
+def debug():
+    return "hello, world!\n"
+
 ## subroutines for the first deliverable
 
 @app.route('/logs/status/DASSTATUS', methods=['GET'])
