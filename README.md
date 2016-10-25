@@ -9,9 +9,10 @@ vagrant ssh
 ./run-cp1.sh
 ```
 
-then, from either the host machine or inside the vagrant guest, you can
-access the REST communications API with standard HTTP requests that meet
-the API from the wiki on port 5000. For example, at a new terminal,
+and wait until you see `odom received!` in one of the info messages in the
+output. Then, from either the host machine or inside the vagrant guest,
+you can access the REST communications API with standard HTTP requests that
+meet the API from the wiki on port 5000. For example, at a new terminal,
 
 ```
 % curl -X POST -d "" localhost:5000/phase1/power/start_challenge_problem
