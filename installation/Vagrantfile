@@ -17,7 +17,7 @@ Vagrant.configure(2) do |config|
 
  $script = <<-SCRIPT
   sudo apt-get install software-properties-common -y --force-yes
-  sudo apt-add-repository ppa:ansible/ansible -y 
+  sudo apt-add-repository ppa:ansible/ansible -y
   sudo apt-get update -y
   sudo apt-get install ansible -y --force-yes
   sudo apt-get install -f
@@ -35,40 +35,41 @@ Vagrant.configure(2) do |config|
   sudo apt-get update
   sudo apt-get install openjdk-8-jre-headless -y --force-yes
   sudo apt-get install xserver-xorg-video-dummy
+  sudo apt-get -y install python-flask
   SCRIPT
 
   config.vm.provision "shell", inline: $script, privileged: false
-  
+
   config.vm.provision "shell" do |s|
     s.inline = "cp -r /vagrant/catkin_ws /home/vagrant"
 	s.name = "Copy the base programs for CP1"
 	s.privileged = false
   end
-  
+
    config.vm.provision "shell" do |s|
     s.inline = "cp /vagrant/setup-cp1.sh /home/vagrant"
 	s.name = "Copy the setup script"
 	s.privileged = false
   end
-  
+
    config.vm.provision "shell" do |s|
     s.inline = "cp -r /vagrant/run-cp1.sh /home/vagrant"
 	s.name = "Copy the CP1 run script"
 	s.privileged = false
   end
-  
+
   config.vm.provision "shell" do |s|
     s.inline = "cp -r /vagrant/xorg.conf /home/vagrant"
 	s.name = "Copy the X config file for use by headless robot"
 	s.privileged = false
   end
-  
+
   $setup = <<-SETUP
   echo Setting up challenge problem 1
   ./setup-cp1.sh
   echo "source catkin_ws/devel/setup.bash" >> .bashrc
   SETUP
-  
+
   config.vm.provision "shell", inline: $setup, privileged: false
-  
+
 end
