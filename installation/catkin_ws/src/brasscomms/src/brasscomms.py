@@ -44,14 +44,24 @@ def int_out_of_range(x,upper,lower) :
 start_percentage = -1
 bot_status = Status.Starting
 
+def status_name (s):
+    if (s == 1): return "Starting"
+    if (s == 2): return "Operational"
+    if (s == 3): return "Adapting"
+    if (s == 4): return "ShuttingDown"
+    if (s == 5): return "Completed"
+    return "Unknown"
+
 ## callbacks to change the status
 def done_cb(terminal, result):
     global bot_status
     bot_status = Status.Completed
+    print "brasscomms received successful result from plan: " %result 
 
 def active_cb():
     global bot_status
     bot_status = Status.Operational
+    print "brasscoms received notification that goal is active"
 
 
 #### subroutines for the first deliverable
@@ -62,24 +72,23 @@ def status():
     assert request.method == 'GET'
 
     global bot_status
-    return bot_status
+    ret_status = status_name(bot_status)
+    return "{{status : \"{}\" }}".format(ret_status)
 
 @app.route('/phase1/power/start_challenge_problem', methods=['POST'])
 def startChallengeProblem():
     assert request.path == '/phase1/power/start_challenge_problem'
     assert request.method == 'POST'
-
+    print "Processing start_challeng_problem"
     try:
         igfile = open('/home/vagrant/catkin_ws/src/cp1_gazebo/instructions/newnav.ig', "r")
         igcode = igfile.read()
         goal = ig_action_msgs.msg.InstructionGraphGoal(order=igcode)
-
         global client
         client.send_goal( goal = goal, done_cb = done_cb, active_cb = active_cb)
-
     except Exception as e:
         print e
-        print "Could not open newnav for reading!"
+        print "Could not send the goal!"
 
     return 'starting challenge problem'
 
@@ -90,7 +99,8 @@ def stopChallengeProblem():
 
     global client
     client.cancel_all_goals()
-
+    global bot_status
+    bot_status = Status.Completed
     return 'killed challenge problem'
 
 
@@ -278,9 +288,9 @@ def recal_stop():
 # machine from the host. for debugging, this may be unsafe depending
 # on your machine configuration and network attachements.
 if __name__ == "__main__":
-    app.run( host='0.0.0.0' )
     ## start up the ros node and make an action server
     rospy.init_node("brasscomms")
     client = actionlib.SimpleActionClient("ig_action_server", ig_action_msgs.msg.InstructionGraphAction)
     client.wait_for_server()
+    app.run (host="0.0.0.0")
     
