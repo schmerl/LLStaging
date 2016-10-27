@@ -1,6 +1,8 @@
 cmu-robotics
 ============
 
+Vagrant installation can be found at: https://www.vagrantup.com/docs/installation/
+
 In order to run the simulation, once you've installed vagrant, etc.:
 
 ```
