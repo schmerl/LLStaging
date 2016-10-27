@@ -10,6 +10,12 @@ from math import degrees
 import dynamic_reconfigure.client
 from orientation import Orientation
 
+move_base = None
+
+def cancel():
+	if (move_base != None):
+	   move_base.cancel_goal()
+
 def moveAbs(x,y,v):
 	return move (x,y,v,"Absolute");
 
@@ -31,7 +37,7 @@ def move(x,y,v,action):
 		frameType = "map"
 	else:
 		frameType = 'base_link'
-
+        global move_base
 	move_base = publisher.move_base_action_client ()
     
 	print "moving ->" + str(frameType)
@@ -55,6 +61,7 @@ def move(x,y,v,action):
 		rospy.loginfo("Successfully executed the vertex")
 	
 	publisher.close_move_base_action_client()
+        move_base = None
 	return status, msg
 
 def turn(angle, rotation):

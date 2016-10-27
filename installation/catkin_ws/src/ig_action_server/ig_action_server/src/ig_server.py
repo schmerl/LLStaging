@@ -37,6 +37,7 @@ class IGServer(object):
 	_init_yaw = None
 	_yaw_with_drift = None
 	_yaw_with_drift_time = None
+        _goal_canceled = False
 
 	def __init__(self, name):
 		self._name = name
@@ -47,11 +48,18 @@ class IGServer(object):
 		rospy.sleep(10)
 		self._init_yaw = self._yaw_with_drift
 		self._init_time = self._yaw_with_drift_time
+		self._as.register_preempt_callback(self.cancel_goal)
 		print str(self._init_yaw)
 
+	def cancel_goal(self):
+		print "Received request to preempt/cancel goal"
+		self._goal_canceled = True
+                turtlebot.cancel()
+		turtlebot2.cancel()
 
 	def execute_cb(self, goal):
 		# Setting the rate of execution.
+                self._goal_canceled = False
 		r =rospy.Rate(1)
 		self._success = True		
 
@@ -198,6 +206,8 @@ class IGServer(object):
 		(n, vs, I, O) = config
 		v = findn(vs, n)
 		(n, c) = v.params
+                if (self._goal_canceled):
+			return (CANCELED, None)
 		if c.operator == END:
 			return (TERMINATED, None)
 		elif I == [] and (c.operator in (DOUNTIL, IFELSE)):
@@ -212,6 +222,8 @@ class IGServer(object):
 			b = checkcond(cnd)
 			self._sucess = self.doaction(a)
 			result = STEP if self._success else FAIL
+                        if (self._goal_canceleed):
+				return (CANCELED, None)
 			if b:
 		  		return (result, (n2, vs, I, [a] + O))
 			else:
@@ -247,6 +259,10 @@ class IGServer(object):
 			  print "Failed!"
 			  self.publish_feedback("Terminating because of failure")
 			  break
+			elif status == CANCELED:
+			  print "Canceled"
+			  self.publish_feedback("Instruction graph was canceled")
+                          break
 			else:
 			  config = config2
 		(_, _, _, O) = config

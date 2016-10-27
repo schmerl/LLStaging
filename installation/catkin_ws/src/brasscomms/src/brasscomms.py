@@ -56,7 +56,7 @@ def status_name (s):
 def done_cb(terminal, result):
     global bot_status
     bot_status = Status.Completed
-    print "brasscomms received successful result from plan: " %result 
+    print "brasscomms received successful result from plan: %d" %(terminal)  
 
 def active_cb():
     global bot_status

@@ -22,3 +22,4 @@ TERMINATED = 11
 WAITING =    12
 STEP =       13
 FAIL =       14
+CANCELED =   15
