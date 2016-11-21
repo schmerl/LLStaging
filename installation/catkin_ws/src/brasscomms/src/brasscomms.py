@@ -56,7 +56,7 @@ def status_name (s):
 def done_cb(terminal, result):
     global bot_status
     bot_status = Status.Completed
-    print "brasscomms received successful result from plan: %d" %(terminal)  
+    print "brasscomms received successful result from plan: %d" %(terminal)
 
 def active_cb():
     global bot_status
@@ -104,6 +104,39 @@ def stopChallengeProblem():
     return 'killed challenge problem'
 
 
+#### second deliverable subroutines that don't depend on other components
+#### being finished.
+
+@app.route('/phase1/power/add_obstacle', methods=['POST'])
+def addObstacle():
+    assert request.path == '/phase1/power/add_obstacle'
+    assert request.method == 'POST'
+
+    obs_loc = request.args.get('obstacle_location','')
+
+    [obsLoc_x , obsLoc_y] = obs_loc.split(',')
+    if not (isint(obsLoc_x) and isint(obsLoc_y)):
+        abort(400, 'object location malformed. must be of the form "int,int".')
+
+    return 'todo: make a call to add the obstactle here'
+
+@app.route('/phase1/power/remove_obstacle', methods=['POST'])
+def removeObstacle():
+    assert request.path == '/phase1/power/remove_obstacle'
+    assert request.method == 'POST'
+
+    return 'todo: make a call to remove the obstacle here'
+
+@app.route('/phase1/power/get_robot_location', methods=['GET'])
+def location():
+    assert request.path == '/phase1/power/get_robot_location'
+    assert request.method == 'GET'
+    return 'todo: make a ROS call here to determine location'
+
+
+
+
+
 
 #### subroutines for the rest of the full API; STUBS BELOW HERE
 
@@ -137,12 +170,6 @@ def initalSettings():
 
     return "todo: make a call here now that the data's all checked"
 
-@app.route('/phase1/power/get_robot_location', methods=['GET'])
-def location():
-    assert request.path == '/phase1/power/get_robot_location'
-    assert request.method == 'GET'
-    return 'todo: make a ROS call here to determine location'
-
 @app.route('/phase1/power/get_battery_level', methods=['GET'])
 def battery():
     assert request.path == '/phase1/power/get_battery_level'
@@ -169,26 +196,6 @@ def changePower():
         abort(400, 'current battery larger than the original battery setting. batteries only lose power')
 
     return 'todo: make a call here to change the power'
-
-@app.route('/phase1/power/add_obstacle', methods=['POST'])
-def addObstacle():
-    assert request.path == '/phase1/power/add_obstacle'
-    assert request.method == 'POST'
-
-    obs_loc = request.args.get('obstacle_location','')
-
-    [obsLoc_x , obsLoc_y] = obs_loc.split(',')
-    if not (isint(obsLoc_x) and isint(obsLoc_y)):
-        abort(400, 'object location malformed. must be of the form "int,int".')
-
-    return 'todo: make a call to add the obstactle here'
-
-@app.route('/phase1/power/remove_obstacle', methods=['POST'])
-def removeObstacle():
-    assert request.path == '/phase1/power/remove_obstacle'
-    assert request.method == 'POST'
-
-    return 'todo: make a call to remove the obstacle here'
 
 @app.route('/phase1/recalibration/start_challenge_problem', methods=['POST'])
 def recal_start():
@@ -293,4 +300,3 @@ if __name__ == "__main__":
     client = actionlib.SimpleActionClient("ig_action_server", ig_action_msgs.msg.InstructionGraphAction)
     client.wait_for_server()
     app.run (host="0.0.0.0")
-    
