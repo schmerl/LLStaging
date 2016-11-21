@@ -45,6 +45,8 @@
    - name: Python Ply
      apt: pkg=python-ply state=installed
      
+   - name: Install YAML processor
+     pip: name=shyaml
 
    # - name: Clone InstructionGraphs |  clone  git
    #   git: repo=https://github.com/anuragkanungo/instructiongraphs.git dest=~/

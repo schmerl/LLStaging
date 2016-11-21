@@ -76,8 +76,8 @@
   <arg name="initial_pose_y" default="0.0"/> 
   <arg name="initial_pose_a" default="0.0"/>
   <include file="$(find turtlebot_navigation)/launch/includes/amcl.launch.xml">
-    <arg name="initial_pose_x" value="15.5"/>
-    <arg name="initial_pose_y" value="69"/>
+    <arg name="initial_pose_x" value="39"/>
+    <arg name="initial_pose_y" value="27"/>
     <arg name="initial_pose_a" value="$(arg initial_pose_a)"/>
   </include>
 

@@ -73,12 +73,6 @@
   <node name="ig_interpreter" pkg="ig_action_server" type="ig_server.py" output="screen">
 
   </node>
-<!--
-  <node name="ig_interpreter" pkg="ig_interpreter" type="ig_node" output="screen">
-    <param name="ig_file" value="$(find cp1_gazebo)/instructions/hometogoal.ig"/>
+  <node name="brasscomms" pkg="brasscomms" type="brasscomms.py" output="screen">
   </node>
--->
-  <!-- launch node to report the state of the robot -->
-  <!-- Not the publish frequency is in Hz -->
-
 </launch>
