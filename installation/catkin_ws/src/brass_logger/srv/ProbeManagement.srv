@@ -1,0 +1,6 @@
+int8 action
+string data
+---
+int8 action
+int8 success
+string message

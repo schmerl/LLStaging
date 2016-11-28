@@ -41,8 +41,7 @@ def locate(x,y):
 
   time.sleep(1)
 
-def cancel():
-  publisher.move_base_action_client().cancel_goal()
+
 
 def moveTo(x, y):
   move_base_client = publisher.move_base_action_client (); #actionlib.SimpleActionClient("move_base", MoveBaseAction)
