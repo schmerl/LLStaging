@@ -1,0 +1,3 @@
+[submodule "installation/catkin_ws/src/brasscomms"]
+	path = installation/catkin_ws/src/brasscomms
+	url = git@github.com:ivoysey/brasscomms.git
