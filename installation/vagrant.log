@@ -3,7 +3,7 @@
 [0m[K[0m[0mProgress: 90%[0m[0m[K[0m[1m==> default: Matching MAC address for NAT networking...[0m
 [1m==> default: Checking if box 'ubuntu/trusty64' is up to date...[0m
 [1;33m==> default: A newer version of the box 'ubuntu/trusty64' is available! You currently
-==> default: have version '20160802.0.1'. The latest is version '20161111.0.0'. Run
+==> default: have version '20160802.0.1'. The latest is version '20161214.0.0'. Run
 ==> default: `vagrant box update` to update.[0m
 [1m==> default: Setting the name of the VM: cmu-mars[0m
 [1m==> default: Clearing any previously set forwarded ports...[0m
@@ -40,7 +40,7 @@
     default: VirtualBox Version: 5.1[0m
 [1m==> default: Configuring and enabling network interfaces...[0m
 [1m==> default: Mounting shared folders...[0m
-[0m    default: /vagrant => I:/BRASS/LLCopy/installation[0m
+[0m    default: /vagrant => I:/BRASS/LLStaging/installation[0m
 [1m==> default: Running provisioner: shell...[0m
 [0m    default: Running: inline script[0m
 [1;32m==> default: Reading package lists...[0m
@@ -49,13 +49,13 @@
 [1;32m==> default: software-properties-common is already the newest version.
 ==> default: 0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.[0m
 [1;31m==> default: gpg: [0m
-[1;31m==> default: keyring `/tmp/tmpjsinr7sb/secring.gpg' created[0m
+[1;31m==> default: keyring `/tmp/tmp4xaz5sjg/secring.gpg' created[0m
 [1;31m==> default: gpg: [0m
-[1;31m==> default: keyring `/tmp/tmpjsinr7sb/pubring.gpg' created[0m
+[1;31m==> default: keyring `/tmp/tmp4xaz5sjg/pubring.gpg' created[0m
 [1;31m==> default: gpg: [0m
 [1;31m==> default: requesting key 7BB9C367 from hkp server keyserver.ubuntu.com[0m
 [1;31m==> default: gpg: [0m
-[1;31m==> default: /tmp/tmpjsinr7sb/trustdb.gpg: trustdb created[0m
+[1;31m==> default: /tmp/tmp4xaz5sjg/trustdb.gpg: trustdb created[0m
 [1;31m==> default: gpg: [0m
 [1;31m==> default: key 7BB9C367: public key "Launchpad PPA for Ansible, Inc." imported[0m
 [1;31m==> default: gpg: [0m
@@ -64,49 +64,75 @@
 [1;31m==> default:               imported: 1[0m
 [1;31m==> default:   (RSA: 1)[0m
 [1;32m==> default: OK[0m
+[1;32m==> default:  [0m
+[1;32m==> default:  More info: https://launchpad.net/~openjdk-r/+archive/ubuntu/ppa[0m
+[1;31m==> default: gpg: [0m
+[1;31m==> default: keyring `/tmp/tmpkeq70vww/secring.gpg' created[0m
+[1;31m==> default: gpg: [0m
+[1;31m==> default: keyring `/tmp/tmpkeq70vww/pubring.gpg' created[0m
+[1;31m==> default: gpg: [0m
+[1;31m==> default: requesting key 86F44E2A from hkp server keyserver.ubuntu.com[0m
+[1;31m==> default: gpg: [0m
+[1;31m==> default: /tmp/tmpkeq70vww/trustdb.gpg: trustdb created[0m
+[1;31m==> default: gpg: [0m
+[1;31m==> default: key 86F44E2A: public key "Launchpad OpenJDK builds (all archs)" imported[0m
+[1;31m==> default: gpg: [0m
+[1;31m==> default: Total number processed: 1[0m
+[1;31m==> default: gpg: [0m
+[1;31m==> default:               imported: 1[0m
+[1;31m==> default:   (RSA: 1)[0m
+[1;32m==> default: OK[0m
+[1;32m==> default: Ign file: ./ InRelease[0m
+[1;32m==> default: Ign file: ./ Release.gpg[0m
+[1;32m==> default: Ign file: ./ Release[0m
+[1;32m==> default: Ign file: ./ Translation-en_US[0m
+[1;32m==> default: Ign file: ./ Translation-en[0m
 [1;32m==> default: Get:1 http://security.ubuntu.com trusty-security InRelease [65.9 kB][0m
 [1;32m==> default: Ign http://archive.ubuntu.com trusty InRelease[0m
 [1;32m==> default: Get:2 http://ppa.launchpad.net trusty InRelease [16.0 kB][0m
 [1;32m==> default: Get:3 http://archive.ubuntu.com trusty-updates InRelease [65.9 kB][0m
-[1;32m==> default: Get:4 http://ppa.launchpad.net trusty/main amd64 Packages [525 B][0m
-[1;32m==> default: Get:5 http://security.ubuntu.com trusty-security/main Sources [120 kB][0m
-[1;32m==> default: Get:6 http://ppa.launchpad.net trusty/main Translation-en [322 B][0m
+[1;32m==> default: Get:4 http://ppa.launchpad.net trusty InRelease [15.5 kB][0m
+[1;32m==> default: Get:5 http://security.ubuntu.com trusty-security/main Sources [123 kB][0m
+[1;32m==> default: Get:6 http://ppa.launchpad.net trusty/main amd64 Packages [525 B][0m
 [1;32m==> default: Get:7 http://archive.ubuntu.com trusty-backports InRelease [65.9 kB][0m
-[1;32m==> default: Get:8 http://security.ubuntu.com trusty-security/universe Sources [45.8 kB][0m
+[1;32m==> default: Get:8 http://ppa.launchpad.net trusty/main Translation-en [322 B][0m
+[1;32m==> default: Get:9 http://security.ubuntu.com trusty-security/universe Sources [46.5 kB][0m
+[1;32m==> default: Get:10 http://ppa.launchpad.net trusty/main amd64 Packages [7,407 B][0m
 [1;32m==> default: Hit http://archive.ubuntu.com trusty Release.gpg[0m
-[1;32m==> default: Get:9 http://security.ubuntu.com trusty-security/main amd64 Packages [548 kB][0m
-[1;32m==> default: Get:10 http://archive.ubuntu.com trusty-updates/main Sources [384 kB][0m
-[1;32m==> default: Get:11 http://archive.ubuntu.com trusty-updates/restricted Sources [5,888 B][0m
-[1;32m==> default: Get:12 http://archive.ubuntu.com trusty-updates/universe Sources [169 kB][0m
-[1;32m==> default: Get:13 http://security.ubuntu.com trusty-security/universe amd64 Packages [144 kB][0m
-[1;32m==> default: Get:14 http://archive.ubuntu.com trusty-updates/multiverse Sources [7,522 B][0m
-[1;32m==> default: Get:15 http://security.ubuntu.com trusty-security/main Translation-en [301 kB][0m
-[1;32m==> default: Get:16 http://archive.ubuntu.com trusty-updates/main amd64 Packages [918 kB][0m
-[1;32m==> default: Get:17 http://security.ubuntu.com trusty-security/universe Translation-en [85.0 kB][0m
-[1;32m==> default: Get:18 http://archive.ubuntu.com trusty-updates/restricted amd64 Packages [16.4 kB][0m
-[1;32m==> default: Get:19 http://archive.ubuntu.com trusty-updates/universe amd64 Packages [388 kB][0m
-[1;32m==> default: Get:20 http://archive.ubuntu.com trusty-updates/multiverse amd64 Packages [14.0 kB][0m
-[1;32m==> default: Get:21 http://archive.ubuntu.com trusty-updates/main Translation-en [445 kB][0m
-[1;32m==> default: Get:22 http://archive.ubuntu.com trusty-updates/multiverse Translation-en [7,340 B][0m
-[1;32m==> default: Get:23 http://archive.ubuntu.com trusty-updates/restricted Translation-en [3,842 B][0m
-[1;32m==> default: Get:24 http://archive.ubuntu.com trusty-updates/universe Translation-en [205 kB][0m
-[1;32m==> default: Get:25 http://archive.ubuntu.com trusty-backports/main Sources [9,632 B][0m
-[1;32m==> default: Get:26 http://archive.ubuntu.com trusty-backports/restricted Sources [28 B][0m
-[1;32m==> default: Get:27 http://archive.ubuntu.com trusty-backports/universe Sources [35.2 kB][0m
-[1;32m==> default: Get:28 http://archive.ubuntu.com trusty-backports/multiverse Sources [1,898 B][0m
-[1;32m==> default: Get:29 http://archive.ubuntu.com trusty-backports/main amd64 Packages [13.3 kB][0m
-[1;32m==> default: Get:30 http://archive.ubuntu.com trusty-backports/restricted amd64 Packages [28 B][0m
-[1;32m==> default: Get:31 http://archive.ubuntu.com trusty-backports/universe amd64 Packages [43.2 kB][0m
-[1;32m==> default: Get:32 http://archive.ubuntu.com trusty-backports/multiverse amd64 Packages [1,571 B][0m
-[1;32m==> default: Get:33 http://archive.ubuntu.com trusty-backports/main Translation-en [7,493 B][0m
-[1;32m==> default: Get:34 http://archive.ubuntu.com trusty-backports/multiverse Translation-en [1,215 B][0m
-[1;32m==> default: Get:35 http://archive.ubuntu.com trusty-backports/restricted Translation-en [28 B][0m
-[1;32m==> default: Get:36 http://archive.ubuntu.com trusty-backports/universe Translation-en [36.8 kB][0m
+[1;32m==> default: Get:11 http://security.ubuntu.com trusty-security/main amd64 Packages [570 kB][0m
+[1;32m==> default: Get:12 http://ppa.launchpad.net trusty/main Translation-en [3,118 B][0m
+[1;32m==> default: Get:13 http://archive.ubuntu.com trusty-updates/main Sources [388 kB][0m
+[1;32m==> default: Get:14 http://security.ubuntu.com trusty-security/universe amd64 Packages [146 kB][0m
+[1;32m==> default: Get:15 http://archive.ubuntu.com trusty-updates/restricted Sources [5,888 B][0m
+[1;32m==> default: Get:16 http://security.ubuntu.com trusty-security/main Translation-en [314 kB][0m
+[1;32m==> default: Get:17 http://archive.ubuntu.com trusty-updates/universe Sources [170 kB][0m
+[1;32m==> default: Get:18 http://security.ubuntu.com trusty-security/universe Translation-en [86.6 kB][0m
+[1;32m==> default: Get:19 http://archive.ubuntu.com trusty-updates/multiverse Sources [7,523 B][0m
+[1;32m==> default: Get:20 http://archive.ubuntu.com trusty-updates/main amd64 Packages [935 kB][0m
+[1;32m==> default: Get:21 http://archive.ubuntu.com trusty-updates/restricted amd64 Packages [16.4 kB][0m
+[1;32m==> default: Get:22 http://archive.ubuntu.com trusty-updates/universe amd64 Packages [390 kB][0m
+[1;32m==> default: Get:23 http://archive.ubuntu.com trusty-updates/multiverse amd64 Packages [14.0 kB][0m
+[1;32m==> default: Get:24 http://archive.ubuntu.com trusty-updates/main Translation-en [457 kB][0m
+[1;32m==> default: Get:25 http://archive.ubuntu.com trusty-updates/multiverse Translation-en [7,340 B][0m
+[1;32m==> default: Get:26 http://archive.ubuntu.com trusty-updates/restricted Translation-en [3,842 B][0m
+[1;32m==> default: Get:27 http://archive.ubuntu.com trusty-updates/universe Translation-en [207 kB][0m
+[1;32m==> default: Get:28 http://archive.ubuntu.com trusty-backports/main Sources [9,646 B][0m
+[1;32m==> default: Get:29 http://archive.ubuntu.com trusty-backports/restricted Sources [28 B][0m
+[1;32m==> default: Get:30 http://archive.ubuntu.com trusty-backports/universe Sources [35.3 kB][0m
+[1;32m==> default: Get:31 http://archive.ubuntu.com trusty-backports/multiverse Sources [1,898 B][0m
+[1;32m==> default: Get:32 http://archive.ubuntu.com trusty-backports/main amd64 Packages [13.3 kB][0m
+[1;32m==> default: Get:33 http://archive.ubuntu.com trusty-backports/restricted amd64 Packages [28 B][0m
+[1;32m==> default: Get:34 http://archive.ubuntu.com trusty-backports/universe amd64 Packages [43.2 kB][0m
+[1;32m==> default: Get:35 http://archive.ubuntu.com trusty-backports/multiverse amd64 Packages [1,571 B][0m
+[1;32m==> default: Get:36 http://archive.ubuntu.com trusty-backports/main Translation-en [7,493 B][0m
+[1;32m==> default: Get:37 http://archive.ubuntu.com trusty-backports/multiverse Translation-en [1,215 B][0m
+[1;32m==> default: Get:38 http://archive.ubuntu.com trusty-backports/restricted Translation-en [28 B][0m
+[1;32m==> default: Get:39 http://archive.ubuntu.com trusty-backports/universe Translation-en [36.8 kB][0m
 [1;32m==> default: Hit http://archive.ubuntu.com trusty Release[0m
-[1;32m==> default: Get:37 http://archive.ubuntu.com trusty/main Sources [1,064 kB][0m
-[1;32m==> default: Get:38 http://archive.ubuntu.com trusty/restricted Sources [5,433 B][0m
-[1;32m==> default: Get:39 http://archive.ubuntu.com trusty/universe Sources [6,399 kB][0m
-[1;32m==> default: Get:40 http://archive.ubuntu.com trusty/multiverse Sources [174 kB][0m
+[1;32m==> default: Get:40 http://archive.ubuntu.com trusty/main Sources [1,064 kB][0m
+[1;32m==> default: Get:41 http://archive.ubuntu.com trusty/restricted Sources [5,433 B][0m
+[1;32m==> default: Get:42 http://archive.ubuntu.com trusty/universe Sources [6,399 kB][0m
+[1;32m==> default: Get:43 http://archive.ubuntu.com trusty/multiverse Sources [174 kB][0m
 [1;32m==> default: Hit http://archive.ubuntu.com trusty/main amd64 Packages[0m
 [1;32m==> default: Hit http://archive.ubuntu.com trusty/restricted amd64 Packages[0m
 [1;32m==> default: Hit http://archive.ubuntu.com trusty/universe amd64 Packages[0m
@@ -119,7 +145,7 @@
 [1;32m==> default: Ign http://archive.ubuntu.com trusty/multiverse Translation-en_US[0m
 [1;32m==> default: Ign http://archive.ubuntu.com trusty/restricted Translation-en_US[0m
 [1;32m==> default: Ign http://archive.ubuntu.com trusty/universe Translation-en_US[0m
-[1;32m==> default: Fetched 11.8 MB in 213503982334601d 4h 0min 26s (0 B/s)
+[1;32m==> default: Fetched 11.9 MB in 21s (558 kB/s)
 ==> default: Reading package lists...[0m
 [1;32m==> default: Reading package lists...[0m
 [1;32m==> default: Building dependency tree...[0m
@@ -131,7 +157,7 @@
 [1;32m==> default: The following NEW packages will be installed:[0m
 [1;32m==> default:   ansible python-jinja2 python-markupsafe python-paramiko python-setuptools[0m
 [1;32m==> default:   sshpass[0m
-[1;32m==> default: 0 upgraded, 6 newly installed, 0 to remove and 63 not upgraded.
+[1;32m==> default: 0 upgraded, 6 newly installed, 0 to remove and 97 not upgraded.
 ==> default: Need to get 2,129 kB of archives.
 ==> default: After this operation, 15.0 MB of additional disk space will be used.
 ==> default: Get:1 http://archive.ubuntu.com/ubuntu/ trusty/main python-markupsafe amd64 0.18-1build2 [14.3 kB][0m
@@ -141,7 +167,7 @@
 [1;32m==> default: Get:5 http://archive.ubuntu.com/ubuntu/ trusty-updates/main python-setuptools all 3.3-1ubuntu2 [230 kB][0m
 [1;32m==> default: Get:6 http://archive.ubuntu.com/ubuntu/ trusty/universe sshpass amd64 1.05-1 [10.5 kB][0m
 [1;31m==> default: dpkg-preconfigure: unable to re-open stdin: No such file or directory[0m
-[1;32m==> default: Fetched 2,129 kB in 2s (969 kB/s)[0m
+[1;32m==> default: Fetched 2,129 kB in 2s (1,024 kB/s)[0m
 [1;32m==> default: Selecting previously unselected package python-markupsafe.[0m
 [1;32m==> default: (Reading database ... 62994 files and directories currently installed.)[0m
 [1;32m==> default: Preparing to unpack .../python-markupsafe_0.18-1build2_amd64.deb ...[0m
@@ -171,166 +197,21 @@
 [1;32m==> default: Reading package lists...[0m
 [1;32m==> default: Building dependency tree...[0m
 [1;32m==> default: Reading state information...[0m
-[1;32m==> default: 0 upgraded, 0 newly installed, 0 to remove and 63 not upgraded.[0m
-[1;31m==> default:  [WARNING]: provided hosts list is empty, only localhost is available[0m
-[1;32m==> default: 
-==> default: PLAY [localhost] ***************************************************************[0m
-[1;32m==> default: 
-==> default: TASK [setup] *******************************************************************[0m
-[1;32m==> default: ok: [localhost][0m
-[1;32m==> default: 
-==> default: TASK [Add apt-key] *************************************************************[0m
-[1;32m==> default: changed: [localhost][0m
-[1;32m==> default: 
-==> default: TASK [Install ROS Indigo Desktop Full] *****************************************[0m
-[1;32m==> default: changed: [localhost][0m
-[1;32m==> default: 
-==> default: TASK [Install Rosinstall] ******************************************************[0m
-[1;32m==> default: changed: [localhost][0m
-[1;32m==> default: 
-==> default: TASK [Install Ros-Indigo-Turtlebot] ********************************************[0m
-[1;32m==> default: changed: [localhost][0m
-[1;32m==> default: 
-==> default: TASK [Install Turtlebot apps] **************************************************[0m
-[1;32m==> default: changed: [localhost][0m
-[1;32m==> default: 
-==> default: TASK [Install Turtlebot interactions] ******************************************[0m
-[1;32m==> default: changed: [localhost][0m
-[1;32m==> default: 
-==> default: TASK [Install turtlebot simulator] *********************************************[0m
-[1;32m==> default: changed: [localhost][0m
-[1;32m==> default: 
-==> default: TASK [Install Kobuki] **********************************************************[0m
-[1;32m==> default: ok: [localhost][0m
-[1;32m==> default: 
-==> default: TASK [Install Rocon] ***********************************************************[0m
-[1;32m==> default: changed: [localhost][0m
-[1;32m==> default: 
-==> default: TASK [Install Rocon-Qt] ********************************************************[0m
-[1;32m==> default: ok: [localhost][0m
-[1;32m==> default: 
-==> default: TASK [Install Ros-Ar-Track] ****************************************************[0m
-[1;32m==> default: ok: [localhost][0m
-[1;32m==> default: 
-==> default: TASK [Python Ply] **************************************************************[0m
-[1;32m==> default: changed: [localhost][0m
-[1;32m==> default: 
-==> default: TASK [Install YAML processor] **************************************************[0m
-[1;32m==> default: fatal: [localhost]: FAILED! => {"changed": false, "failed": true, "msg": "Failed to find required executable pip2"}[0m
-[1;32m==> default: 	to retry, use: --limit @/vagrant/turtle.retry[0m
-[1;32m==> default: 
-==> default: PLAY RECAP *********************************************************************[0m
-[1;32m==> default: localhost                  : ok=13   changed=9    unreachable=0    failed=1   [0m
-[1;32m==> default: Wrote /etc/ros/rosdep/sources.list.d/20-default.list
-==> default: Recommended: please run
-==> default: 
-==> default: 	rosdep update[0m
-[1;32m==> default: Recursively changing ownership of ros home directory '/home/vagrant/.ros' to 'vagrant:vagrant' (current user)...
-==> default: Done.[0m
-[1;32m==> default: reading in sources list data from /etc/ros/rosdep/sources.list.d
-==> default: Hit https://raw.githubusercontent.com/ros/rosdistro/master/rosdep/osx-homebrew.yaml
-==> default: Hit https://raw.githubusercontent.com/ros/rosdistro/master/rosdep/base.yaml
-==> default: Hit https://raw.githubusercontent.com/ros/rosdistro/master/rosdep/python.yaml
-==> default: Hit https://raw.githubusercontent.com/ros/rosdistro/master/rosdep/ruby.yaml
-==> default: Hit https://raw.githubusercontent.com/ros/rosdistro/master/releases/fuerte.yaml
-==> default: Query rosdistro index https://raw.githubusercontent.com/ros/rosdistro/master/index.yaml
-==> default: Add distro "groovy"
-==> default: Add distro "hydro"
-==> default: Add distro "indigo"
-==> default: Add distro "jade"
-==> default: Add distro "kinetic"
-==> default: updated cache in /home/vagrant/.ros/rosdep/sources.cache[0m
-[1;32m==> default:  [0m
-[1;32m==> default:  More info: https://launchpad.net/~openjdk-r/+archive/ubuntu/ppa[0m
-[1;31m==> default: gpg: [0m
-[1;31m==> default: keyring `/tmp/tmpp3si3kcv/secring.gpg' created[0m
-[1;31m==> default: gpg: [0m
-[1;31m==> default: keyring `/tmp/tmpp3si3kcv/pubring.gpg' created[0m
-[1;31m==> default: gpg: [0m
-[1;31m==> default: requesting key 86F44E2A from hkp server keyserver.ubuntu.com[0m
-[1;31m==> default: gpg: /tmp/tmpp3si3kcv/trustdb.gpg: trustdb created
-==> default: gpg: key 86F44E2A: public key "Launchpad OpenJDK builds (all archs)" imported
-==> default: gpg: Total number processed: 1
-==> default: gpg:               imported: 1  (RSA: 1)[0m
-[1;32m==> default: OK[0m
-[1;32m==> default: Get:1 http://security.ubuntu.com trusty-security InRelease [65.9 kB][0m
-[1;32m==> default: Hit http://packages.ros.org trusty InRelease[0m
-[1;32m==> default: Get:2 http://security.ubuntu.com trusty-security/main Sources [120 kB][0m
-[1;32m==> default: Hit http://packages.ros.org trusty/main amd64 Packages[0m
-[1;32m==> default: Get:3 http://security.ubuntu.com trusty-security/universe Sources [45.8 kB][0m
-[1;32m==> default: Ign http://archive.ubuntu.com trusty InRelease[0m
-[1;32m==> default: Get:4 http://security.ubuntu.com trusty-security/main amd64 Packages [548 kB][0m
-[1;32m==> default: Hit http://ppa.launchpad.net trusty InRelease[0m
-[1;32m==> default: Get:5 http://archive.ubuntu.com trusty-updates InRelease [65.9 kB][0m
-[1;32m==> default: Get:6 http://security.ubuntu.com trusty-security/universe amd64 Packages [144 kB][0m
-[1;32m==> default: Hit http://security.ubuntu.com trusty-security/main Translation-en[0m
-[1;32m==> default: Get:7 http://ppa.launchpad.net trusty InRelease [15.5 kB][0m
-[1;32m==> default: Hit http://security.ubuntu.com trusty-security/universe Translation-en[0m
-[1;32m==> default: Hit http://ppa.launchpad.net trusty/main amd64 Packages[0m
-[1;32m==> default: Ign http://packages.ros.org trusty/main Translation-en_US[0m
-[1;32m==> default: Hit http://archive.ubuntu.com trusty-backports InRelease[0m
-[1;32m==> default: Ign http://packages.ros.org trusty/main Translation-en[0m
-[1;32m==> default: Hit http://ppa.launchpad.net trusty/main Translation-en[0m
-[1;32m==> default: Hit http://archive.ubuntu.com trusty Release.gpg[0m
-[1;32m==> default: Get:8 http://ppa.launchpad.net trusty/main amd64 Packages [7,407 B][0m
-[1;32m==> default: Get:9 http://archive.ubuntu.com trusty-updates/main Sources [384 kB][0m
-[1;32m==> default: Get:10 http://ppa.launchpad.net trusty/main Translation-en [3,118 B][0m
-[1;32m==> default: Get:11 http://archive.ubuntu.com trusty-updates/restricted Sources [5,888 B][0m
-[1;32m==> default: Get:12 http://archive.ubuntu.com trusty-updates/universe Sources [169 kB][0m
-[1;32m==> default: Get:13 http://archive.ubuntu.com trusty-updates/multiverse Sources [7,522 B][0m
-[1;32m==> default: Get:14 http://archive.ubuntu.com trusty-updates/main amd64 Packages [918 kB][0m
-[1;32m==> default: Get:15 http://archive.ubuntu.com trusty-updates/restricted amd64 Packages [16.4 kB][0m
-[1;32m==> default: Get:16 http://archive.ubuntu.com trusty-updates/universe amd64 Packages [388 kB][0m
-[1;32m==> default: Get:17 http://archive.ubuntu.com trusty-updates/multiverse amd64 Packages [14.0 kB][0m
-[1;32m==> default: Hit http://archive.ubuntu.com trusty-updates/main Translation-en[0m
-[1;32m==> default: Hit http://archive.ubuntu.com trusty-updates/multiverse Translation-en[0m
-[1;32m==> default: Hit http://archive.ubuntu.com trusty-updates/restricted Translation-en[0m
-[1;32m==> default: Hit http://archive.ubuntu.com trusty-updates/universe Translation-en[0m
-[1;32m==> default: Hit http://archive.ubuntu.com trusty-backports/main Sources[0m
-[1;32m==> default: Hit http://archive.ubuntu.com trusty-backports/restricted Sources[0m
-[1;32m==> default: Hit http://archive.ubuntu.com trusty-backports/universe Sources[0m
-[1;32m==> default: Hit http://archive.ubuntu.com trusty-backports/multiverse Sources[0m
-[1;32m==> default: Hit http://archive.ubuntu.com trusty-backports/main amd64 Packages[0m
-[1;32m==> default: Hit http://archive.ubuntu.com trusty-backports/restricted amd64 Packages[0m
-[1;32m==> default: Hit http://archive.ubuntu.com trusty-backports/universe amd64 Packages[0m
-[1;32m==> default: Hit http://archive.ubuntu.com trusty-backports/multiverse amd64 Packages[0m
-[1;32m==> default: Hit http://archive.ubuntu.com trusty-backports/main Translation-en[0m
-[1;32m==> default: Hit http://archive.ubuntu.com trusty-backports/multiverse Translation-en[0m
-[1;32m==> default: Hit http://archive.ubuntu.com trusty-backports/restricted Translation-en[0m
-[1;32m==> default: Hit http://archive.ubuntu.com trusty-backports/universe Translation-en[0m
-[1;32m==> default: Hit http://archive.ubuntu.com trusty Release[0m
-[1;32m==> default: Hit http://archive.ubuntu.com trusty/main Sources[0m
-[1;32m==> default: Hit http://archive.ubuntu.com trusty/restricted Sources[0m
-[1;32m==> default: Hit http://archive.ubuntu.com trusty/universe Sources[0m
-[1;32m==> default: Hit http://archive.ubuntu.com trusty/multiverse Sources[0m
-[1;32m==> default: Hit http://archive.ubuntu.com trusty/main amd64 Packages[0m
-[1;32m==> default: Hit http://archive.ubuntu.com trusty/restricted amd64 Packages[0m
-[1;32m==> default: Hit http://archive.ubuntu.com trusty/universe amd64 Packages[0m
-[1;32m==> default: Hit http://archive.ubuntu.com trusty/multiverse amd64 Packages[0m
-[1;32m==> default: Hit http://archive.ubuntu.com trusty/main Translation-en[0m
-[1;32m==> default: Hit http://archive.ubuntu.com trusty/multiverse Translation-en[0m
-[1;32m==> default: Hit http://archive.ubuntu.com trusty/restricted Translation-en[0m
-[1;32m==> default: Hit http://archive.ubuntu.com trusty/universe Translation-en[0m
-[1;32m==> default: Ign http://archive.ubuntu.com trusty/main Translation-en_US[0m
-[1;32m==> default: Ign http://archive.ubuntu.com trusty/multiverse Translation-en_US[0m
-[1;32m==> default: Ign http://archive.ubuntu.com trusty/restricted Translation-en_US[0m
-[1;32m==> default: Ign http://archive.ubuntu.com trusty/universe Translation-en_US[0m
-[1;32m==> default: Fetched 2,918 kB in 9s (321 kB/s)
-==> default: Reading package lists...[0m
+[1;32m==> default: 0 upgraded, 0 newly installed, 0 to remove and 97 not upgraded.[0m
 [1;32m==> default: Reading package lists...[0m
 [1;32m==> default: Building dependency tree...[0m
 [1;32m==> default: Reading state information...[0m
 [1;32m==> default: The following extra packages will be installed:[0m
 [1;32m==> default:   ca-certificates-java java-common libnspr4 libnss3 libnss3-nssdb libpcsclite1[0m
 [1;32m==> default: Suggested packages:[0m
-[1;32m==> default:   default-jre equivs pcscd openjdk-8-jre-jamvm fonts-dejavu-extra[0m
+[1;32m==> default:   default-jre equivs pcscd openjdk-8-jre-jamvm libnss-mdns fonts-dejavu-extra[0m
 [1;32m==> default:   fonts-ipafont-gothic fonts-ipafont-mincho ttf-wqy-microhei ttf-wqy-zenhei[0m
 [1;32m==> default:   ttf-indic-fonts-core ttf-telugu-fonts ttf-oriya-fonts ttf-kannada-fonts[0m
 [1;32m==> default:   ttf-bengali-fonts[0m
 [1;32m==> default: The following NEW packages will be installed:[0m
 [1;32m==> default:   ca-certificates-java java-common libnspr4 libnss3 libnss3-nssdb libpcsclite1[0m
 [1;32m==> default:   openjdk-8-jre-headless[0m
-[1;32m==> default: 0 upgraded, 7 newly installed, 0 to remove and 48 not upgraded.
+[1;32m==> default: 0 upgraded, 7 newly installed, 0 to remove and 97 not upgraded.
 ==> default: Need to get 28.1 MB of archives.
 ==> default: After this operation, 103 MB of additional disk space will be used.
 ==> default: Get:1 http://archive.ubuntu.com/ubuntu/ trusty-updates/main libnspr4 amd64 2:4.12-0ubuntu0.14.04.1 [110 kB][0m
@@ -341,9 +222,9 @@
 [1;32m==> default: Get:6 http://archive.ubuntu.com/ubuntu/ trusty/main ca-certificates-java all 20130815ubuntu1 [13.4 kB][0m
 [1;32m==> default: Get:7 http://archive.ubuntu.com/ubuntu/ trusty/main java-common all 0.51 [130 kB][0m
 [1;31m==> default: dpkg-preconfigure: unable to re-open stdin: No such file or directory[0m
-[1;32m==> default: Fetched 28.1 MB in 10s (2,653 kB/s)[0m
+[1;32m==> default: Fetched 28.1 MB in 13s (2,042 kB/s)[0m
 [1;32m==> default: Selecting previously unselected package libnspr4:amd64.[0m
-[1;32m==> default: (Reading database ... 136695 files and directories currently installed.)[0m
+[1;32m==> default: (Reading database ... 64636 files and directories currently installed.)[0m
 [1;32m==> default: Preparing to unpack .../libnspr4_2%3a4.12-0ubuntu0.14.04.1_amd64.deb ...[0m
 [1;32m==> default: Unpacking libnspr4:amd64 (2:4.12-0ubuntu0.14.04.1) ...[0m
 [1;32m==> default: Selecting previously unselected package libnss3-nssdb.[0m
@@ -410,19 +291,141 @@
 [1;32m==> default: update-alternatives: [0m
 [1;32m==> default: using /usr/lib/jvm/java-8-openjdk-amd64/jre/lib/jexec to provide /usr/bin/jexec (jexec) in auto mode[0m
 [1;32m==> default: Processing triggers for libc-bin (2.19-0ubuntu6.9) ...[0m
+[1;31m==> default:  [WARNING]: provided hosts list is empty, only localhost is available[0m
+[1;32m==> default: 
+==> default: PLAY [localhost] ***************************************************************[0m
+[1;32m==> default: 
+==> default: TASK [setup] *******************************************************************[0m
+[1;32m==> default: ok: [localhost][0m
+[1;32m==> default: 
+==> default: TASK [Install ROS Indigo Desktop Full] *****************************************[0m
+[1;32m==> default: changed: [localhost][0m
+[1;32m==> default: 
+==> default: TASK [Install Rosinstall] ******************************************************[0m
+[1;32m==> default: changed: [localhost][0m
+[1;32m==> default: 
+==> default: TASK [Install Ros-Indigo-Turtlebot] ********************************************[0m
+[1;32m==> default: changed: [localhost][0m
+[1;32m==> default: 
+==> default: TASK [Install Turtlebot apps] **************************************************[0m
+[1;32m==> default: changed: [localhost][0m
+[1;32m==> default: 
+==> default: TASK [Install Turtlebot interactions] ******************************************[0m
+[1;32m==> default: changed: [localhost][0m
+[1;32m==> default: 
+==> default: TASK [Install turtlebot simulator] *********************************************[0m
+[1;32m==> default: changed: [localhost][0m
+[1;32m==> default: 
+==> default: TASK [Install Kobuki] **********************************************************[0m
+[1;32m==> default: ok: [localhost][0m
+[1;32m==> default: 
+==> default: TASK [Install Rocon] ***********************************************************[0m
+[1;32m==> default: changed: [localhost][0m
+[1;32m==> default: 
+==> default: TASK [Install Rocon-Qt] ********************************************************[0m
+[1;32m==> default: ok: [localhost][0m
+[1;32m==> default: 
+==> default: TASK [Install Ros-Ar-Track] ****************************************************[0m
+[1;32m==> default: ok: [localhost][0m
+[1;32m==> default: 
+==> default: TASK [Python Ply] **************************************************************[0m
+[1;32m==> default: changed: [localhost][0m
+[1;32m==> default: 
+==> default: TASK [Python Pip] **************************************************************[0m
+[1;32m==> default: changed: [localhost][0m
+[1;32m==> default: 
+==> default: TASK [Install YAML processor] **************************************************[0m
+[1;32m==> default: changed: [localhost][0m
+[1;32m==> default: 
+==> default: PLAY RECAP *********************************************************************[0m
+[1;32m==> default: localhost                  : ok=14   changed=10   unreachable=0    failed=0   [0m
+[1;32m==> default: Wrote /etc/ros/rosdep/sources.list.d/20-default.list
+==> default: Recommended: please run
+==> default: 
+==> default: 	rosdep update[0m
+[1;32m==> default: Recursively changing ownership of ros home directory '/home/vagrant/.ros' to 'vagrant:vagrant' (current user)...
+==> default: Done.[0m
+[1;31m==> default: ERROR: error loading sources list:
+==> default: 	[Errno 104] Connection reset by peer[0m
+[1;32m==> default: reading in sources list data from /etc/ros/rosdep/sources.list.d[0m
+[1;32m==> default: Ign file: ./ InRelease[0m
+[1;32m==> default: Ign file: ./ Release.gpg[0m
+[1;32m==> default: Ign file: ./ Release[0m
+[1;32m==> default: Ign file: ./ Translation-en_US[0m
+[1;32m==> default: Ign file: ./ Translation-en[0m
+[1;32m==> default: Get:1 http://security.ubuntu.com trusty-security InRelease [65.9 kB][0m
+[1;32m==> default: Get:2 http://security.ubuntu.com trusty-security/main Sources [123 kB][0m
+[1;32m==> default: Get:3 http://security.ubuntu.com trusty-security/universe Sources [46.5 kB][0m
+[1;32m==> default: Get:4 http://security.ubuntu.com trusty-security/main amd64 Packages [570 kB][0m
+[1;32m==> default: Ign http://archive.ubuntu.com trusty InRelease[0m
+[1;32m==> default: Hit http://ppa.launchpad.net trusty InRelease[0m
+[1;32m==> default: Get:5 http://archive.ubuntu.com trusty-updates InRelease [65.9 kB][0m
+[1;32m==> default: Hit http://ppa.launchpad.net trusty InRelease[0m
+[1;32m==> default: Get:6 http://security.ubuntu.com trusty-security/universe amd64 Packages [146 kB][0m
+[1;32m==> default: Hit http://security.ubuntu.com trusty-security/main Translation-en[0m
+[1;32m==> default: Hit http://ppa.launchpad.net trusty/main amd64 Packages[0m
+[1;32m==> default: Hit http://security.ubuntu.com trusty-security/universe Translation-en[0m
+[1;32m==> default: Hit http://ppa.launchpad.net trusty/main Translation-en[0m
+[1;32m==> default: Hit http://archive.ubuntu.com trusty-backports InRelease[0m
+[1;32m==> default: Hit http://ppa.launchpad.net trusty/main amd64 Packages[0m
+[1;32m==> default: Hit http://archive.ubuntu.com trusty Release.gpg[0m
+[1;32m==> default: Hit http://ppa.launchpad.net trusty/main Translation-en[0m
+[1;32m==> default: Get:7 http://archive.ubuntu.com trusty-updates/main Sources [388 kB][0m
+[1;32m==> default: Get:8 http://archive.ubuntu.com trusty-updates/restricted Sources [5,888 B][0m
+[1;32m==> default: Get:9 http://archive.ubuntu.com trusty-updates/universe Sources [170 kB][0m
+[1;32m==> default: Get:10 http://archive.ubuntu.com trusty-updates/multiverse Sources [7,523 B][0m
+[1;32m==> default: Get:11 http://archive.ubuntu.com trusty-updates/main amd64 Packages [935 kB][0m
+[1;32m==> default: Get:12 http://archive.ubuntu.com trusty-updates/restricted amd64 Packages [16.4 kB][0m
+[1;32m==> default: Get:13 http://archive.ubuntu.com trusty-updates/universe amd64 Packages [390 kB][0m
+[1;32m==> default: Get:14 http://archive.ubuntu.com trusty-updates/multiverse amd64 Packages [14.0 kB][0m
+[1;32m==> default: Hit http://archive.ubuntu.com trusty-updates/main Translation-en[0m
+[1;32m==> default: Hit http://archive.ubuntu.com trusty-updates/multiverse Translation-en[0m
+[1;32m==> default: Hit http://archive.ubuntu.com trusty-updates/restricted Translation-en[0m
+[1;32m==> default: Hit http://archive.ubuntu.com trusty-updates/universe Translation-en[0m
+[1;32m==> default: Hit http://archive.ubuntu.com trusty-backports/main Sources[0m
+[1;32m==> default: Hit http://archive.ubuntu.com trusty-backports/restricted Sources[0m
+[1;32m==> default: Hit http://archive.ubuntu.com trusty-backports/universe Sources[0m
+[1;32m==> default: Hit http://archive.ubuntu.com trusty-backports/multiverse Sources[0m
+[1;32m==> default: Hit http://archive.ubuntu.com trusty-backports/main amd64 Packages[0m
+[1;32m==> default: Hit http://archive.ubuntu.com trusty-backports/restricted amd64 Packages[0m
+[1;32m==> default: Hit http://archive.ubuntu.com trusty-backports/universe amd64 Packages[0m
+[1;32m==> default: Hit http://archive.ubuntu.com trusty-backports/multiverse amd64 Packages[0m
+[1;32m==> default: Hit http://archive.ubuntu.com trusty-backports/main Translation-en[0m
+[1;32m==> default: Hit http://archive.ubuntu.com trusty-backports/multiverse Translation-en[0m
+[1;32m==> default: Hit http://archive.ubuntu.com trusty-backports/restricted Translation-en[0m
+[1;32m==> default: Hit http://archive.ubuntu.com trusty-backports/universe Translation-en[0m
+[1;32m==> default: Hit http://archive.ubuntu.com trusty Release[0m
+[1;32m==> default: Hit http://archive.ubuntu.com trusty/main Sources[0m
+[1;32m==> default: Hit http://archive.ubuntu.com trusty/restricted Sources[0m
+[1;32m==> default: Hit http://archive.ubuntu.com trusty/universe Sources[0m
+[1;32m==> default: Hit http://archive.ubuntu.com trusty/multiverse Sources[0m
+[1;32m==> default: Hit http://archive.ubuntu.com trusty/main amd64 Packages[0m
+[1;32m==> default: Hit http://archive.ubuntu.com trusty/restricted amd64 Packages[0m
+[1;32m==> default: Hit http://archive.ubuntu.com trusty/universe amd64 Packages[0m
+[1;32m==> default: Hit http://archive.ubuntu.com trusty/multiverse amd64 Packages[0m
+[1;32m==> default: Hit http://archive.ubuntu.com trusty/main Translation-en[0m
+[1;32m==> default: Hit http://archive.ubuntu.com trusty/multiverse Translation-en[0m
+[1;32m==> default: Hit http://archive.ubuntu.com trusty/restricted Translation-en[0m
+[1;32m==> default: Hit http://archive.ubuntu.com trusty/universe Translation-en[0m
+[1;32m==> default: Ign http://archive.ubuntu.com trusty/main Translation-en_US[0m
+[1;32m==> default: Ign http://archive.ubuntu.com trusty/multiverse Translation-en_US[0m
+[1;32m==> default: Ign http://archive.ubuntu.com trusty/restricted Translation-en_US[0m
+[1;32m==> default: Ign http://archive.ubuntu.com trusty/universe Translation-en_US[0m
+[1;32m==> default: Fetched 2,944 kB in 9s (323 kB/s)
+==> default: Reading package lists...[0m
 [1;32m==> default: Reading package lists...[0m
 [1;32m==> default: Building dependency tree...[0m
 [1;32m==> default: Reading state information...[0m
 [1;32m==> default: The following NEW packages will be installed:[0m
 [1;32m==> default:   xserver-xorg-video-dummy[0m
-[1;32m==> default: 0 upgraded, 1 newly installed, 0 to remove and 48 not upgraded.
+[1;32m==> default: 0 upgraded, 1 newly installed, 0 to remove and 76 not upgraded.
 ==> default: Need to get 8,554 B of archives.
 ==> default: After this operation, 68.6 kB of additional disk space will be used.
 ==> default: Get:1 http://archive.ubuntu.com/ubuntu/ trusty/main xserver-xorg-video-dummy amd64 1:0.3.7-1build1 [8,554 B][0m
 [1;31m==> default: dpkg-preconfigure: unable to re-open stdin: No such file or directory[0m
-[1;32m==> default: Fetched 8,554 B in 0s (50.1 kB/s)[0m
+[1;32m==> default: Fetched 8,554 B in 0s (44.9 kB/s)[0m
 [1;32m==> default: Selecting previously unselected package xserver-xorg-video-dummy.[0m
-[1;32m==> default: (Reading database ... 137008 files and directories currently installed.)[0m
+[1;32m==> default: (Reading database ... 137540 files and directories currently installed.)[0m
 [1;32m==> default: Preparing to unpack .../xserver-xorg-video-dummy_1%3a0.3.7-1build1_amd64.deb ...[0m
 [1;32m==> default: Unpacking xserver-xorg-video-dummy (1:0.3.7-1build1) ...[0m
 [1;32m==> default: Setting up xserver-xorg-video-dummy (1:0.3.7-1build1) ...[0m
@@ -438,7 +441,7 @@
 [1;32m==> default: The following NEW packages will be installed:[0m
 [1;32m==> default:   python-blinker python-flask python-itsdangerous python-pyinotify[0m
 [1;32m==> default:   python-werkzeug[0m
-[1;32m==> default: 0 upgraded, 5 newly installed, 0 to remove and 48 not upgraded.
+[1;32m==> default: 0 upgraded, 5 newly installed, 0 to remove and 76 not upgraded.
 ==> default: Need to get 354 kB of archives.
 ==> default: After this operation, 1,897 kB of additional disk space will be used.
 ==> default: Get:1 http://archive.ubuntu.com/ubuntu/ trusty/main python-blinker all 1.3.dfsg1-1ubuntu2 [29.8 kB][0m
@@ -447,9 +450,9 @@
 [1;32m==> default: Get:4 http://archive.ubuntu.com/ubuntu/ trusty/main python-flask all 0.10.1-2build1 [51.7 kB][0m
 [1;32m==> default: Get:5 http://archive.ubuntu.com/ubuntu/ trusty/main python-pyinotify all 0.9.4-1build1 [24.5 kB][0m
 [1;31m==> default: dpkg-preconfigure: unable to re-open stdin: No such file or directory[0m
-[1;32m==> default: Fetched 354 kB in 0s (373 kB/s)[0m
+[1;32m==> default: Fetched 354 kB in 0s (419 kB/s)[0m
 [1;32m==> default: Selecting previously unselected package python-blinker.[0m
-[1;32m==> default: (Reading database ... 137014 files and directories currently installed.)[0m
+[1;32m==> default: (Reading database ... 137546 files and directories currently installed.)[0m
 [1;32m==> default: Preparing to unpack .../python-blinker_1.3.dfsg1-1ubuntu2_all.deb ...[0m
 [1;32m==> default: Unpacking python-blinker (1.3.dfsg1-1ubuntu2) ...[0m
 [1;32m==> default: Selecting previously unselected package python-werkzeug.[0m
@@ -474,44 +477,43 @@
 [1;32m==> default: Reading state information...[0m
 [1;32m==> default: The following NEW packages will be installed:[0m
 [1;32m==> default:   python-enum[0m
-[1;32m==> default: 0 upgraded, 1 newly installed, 0 to remove and 48 not upgraded.
+[1;32m==> default: 0 upgraded, 1 newly installed, 0 to remove and 76 not upgraded.
 ==> default: Need to get 9,328 B of archives.
 ==> default: After this operation, 73.7 kB of additional disk space will be used.
 ==> default: Get:1 http://archive.ubuntu.com/ubuntu/ trusty/universe python-enum all 0.4.4-2 [9,328 B][0m
 [1;31m==> default: dpkg-preconfigure: unable to re-open stdin: No such file or directory[0m
-[1;32m==> default: Fetched 9,328 B in 0s (48.0 kB/s)[0m
+[1;32m==> default: Fetched 9,328 B in 0s (50.2 kB/s)[0m
 [1;32m==> default: Selecting previously unselected package python-enum.[0m
-[1;32m==> default: (Reading database ... 137221 files and directories currently installed.)[0m
+[1;32m==> default: (Reading database ... 137753 files and directories currently installed.)[0m
 [1;32m==> default: Preparing to unpack .../python-enum_0.4.4-2_all.deb ...[0m
 [1;32m==> default: Unpacking python-enum (0.4.4-2) ...[0m
 [1;32m==> default: Setting up python-enum (0.4.4-2) ...[0m
 [1;32m==> default: Reading package lists...[0m
 [1;32m==> default: Building dependency tree...[0m
-[1;32m==> default: 
-==> default: Reading state information...[0m
-[1;32m==> default: The following extra packages will be installed:
-==> default:   emacs24 emacs24-bin-common emacs24-common emacs24-common-non-dfsg
-==> default:   emacsen-common gconf-service gconf-service-backend gconf2-common ghostscript
-==> default:   gsfonts imagemagick-common libcupsfilters1 libcupsimage2 libfftw3-double3
-==> default:   libgconf-2-4 libgif4 libgs9 libgs9-common libijs-0.35 libjbig2dec0
-==> default:   liblqr-1-0 libm17n-0 libmagickcore5 libmagickwand5 libotf0 librsvg2-2
-==> default:   librsvg2-common m17n-contrib m17n-db poppler-data[0m
-[1;32m==> default: Suggested packages:
-==> default:   emacs24-el ghostscript-x hpijs libfftw3-bin libfftw3-dev fonts-droid
-==> default:   m17n-docs libmagickcore5-extra librsvg2-bin poppler-utils
-==> default:   fonts-japanese-mincho fonts-ipafont-mincho fonts-japanese-gothic
-==> default:   fonts-ipafont-gothic fonts-arphic-ukai fonts-arphic-uming fonts-unfonts-core[0m
-[1;32m==> default: The following NEW packages will be installed:
-==> default:   emacs emacs24 emacs24-bin-common emacs24-common emacs24-common-non-dfsg
-==> default:   emacsen-common gconf-service gconf-service-backend gconf2-common ghostscript
-==> default:   gsfonts imagemagick-common libcupsfilters1 libcupsimage2 libfftw3-double3
-==> default:   libgconf-2-4 libgif4 libgs9 libgs9-common libijs-0.35 libjbig2dec0
-==> default:   liblqr-1-0 libm17n-0 libmagickcore5 libmagickwand5 libotf0 librsvg2-2
-==> default:   librsvg2-common m17n-contrib m17n-db poppler-data[0m
-[1;32m==> default: 0 upgraded, 31 newly installed, 0 to remove and 48 not upgraded.
+[1;32m==> default: Reading state information...[0m
+[1;32m==> default: The following extra packages will be installed:[0m
+[1;32m==> default:   emacs24 emacs24-bin-common emacs24-common emacs24-common-non-dfsg[0m
+[1;32m==> default:   emacsen-common gconf-service gconf-service-backend gconf2-common ghostscript[0m
+[1;32m==> default:   gsfonts imagemagick-common libcupsfilters1 libcupsimage2 libfftw3-double3[0m
+[1;32m==> default:   libgconf-2-4 libgif4 libgs9 libgs9-common libijs-0.35 libjbig2dec0[0m
+[1;32m==> default:   liblqr-1-0 libm17n-0 libmagickcore5 libmagickwand5 libotf0 librsvg2-2[0m
+[1;32m==> default:   librsvg2-common m17n-contrib m17n-db poppler-data[0m
+[1;32m==> default: Suggested packages:[0m
+[1;32m==> default:   emacs24-el ghostscript-x hpijs libfftw3-bin libfftw3-dev fonts-droid[0m
+[1;32m==> default:   m17n-docs libmagickcore5-extra librsvg2-bin poppler-utils[0m
+[1;32m==> default:   fonts-japanese-mincho fonts-ipafont-mincho fonts-japanese-gothic[0m
+[1;32m==> default:   fonts-ipafont-gothic fonts-arphic-ukai fonts-arphic-uming fonts-unfonts-core[0m
+[1;32m==> default: The following NEW packages will be installed:[0m
+[1;32m==> default:   emacs emacs24 emacs24-bin-common emacs24-common emacs24-common-non-dfsg[0m
+[1;32m==> default:   emacsen-common gconf-service gconf-service-backend gconf2-common ghostscript[0m
+[1;32m==> default:   gsfonts imagemagick-common libcupsfilters1 libcupsimage2 libfftw3-double3[0m
+[1;32m==> default:   libgconf-2-4 libgif4 libgs9 libgs9-common libijs-0.35 libjbig2dec0[0m
+[1;32m==> default:   liblqr-1-0 libm17n-0 libmagickcore5 libmagickwand5 libotf0 librsvg2-2[0m
+[1;32m==> default:   librsvg2-common m17n-contrib m17n-db poppler-data[0m
+[1;32m==> default: 0 upgraded, 31 newly installed, 0 to remove and 76 not upgraded.
 ==> default: Need to get 35.9 MB of archives.
 ==> default: After this operation, 143 MB of additional disk space will be used.
-==> default: Get:1 http://archive.ubuntu.com/ubuntu/ trusty-updates/main imagemagick-common all 8:6.7.7.10-6ubuntu3.2 [37.8 kB][0m
+==> default: Get:1 http://archive.ubuntu.com/ubuntu/ trusty-updates/main imagemagick-common all 8:6.7.7.10-6ubuntu3.3 [37.8 kB][0m
 [1;32m==> default: Get:2 http://archive.ubuntu.com/ubuntu/ trusty-updates/main libcupsfilters1 amd64 1.0.52-0ubuntu1.7 [73.8 kB][0m
 [1;32m==> default: Get:3 http://archive.ubuntu.com/ubuntu/ trusty-updates/main libcupsimage2 amd64 1.7.2-0ubuntu1.7 [15.4 kB][0m
 [1;32m==> default: Get:4 http://archive.ubuntu.com/ubuntu/ trusty/main libfftw3-double3 amd64 3.3.3-7ubuntu3 [702 kB][0m
@@ -519,8 +521,8 @@
 [1;32m==> default: Get:6 http://archive.ubuntu.com/ubuntu/ trusty/main libgconf-2-4 amd64 3.2.6-0ubuntu2 [80.8 kB][0m
 [1;32m==> default: Get:7 http://archive.ubuntu.com/ubuntu/ trusty/main libgif4 amd64 4.1.6-11 [28.6 kB][0m
 [1;32m==> default: Get:8 http://archive.ubuntu.com/ubuntu/ trusty/main liblqr-1-0 amd64 0.4.1-2ubuntu1 [23.4 kB][0m
-[1;32m==> default: Get:9 http://archive.ubuntu.com/ubuntu/ trusty-updates/main libmagickcore5 amd64 8:6.7.7.10-6ubuntu3.2 [1,474 kB][0m
-[1;32m==> default: Get:10 http://archive.ubuntu.com/ubuntu/ trusty-updates/main libmagickwand5 amd64 8:6.7.7.10-6ubuntu3.2 [266 kB][0m
+[1;32m==> default: Get:9 http://archive.ubuntu.com/ubuntu/ trusty-updates/main libmagickcore5 amd64 8:6.7.7.10-6ubuntu3.3 [1,474 kB][0m
+[1;32m==> default: Get:10 http://archive.ubuntu.com/ubuntu/ trusty-updates/main libmagickwand5 amd64 8:6.7.7.10-6ubuntu3.3 [265 kB][0m
 [1;32m==> default: Get:11 http://archive.ubuntu.com/ubuntu/ trusty/main libotf0 amd64 0.9.13-1ubuntu1 [44.2 kB][0m
 [1;32m==> default: Get:12 http://archive.ubuntu.com/ubuntu/ trusty/main librsvg2-2 amd64 2.40.2-1 [88.3 kB][0m
 [1;32m==> default: Get:13 http://archive.ubuntu.com/ubuntu/ trusty/main poppler-data all 0.4.6-4 [1,479 kB][0m
@@ -537,17 +539,17 @@
 [1;32m==> default: Get:24 http://archive.ubuntu.com/ubuntu/ trusty/main emacs all 45.0ubuntu1 [1,624 B][0m
 [1;32m==> default: Get:25 http://archive.ubuntu.com/ubuntu/ trusty/main libijs-0.35 amd64 0.35-8build1 [16.8 kB][0m
 [1;32m==> default: Get:26 http://archive.ubuntu.com/ubuntu/ trusty/main libjbig2dec0 amd64 0.11+20120125-1ubuntu1 [48.6 kB][0m
-[1;32m==> default: Get:27 http://archive.ubuntu.com/ubuntu/ trusty-updates/main libgs9-common all 9.10~dfsg-0ubuntu10.4 [2,066 kB][0m
-[1;32m==> default: Get:28 http://archive.ubuntu.com/ubuntu/ trusty-updates/main libgs9 amd64 9.10~dfsg-0ubuntu10.4 [1,943 kB][0m
+[1;32m==> default: Get:27 http://archive.ubuntu.com/ubuntu/ trusty-updates/main libgs9-common all 9.10~dfsg-0ubuntu10.6 [2,067 kB][0m
+[1;32m==> default: Get:28 http://archive.ubuntu.com/ubuntu/ trusty-updates/main libgs9 amd64 9.10~dfsg-0ubuntu10.6 [1,940 kB][0m
 [1;32m==> default: Get:29 http://archive.ubuntu.com/ubuntu/ trusty/main gsfonts all 1:8.11+urwcyr1.0.7~pre44-4.2ubuntu1 [3,374 kB][0m
-[1;32m==> default: Get:30 http://archive.ubuntu.com/ubuntu/ trusty-updates/main ghostscript amd64 9.10~dfsg-0ubuntu10.4 [40.8 kB][0m
+[1;32m==> default: Get:30 http://archive.ubuntu.com/ubuntu/ trusty-updates/main ghostscript amd64 9.10~dfsg-0ubuntu10.6 [40.8 kB][0m
 [1;32m==> default: Get:31 http://archive.ubuntu.com/ubuntu/ trusty/main librsvg2-common amd64 2.40.2-1 [4,990 B][0m
 [1;31m==> default: dpkg-preconfigure: unable to re-open stdin: No such file or directory[0m
-[1;32m==> default: Fetched 35.9 MB in 48s (747 kB/s)[0m
+[1;32m==> default: Fetched 35.9 MB in 12s (2,968 kB/s)[0m
 [1;32m==> default: Selecting previously unselected package imagemagick-common.[0m
-[1;32m==> default: (Reading database ... 137238 files and directories currently installed.)[0m
-[1;32m==> default: Preparing to unpack .../imagemagick-common_8%3a6.7.7.10-6ubuntu3.2_all.deb ...[0m
-[1;32m==> default: Unpacking imagemagick-common (8:6.7.7.10-6ubuntu3.2) ...[0m
+[1;32m==> default: (Reading database ... 137770 files and directories currently installed.)[0m
+[1;32m==> default: Preparing to unpack .../imagemagick-common_8%3a6.7.7.10-6ubuntu3.3_all.deb ...[0m
+[1;32m==> default: Unpacking imagemagick-common (8:6.7.7.10-6ubuntu3.3) ...[0m
 [1;32m==> default: Selecting previously unselected package libcupsfilters1:amd64.[0m
 [1;32m==> default: Preparing to unpack .../libcupsfilters1_1.0.52-0ubuntu1.7_amd64.deb ...[0m
 [1;32m==> default: Unpacking libcupsfilters1:amd64 (1.0.52-0ubuntu1.7) ...[0m
@@ -570,11 +572,11 @@
 [1;32m==> default: Preparing to unpack .../liblqr-1-0_0.4.1-2ubuntu1_amd64.deb ...[0m
 [1;32m==> default: Unpacking liblqr-1-0:amd64 (0.4.1-2ubuntu1) ...[0m
 [1;32m==> default: Selecting previously unselected package libmagickcore5:amd64.[0m
-[1;32m==> default: Preparing to unpack .../libmagickcore5_8%3a6.7.7.10-6ubuntu3.2_amd64.deb ...[0m
-[1;32m==> default: Unpacking libmagickcore5:amd64 (8:6.7.7.10-6ubuntu3.2) ...[0m
+[1;32m==> default: Preparing to unpack .../libmagickcore5_8%3a6.7.7.10-6ubuntu3.3_amd64.deb ...[0m
+[1;32m==> default: Unpacking libmagickcore5:amd64 (8:6.7.7.10-6ubuntu3.3) ...[0m
 [1;32m==> default: Selecting previously unselected package libmagickwand5:amd64.[0m
-[1;32m==> default: Preparing to unpack .../libmagickwand5_8%3a6.7.7.10-6ubuntu3.2_amd64.deb ...[0m
-[1;32m==> default: Unpacking libmagickwand5:amd64 (8:6.7.7.10-6ubuntu3.2) ...[0m
+[1;32m==> default: Preparing to unpack .../libmagickwand5_8%3a6.7.7.10-6ubuntu3.3_amd64.deb ...[0m
+[1;32m==> default: Unpacking libmagickwand5:amd64 (8:6.7.7.10-6ubuntu3.3) ...[0m
 [1;32m==> default: Selecting previously unselected package libotf0:amd64.[0m
 [1;32m==> default: Preparing to unpack .../libotf0_0.9.13-1ubuntu1_amd64.deb ...[0m
 [1;32m==> default: Unpacking libotf0:amd64 (0.9.13-1ubuntu1) ...[0m
@@ -624,17 +626,17 @@
 [1;32m==> default: Preparing to unpack .../libjbig2dec0_0.11+20120125-1ubuntu1_amd64.deb ...[0m
 [1;32m==> default: Unpacking libjbig2dec0 (0.11+20120125-1ubuntu1) ...[0m
 [1;32m==> default: Selecting previously unselected package libgs9-common.[0m
-[1;32m==> default: Preparing to unpack .../libgs9-common_9.10~dfsg-0ubuntu10.4_all.deb ...[0m
-[1;32m==> default: Unpacking libgs9-common (9.10~dfsg-0ubuntu10.4) ...[0m
+[1;32m==> default: Preparing to unpack .../libgs9-common_9.10~dfsg-0ubuntu10.6_all.deb ...[0m
+[1;32m==> default: Unpacking libgs9-common (9.10~dfsg-0ubuntu10.6) ...[0m
 [1;32m==> default: Selecting previously unselected package libgs9.[0m
-[1;32m==> default: Preparing to unpack .../libgs9_9.10~dfsg-0ubuntu10.4_amd64.deb ...[0m
-[1;32m==> default: Unpacking libgs9 (9.10~dfsg-0ubuntu10.4) ...[0m
+[1;32m==> default: Preparing to unpack .../libgs9_9.10~dfsg-0ubuntu10.6_amd64.deb ...[0m
+[1;32m==> default: Unpacking libgs9 (9.10~dfsg-0ubuntu10.6) ...[0m
 [1;32m==> default: Selecting previously unselected package gsfonts.[0m
 [1;32m==> default: Preparing to unpack .../gsfonts_1%3a8.11+urwcyr1.0.7~pre44-4.2ubuntu1_all.deb ...[0m
 [1;32m==> default: Unpacking gsfonts (1:8.11+urwcyr1.0.7~pre44-4.2ubuntu1) ...[0m
 [1;32m==> default: Selecting previously unselected package ghostscript.[0m
-[1;32m==> default: Preparing to unpack .../ghostscript_9.10~dfsg-0ubuntu10.4_amd64.deb ...[0m
-[1;32m==> default: Unpacking ghostscript (9.10~dfsg-0ubuntu10.4) ...[0m
+[1;32m==> default: Preparing to unpack .../ghostscript_9.10~dfsg-0ubuntu10.6_amd64.deb ...[0m
+[1;32m==> default: Unpacking ghostscript (9.10~dfsg-0ubuntu10.6) ...[0m
 [1;32m==> default: Selecting previously unselected package librsvg2-common:amd64.[0m
 [1;32m==> default: Preparing to unpack .../librsvg2-common_2.40.2-1_amd64.deb ...[0m
 [1;32m==> default: Unpacking librsvg2-common:amd64 (2.40.2-1) ...[0m
@@ -644,17 +646,18 @@
 [1;32m==> default: Processing triggers for hicolor-icon-theme (0.13-1) ...[0m
 [1;32m==> default: Processing triggers for mime-support (3.54ubuntu1.1) ...[0m
 [1;32m==> default: Processing triggers for libgdk-pixbuf2.0-0:amd64 (2.30.7-0ubuntu1.6) ...[0m
-[1;32m==> default: Setting up imagemagick-common (8:6.7.7.10-6ubuntu3.2) ...[0m
+[1;32m==> default: Setting up imagemagick-common (8:6.7.7.10-6ubuntu3.3) ...[0m
 [1;32m==> default: Setting up libcupsfilters1:amd64 (1.0.52-0ubuntu1.7) ...[0m
 [1;32m==> default: Setting up libcupsimage2:amd64 (1.7.2-0ubuntu1.7) ...[0m
 [1;32m==> default: Setting up libfftw3-double3:amd64 (3.3.3-7ubuntu3) ...[0m
 [1;32m==> default: Setting up gconf2-common (3.2.6-0ubuntu2) ...[0m
-[1;31m==> default: Creating config file /etc/gconf/2/path with new version[0m
+[1;31m==> default: 
+==> default: Creating config file /etc/gconf/2/path with new version[0m
 [1;32m==> default: Setting up libgconf-2-4:amd64 (3.2.6-0ubuntu2) ...[0m
 [1;32m==> default: Setting up libgif4:amd64 (4.1.6-11) ...[0m
 [1;32m==> default: Setting up liblqr-1-0:amd64 (0.4.1-2ubuntu1) ...[0m
-[1;32m==> default: Setting up libmagickcore5:amd64 (8:6.7.7.10-6ubuntu3.2) ...[0m
-[1;32m==> default: Setting up libmagickwand5:amd64 (8:6.7.7.10-6ubuntu3.2) ...[0m
+[1;32m==> default: Setting up libmagickcore5:amd64 (8:6.7.7.10-6ubuntu3.3) ...[0m
+[1;32m==> default: Setting up libmagickwand5:amd64 (8:6.7.7.10-6ubuntu3.3) ...[0m
 [1;32m==> default: Setting up libotf0:amd64 (0.9.13-1ubuntu1) ...[0m
 [1;32m==> default: Setting up librsvg2-2:amd64 (2.40.2-1) ...[0m
 [1;32m==> default: Setting up poppler-data (0.4.6-4) ...[0m
@@ -664,22 +667,25 @@
 [1;32m==> default: Setting up emacs24-bin-common (24.3+1-2ubuntu1) ...[0m
 [1;32m==> default: update-alternatives: [0m
 [1;32m==> default: using /usr/bin/ctags.emacs24 to provide /usr/bin/ctags (ctags) in auto mode[0m
-[1;32m==> default: update-alternatives: using /usr/bin/ebrowse.emacs24 to provide /usr/bin/ebrowse (ebrowse) in auto mode[0m
-[1;32m==> default: update-alternatives: using /usr/bin/emacsclient.emacs24 to provide /usr/bin/emacsclient (emacsclient) in auto mode[0m
+[1;32m==> default: update-alternatives: [0m
+[1;32m==> default: using /usr/bin/ebrowse.emacs24 to provide /usr/bin/ebrowse (ebrowse) in auto mode[0m
+[1;32m==> default: update-alternatives: [0m
+[1;32m==> default: using /usr/bin/emacsclient.emacs24 to provide /usr/bin/emacsclient (emacsclient) in auto mode[0m
 [1;32m==> default: update-alternatives: [0m
 [1;32m==> default: using /usr/bin/etags.emacs24 to provide /usr/bin/etags (etags) in auto mode[0m
-[1;32m==> default: update-alternatives: using /usr/bin/grep-changelog.emacs24 to provide /usr/bin/grep-changelog (grep-changelog) in auto mode[0m
+[1;32m==> default: update-alternatives: [0m
+[1;32m==> default: using /usr/bin/grep-changelog.emacs24 to provide /usr/bin/grep-changelog (grep-changelog) in auto mode[0m
 [1;32m==> default: Setting up m17n-db (1.6.4-1) ...[0m
 [1;32m==> default: Setting up m17n-contrib (1.1.14-1) ...[0m
 [1;32m==> default: Setting up libm17n-0 (1.6.4-2ubuntu1) ...[0m
 [1;32m==> default: Setting up libijs-0.35 (0.35-8build1) ...[0m
 [1;32m==> default: Setting up libjbig2dec0 (0.11+20120125-1ubuntu1) ...[0m
-[1;32m==> default: Setting up libgs9-common (9.10~dfsg-0ubuntu10.4) ...[0m
+[1;32m==> default: Setting up libgs9-common (9.10~dfsg-0ubuntu10.6) ...[0m
 [1;32m==> default: update-alternatives: [0m
 [1;32m==> default: using /usr/share/ghostscript/9.10 to provide /usr/share/ghostscript/current (ghostscript-current) in auto mode[0m
-[1;32m==> default: Setting up libgs9 (9.10~dfsg-0ubuntu10.4) ...[0m
+[1;32m==> default: Setting up libgs9 (9.10~dfsg-0ubuntu10.6) ...[0m
 [1;32m==> default: Setting up gsfonts (1:8.11+urwcyr1.0.7~pre44-4.2ubuntu1) ...[0m
-[1;32m==> default: Setting up ghostscript (9.10~dfsg-0ubuntu10.4) ...[0m
+[1;32m==> default: Setting up ghostscript (9.10~dfsg-0ubuntu10.6) ...[0m
 [1;32m==> default: Setting up librsvg2-common:amd64 (2.40.2-1) ...[0m
 [1;32m==> default: Setting up gconf-service (3.2.6-0ubuntu2) ...[0m
 [1;32m==> default: Setting up emacs24 (24.3+1-2ubuntu1) ...[0m
@@ -739,9 +745,10 @@
 [1;32m==> default: -- catkin 0.6.18[0m
 [1;32m==> default: -- BUILD_SHARED_LIBS is on[0m
 [1;32m==> default: -- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
-[1;32m==> default: -- ~~  traversing 7 packages in topological order:[0m
+[1;32m==> default: -- ~~  traversing 8 packages in topological order:[0m
 [1;32m==> default: -- ~~  - cp1_gazebo[0m
 [1;32m==> default: -- ~~  - ig_action_msgs[0m
+[1;32m==> default: -- ~~  - brass_logger[0m
 [1;32m==> default: -- ~~  - brasscomms[0m
 [1;32m==> default: -- ~~  - ig_action_client[0m
 [1;32m==> default: -- ~~  - messages[0m
@@ -750,12 +757,15 @@
 [1;32m==> default: -- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
 [1;32m==> default: -- +++ processing catkin package: 'cp1_gazebo'[0m
 [1;32m==> default: -- ==> add_subdirectory(cp1_gazebo)[0m
-[1;32m==> default: -- +++ processing catkin package: 'ig_action_msgs'[0m
-[1;32m==> default: -- ==> add_subdirectory(ig_action_server/ig_action_msgs)[0m
+[1;32m==> default: -- +++ processing catkin package: 'ig_action_msgs'
+==> default: -- ==> add_subdirectory(ig_action_server/ig_action_msgs)[0m
 [1;32m==> default: -- Using these message generators: gencpp;genlisp;genpy[0m
 [1;32m==> default: -- Generating .msg files for action ig_action_msgs/InstructionGraph /home/vagrant/catkin_ws/src/ig_action_server/ig_action_msgs/action/InstructionGraph.action[0m
 [1;32m==> default: Generating for action InstructionGraph[0m
 [1;32m==> default: -- ig_action_msgs: 7 messages, 0 services[0m
+[1;32m==> default: -- +++ processing catkin package: 'brass_logger'[0m
+[1;32m==> default: -- ==> add_subdirectory(brass_logger)[0m
+[1;32m==> default: -- Using these message generators: gencpp;genlisp;genpy[0m
 [1;32m==> default: -- +++ processing catkin package: 'brasscomms'[0m
 [1;32m==> default: -- ==> add_subdirectory(brasscomms)[0m
 [1;32m==> default: -- +++ processing catkin package: 'ig_action_client'[0m
@@ -773,71 +783,70 @@
 [1;32m==> default: -- Configuring done[0m
 [1;32m==> default: -- Generating done[0m
 [1;32m==> default: -- Build files have been written to: /home/vagrant/catkin_ws/build[0m
-[1;32m==> default: Scanning dependencies of target _ig_action_msgs_generate_messages_check_deps_InstructionGraphAction
-==> default: Scanning dependencies of target _ig_action_msgs_generate_messages_check_deps_InstructionGraphResult[0m
+[1;32m==> default: Scanning dependencies of target _ig_action_msgs_generate_messages_check_deps_InstructionGraphFeedback
+==> default: Scanning dependencies of target _ig_action_msgs_generate_messages_check_deps_InstructionGraphActionGoal[0m
 [1;32m==> default: [  0%] [0m
-[1;32m==> default: Built target _ig_action_msgs_generate_messages_check_deps_InstructionGraphResult[0m
 [1;32m==> default: [  0%] [0m
-[1;32m==> default: Built target _ig_action_msgs_generate_messages_check_deps_InstructionGraphAction[0m
+[1;32m==> default: Built target _ig_action_msgs_generate_messages_check_deps_InstructionGraphFeedback
+==> default: Built target _ig_action_msgs_generate_messages_check_deps_InstructionGraphActionGoal[0m
 [1;32m==> default: Scanning dependencies of target actionlib_msgs_generate_messages_py[0m
-[1;32m==> default: Scanning dependencies of target _ig_action_msgs_generate_messages_check_deps_InstructionGraphActionResult[0m
-[1;32m==> default: [  0%] [0m
-[1;32m==> default: Built target actionlib_msgs_generate_messages_py[0m
-[1;32m==> default: Scanning dependencies of target _ig_action_msgs_generate_messages_check_deps_InstructionGraphActionFeedback[0m
-[1;32m==> default: [  0%] [0m
-[1;32m==> default: Built target _ig_action_msgs_generate_messages_check_deps_InstructionGraphActionResult[0m
-[1;32m==> default: Scanning dependencies of target _ig_action_msgs_generate_messages_check_deps_InstructionGraphFeedback[0m
-[1;32m==> default: [  0%] [0m
-[1;32m==> default: Built target _ig_action_msgs_generate_messages_check_deps_InstructionGraphActionFeedback[0m
-[1;32m==> default: Scanning dependencies of target std_msgs_generate_messages_py[0m
-[1;32m==> default: [  0%] [0m
-[1;32m==> default: Built target std_msgs_generate_messages_py[0m
 [1;32m==> default: Scanning dependencies of target _ig_action_msgs_generate_messages_check_deps_InstructionGraphGoal[0m
 [1;32m==> default: [  0%] [0m
-[1;32m==> default: Built target _ig_action_msgs_generate_messages_check_deps_InstructionGraphFeedback[0m
-[1;32m==> default: Scanning dependencies of target _ig_action_msgs_generate_messages_check_deps_InstructionGraphActionGoal[0m
+[1;32m==> default: Built target actionlib_msgs_generate_messages_py[0m
+[1;32m==> default: Scanning dependencies of target _ig_action_msgs_generate_messages_check_deps_InstructionGraphActionResult[0m
 [1;32m==> default: [  0%] [0m
 [1;32m==> default: Built target _ig_action_msgs_generate_messages_check_deps_InstructionGraphGoal[0m
+[1;32m==> default: Scanning dependencies of target std_msgs_generate_messages_py[0m
+[1;32m==> default: [  0%] [0m
+[1;32m==> default: [  0%] [0m
+[1;32m==> default: Built target _ig_action_msgs_generate_messages_check_deps_InstructionGraphActionResult[0m
+[1;32m==> default: Built target std_msgs_generate_messages_py[0m
+[1;32m==> default: Scanning dependencies of target _ig_action_msgs_generate_messages_check_deps_InstructionGraphActionFeedback
+==> default: Scanning dependencies of target _ig_action_msgs_generate_messages_check_deps_InstructionGraphAction[0m
+[1;32m==> default: [  0%] [0m
+[1;32m==> default: Built target _ig_action_msgs_generate_messages_check_deps_InstructionGraphActionFeedback[0m
+[1;32m==> default: Scanning dependencies of target _ig_action_msgs_generate_messages_check_deps_InstructionGraphResult[0m
+[1;32m==> default: [  0%] [0m
+[1;32m==> default: Built target _ig_action_msgs_generate_messages_check_deps_InstructionGraphAction[0m
 [1;32m==> default: Scanning dependencies of target std_msgs_generate_messages_cpp[0m
 [1;32m==> default: [  0%] [0m
 [1;32m==> default: Built target std_msgs_generate_messages_cpp[0m
-[1;32m==> default: [  0%] [0m
-[1;32m==> default: Built target _ig_action_msgs_generate_messages_check_deps_InstructionGraphActionGoal[0m
 [1;32m==> default: Scanning dependencies of target actionlib_msgs_generate_messages_cpp[0m
-[1;32m==> default: Scanning dependencies of target std_msgs_generate_messages_lisp[0m
 [1;32m==> default: [  0%] [0m
 [1;32m==> default: Built target actionlib_msgs_generate_messages_cpp[0m
 [1;32m==> default: [  0%] [0m
+[1;32m==> default: Built target _ig_action_msgs_generate_messages_check_deps_InstructionGraphResult[0m
 [1;32m==> default: Scanning dependencies of target actionlib_msgs_generate_messages_lisp[0m
-[1;32m==> default: Built target std_msgs_generate_messages_lisp[0m
+[1;32m==> default: Scanning dependencies of target std_msgs_generate_messages_lisp[0m
+[1;32m==> default: [  0%] [0m
 [1;32m==> default: [  0%] [0m
 [1;32m==> default: Built target actionlib_msgs_generate_messages_lisp[0m
-[1;32m==> default: Scanning dependencies of target _messages_generate_messages_check_deps_euler[0m
+[1;32m==> default: Built target std_msgs_generate_messages_lisp[0m
 [1;32m==> default: Scanning dependencies of target ig_action_msgs_generate_messages_py[0m
+[1;32m==> default: Scanning dependencies of target _messages_generate_messages_check_deps_euler[0m
 [1;32m==> default: [  3%] [0m
 [1;32m==> default: Generating Python from MSG ig_action_msgs/InstructionGraphActionGoal[0m
 [1;32m==> default: [  3%] [0m
 [1;32m==> default: Built target _messages_generate_messages_check_deps_euler[0m
 [1;32m==> default: Scanning dependencies of target ig_action_msgs_generate_messages_cpp[0m
 [1;32m==> default: [  7%] [0m
-[1;32m==> default: Generating C++ code from ig_action_msgs/InstructionGraphActionGoal.msg[0m
 [1;32m==> default: [ 11%] [0m
 [1;32m==> default: Generating Python from MSG ig_action_msgs/InstructionGraphActionFeedback[0m
+[1;32m==> default: Generating C++ code from ig_action_msgs/InstructionGraphActionGoal.msg[0m
 [1;32m==> default: [ 15%] [0m
 [1;32m==> default: Generating Python from MSG ig_action_msgs/InstructionGraphActionResult[0m
 [1;32m==> default: [ 19%] [0m
 [1;32m==> default: Generating Python from MSG ig_action_msgs/InstructionGraphFeedback[0m
-[1;32m==> default: [ 23%] [0m
-[1;32m==> default: Generating C++ code from ig_action_msgs/InstructionGraphActionFeedback.msg[0m
-[1;32m==> default: [ 26%] [0m
+[1;32m==> default: [ 26%] [ 26%] [0m
 [1;32m==> default: Generating Python from MSG ig_action_msgs/InstructionGraphResult[0m
+[1;32m==> default: Generating C++ code from ig_action_msgs/InstructionGraphActionFeedback.msg[0m
 [1;32m==> default: [ 30%] [0m
 [1;32m==> default: Generating Python from MSG ig_action_msgs/InstructionGraphGoal[0m
 [1;32m==> default: [ 34%] [0m
 [1;32m==> default: Generating Python from MSG ig_action_msgs/InstructionGraphAction[0m
 [1;32m==> default: [ 38%] [0m
-[1;32m==> default: Generating C++ code from ig_action_msgs/InstructionGraphActionResult.msg[0m
 [1;32m==> default: [ 42%] [0m
+[1;32m==> default: Generating C++ code from ig_action_msgs/InstructionGraphActionResult.msg[0m
 [1;32m==> default: Generating Python msg __init__.py for ig_action_msgs[0m
 [1;32m==> default: [ 42%] [0m
 [1;32m==> default: Built target ig_action_msgs_generate_messages_py[0m
@@ -845,49 +854,49 @@
 [1;32m==> default: [ 46%] [0m
 [1;32m==> default: Generating Lisp code from ig_action_msgs/InstructionGraphActionGoal.msg[0m
 [1;32m==> default: [ 50%] [0m
+[1;32m==> default: Generating Lisp code from ig_action_msgs/InstructionGraphActionFeedback.msg[0m
 [1;32m==> default: [ 53%] [0m
 [1;32m==> default: Generating C++ code from ig_action_msgs/InstructionGraphFeedback.msg[0m
-[1;32m==> default: Generating Lisp code from ig_action_msgs/InstructionGraphActionFeedback.msg[0m
 [1;32m==> default: [ 57%] [0m
 [1;32m==> default: Generating Lisp code from ig_action_msgs/InstructionGraphActionResult.msg[0m
 [1;32m==> default: [ 61%] [0m
 [1;32m==> default: Generating Lisp code from ig_action_msgs/InstructionGraphFeedback.msg[0m
 [1;32m==> default: [ 65%] [0m
-[1;32m==> default: Generating C++ code from ig_action_msgs/InstructionGraphResult.msg[0m
-[1;32m==> default: [ 69%] [0m
 [1;32m==> default: Generating Lisp code from ig_action_msgs/InstructionGraphResult.msg[0m
+[1;32m==> default: [ 69%] [0m
+[1;32m==> default: Generating C++ code from ig_action_msgs/InstructionGraphResult.msg[0m
 [1;32m==> default: [ 73%] [0m
 [1;32m==> default: Generating Lisp code from ig_action_msgs/InstructionGraphGoal.msg[0m
 [1;32m==> default: [ 76%] [0m
 [1;32m==> default: Generating Lisp code from ig_action_msgs/InstructionGraphAction.msg[0m
-[1;32m==> default: [ 80%] [0m
-[1;32m==> default: Generating C++ code from ig_action_msgs/InstructionGraphGoal.msg[0m
-[1;32m==> default: [ 80%] [0m
+[1;32m==> default: [ 76%] [0m
 [1;32m==> default: Built target ig_action_msgs_generate_messages_lisp[0m
 [1;32m==> default: Scanning dependencies of target messages_generate_messages_lisp[0m
+[1;32m==> default: [ 80%] [0m
 [1;32m==> default: [ 84%] [0m
 [1;32m==> default: Generating Lisp code from messages/euler.msg[0m
+[1;32m==> default: Generating C++ code from ig_action_msgs/InstructionGraphGoal.msg[0m
 [1;32m==> default: [ 84%] [0m
 [1;32m==> default: Built target messages_generate_messages_lisp[0m
-[1;32m==> default: Scanning dependencies of target messages_generate_messages_cpp[0m
-[1;32m==> default: [ 88%] [0m
-[1;32m==> default: Generating C++ code from messages/euler.msg[0m
-[1;32m==> default: [ 92%] [0m
-[1;32m==> default: Generating C++ code from ig_action_msgs/InstructionGraphAction.msg[0m
-[1;32m==> default: [ 92%] [0m
-[1;32m==> default: Built target messages_generate_messages_cpp[0m
 [1;32m==> default: Scanning dependencies of target messages_generate_messages_py[0m
-[1;32m==> default: [ 96%] [0m
+[1;32m==> default: [ 88%] [0m
 [1;32m==> default: Generating Python from MSG messages/euler[0m
+[1;32m==> default: [ 92%] [0m
+[1;32m==> default: Generating Python msg __init__.py for messages[0m
 [1;32m==> default: [ 96%] [0m
+[1;32m==> default: Generating C++ code from ig_action_msgs/InstructionGraphAction.msg[0m
+[1;32m==> default: [ 96%] [0m
+[1;32m==> default: Built target messages_generate_messages_py[0m
+[1;32m==> default: Scanning dependencies of target messages_generate_messages_cpp[0m
+[1;32m==> default: [100%] [0m
+[1;32m==> default: Generating C++ code from messages/euler.msg[0m
+[1;32m==> default: [100%] [0m
 [1;32m==> default: Built target ig_action_msgs_generate_messages_cpp[0m
 [1;32m==> default: Scanning dependencies of target ig_action_msgs_generate_messages[0m
-[1;32m==> default: [ 96%] [0m
+[1;32m==> default: [100%] [0m
 [1;32m==> default: Built target ig_action_msgs_generate_messages[0m
 [1;32m==> default: [100%] [0m
-[1;32m==> default: Generating Python msg __init__.py for messages[0m
-[1;32m==> default: [100%] [0m
-[1;32m==> default: Built target messages_generate_messages_py[0m
+[1;32m==> default: Built target messages_generate_messages_cpp[0m
 [1;32m==> default: Scanning dependencies of target messages_generate_messages[0m
 [1;32m==> default: [100%] [0m
 [1;32m==> default: Built target messages_generate_messages[0m

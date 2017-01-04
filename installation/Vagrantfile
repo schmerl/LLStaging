@@ -3,7 +3,7 @@
 
 Vagrant.configure(2) do |config|
   config.vm.box = "ubuntu/trusty64"
-
+#  config.vm.box_version = "=20160802.0.1"
   ## For headless comment above line and uncomment below one
   #config.vm.box = "ubuntu/trusty64"
   #config.vm.network "forwarded_port", guest: 80, host: 8080
@@ -23,10 +23,13 @@ Vagrant.configure(2) do |config|
  $script = <<-SCRIPT
   sudo apt-get install software-properties-common -y --force-yes
   sudo apt-add-repository ppa:ansible/ansible -y
+  sudo add-apt-repository ppa:openjdk-r/ppa
+  sudo sh -c 'echo "deb file:/vagrant/debs ./" >> /etc/apt/sources.list'
   sudo apt-get update -y
   sudo apt-get install ansible -y --force-yes
   sudo apt-get install -f
-  sudo cp /vagrant/ros-latest.list /etc/apt/sources.list.d/
+##  sudo apt-get install dpkg-dev -y --force-yes
+  sudo apt-get install openjdk-8-jre-headless -y --force-yes
   cd /vagrant
   sudo ansible-playbook turtle.yml
   echo "source /opt/ros/indigo/setup.bash" >> ~/.bashrc
@@ -36,15 +39,17 @@ Vagrant.configure(2) do |config|
   sudo rosdep fix-permissions
   rosdep update
   sudo cp /vagrant/tcpros_service.py /opt/ros/indigo/lib/python2.7/dist-packages/rospy/impl/
-  sudo add-apt-repository ppa:openjdk-r/ppa
   sudo apt-get update
-  sudo apt-get install openjdk-8-jre-headless -y --force-yes
   sudo apt-get install xserver-xorg-video-dummy
   sudo apt-get -y install python-flask
   sudo apt-get -y install python-enum
+  # overcome webcam issue 
+  sudo ln -s /dev/null /dev/raw1394
   sudo apt-get -y install emacs
   SCRIPT
 
+
+  
   config.vm.provision "shell", inline: $script, privileged: false
 
   config.vm.provision "shell" do |s|
@@ -54,24 +59,25 @@ Vagrant.configure(2) do |config|
   end
 
    config.vm.provision "shell" do |s|
-    s.inline = "cp /vagrant/setup-cp1.sh /home/vagrant"
+    s.inline = "cp /vagrant/setup-cp1.sh /home/vagrant; chmod +x /home/vagrant/setup-cp1.sh"
 	s.name = "Copy the setup script"
 	s.privileged = false
   end
 
    config.vm.provision "shell" do |s|
-    s.inline = "cp -r /vagrant/run-cp1.sh /home/vagrant"
+    s.inline = "cp /vagrant/run-cp1.sh /home/vagrant; chmod +x /home/vagrant/run-cp1.sh"
 	s.name = "Copy the CP1 run script"
 	s.privileged = false
   end
 
   config.vm.provision "shell" do |s|
-    s.inline = "cp -r /vagrant/xorg.conf /home/vagrant"
+    s.inline = "cp /vagrant/xorg.conf /home/vagrant"
 	s.name = "Copy the X config file for use by headless robot"
 	s.privileged = false
   end
 
   $setup = <<-SETUP
+  
   echo Setting up challenge problem 1
   ./setup-cp1.sh
   echo "source catkin_ws/devel/setup.bash" >> .bashrc

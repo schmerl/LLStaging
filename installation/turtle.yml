@@ -7,43 +7,46 @@
    #   become: yes
    #   become_method: sudo
 
-   - name: Add apt-key
-     command: apt-key adv --keyserver hkp://ha.pool.sks-keyservers.net --recv-key 0xB01FA116
-     become: yes
-     become_method: sudo
+   #- name: Add apt-key
+   #  command: apt-key adv --keyserver hkp://ha.pool.sks-keyservers.net --recv-key 0xB01FA116
+   #  become: yes
+   #  become_method: sudo
 
    - name: Install ROS Indigo Desktop Full
-     apt: pkg=ros-indigo-desktop-full state=installed update_cache=true
+     apt: pkg=ros-indigo-desktop-full state=installed force=yes update_cache=true
 
    - name: Install Rosinstall
-     apt: pkg=python-rosinstall state=installed
+     apt: pkg=python-rosinstall state=installed force=yes 
 
    - name: Install Ros-Indigo-Turtlebot
-     apt: pkg=ros-indigo-turtlebot state=installed
+     apt: pkg=ros-indigo-turtlebot state=installed force=yes 
 
    - name: Install Turtlebot apps
-     apt: pkg=ros-indigo-turtlebot-apps state=installed
+     apt: pkg=ros-indigo-turtlebot-apps state=installed force=yes 
 
    - name: Install Turtlebot interactions
-     apt: pkg=ros-indigo-turtlebot-interactions state=installed
+     apt: pkg=ros-indigo-turtlebot-interactions state=installed force=yes 
 
    - name: Install turtlebot simulator
-     apt: pkg=ros-indigo-turtlebot-simulator state=installed
+     apt: pkg=ros-indigo-turtlebot-simulator state=installed force=yes 
 
    - name: Install Kobuki
-     apt: pkg=ros-indigo-kobuki-ftdi state=installed
+     apt: pkg=ros-indigo-kobuki-ftdi state=installed force=yes 
 
    - name: Install Rocon
-     apt: pkg=ros-indigo-rocon-remocon state=installed
+     apt: pkg=ros-indigo-rocon-remocon state=installed force=yes 
 
    - name: Install Rocon-Qt
-     apt: pkg=ros-indigo-rocon-qt-library state=installed
+     apt: pkg=ros-indigo-rocon-qt-library state=installed force=yes 
 
    - name: Install Ros-Ar-Track
-     apt: pkg=ros-indigo-ar-track-alvar-msgs state=installed
+     apt: pkg=ros-indigo-ar-track-alvar-msgs state=installed force=yes 
      
    - name: Python Ply
-     apt: pkg=python-ply state=installed
+     apt: pkg=python-ply state=installed force=yes 
+     
+   - name: Python Pip
+     apt: pkg=python-pip state=installed force=yes 
      
    - name: Install YAML processor
      pip: name=shyaml
