@@ -1,6 +1,21 @@
 cmu-robotics
 ============
 
+**Note about LFS**: This repository uses Git LFS for large file storage (https://git-lfs.github.com/). 
+This needs to be installed on the pulling machine, and it changes the workflow slightly.
+
+To check out the files you need to do the following:
+```
+git lfs install (This should only be done once)
+git clone ...
+git lfs pull
+```
+
+After this, the workflow shouldn't change. So, you you add a .deb file to
+installation/debs, then git push should call the lfs hooks and work automagically.
+
+**Installation**
+
 Vagrant installation can be found at: https://www.vagrantup.com/docs/installation/
 
 In order to run the simulation, once you've installed vagrant, etc.:
