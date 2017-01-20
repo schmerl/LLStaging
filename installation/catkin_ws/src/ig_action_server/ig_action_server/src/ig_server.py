@@ -73,7 +73,7 @@ class IGServer(object):
 		else:
 			self.publish_feedback('Validating instructions')
 			assert(statics.valid(ast))
-
+			self.publish_feedback('Received new valid IG: %s' %(goal.order))
 			self.publish_feedback('Executing graph')
 			rospy.loginfo('Executing the graph')
 			self.eval(ast)
@@ -100,81 +100,84 @@ class IGServer(object):
 		self._result.sequence = result
 		self._as.set_succeeded(self._result)
 
-	def doaction(self, action):
+	def doaction(self, action, node):
 		# we currently only support moving and saying in this simulation
 		status = True
 		msg = ""
 		if action.operator == MOVE:
 			(distance, angular, speed, delta_y, rotation) = action.params
-			print "Moving for distance %s at rotation %s with a speed of %s %s %s" \
-			%(distance, angular, speed, delta_y, rotation)
-			self.publish_feedback("Moving for distance %s at rotation %s with a speed of %s %s %s" \
-			%(distance, angular, speed, delta_y, rotation))
+			self.publish_feedback("%s:MOVE(%s,%s,%s,%s,%s):START" \
+				%(node,distance, angular, speed, delta_y, rotation))
 			status,msg = turtlebot.move(distance, angular, speed, delta_y, rotation)
 			if status:
-				self.publish_feedback("Move(%s,%s,%s,%s,%s): SUCCESS" %(distance, angular, speed, delta_y, rotation))
+				self.publish_feedback("%s:Move(%s,%s,%s,%s,%s):SUCCESS" %(node,distance, angular, speed, delta_y, rotation))
 				return True
 			else:
-				self.publish_feedback("Move(%s,%s,%s,%s,%s): FAILED: %s" %(distance, angular, speed, delta_y, rotation, msg))
+				self.publish_feedback("%s:Move(%s,%s,%s,%s,%s): FAILED: %s" %(node,distance, angular, speed, delta_y, rotation, msg))
 				return False
 				
 		elif action.operator == SAY:
 			(s,) = action.params
+			self.publish_feedback("%s:Say(\"%s\"): START" %(node,s))
 			turtlebot.say(s)
-			self.publish_feedback("Say(\"%s\"): SUCCESS" %s)
+			self.publish_feedback("%s:Say(\"%s\"): SUCCESS" %(node,s))
 			return True
 		elif action.operator == LOCATE:
 			(x,y) = action.params
-			self.publish_feedback("Locating inital pose of robot to (%s, %s)" %(x,y))
+			self.publish_feedback("%s:Locate(%s, %s): START" %(node,x,y))
 			turtlebot.locate(x,y)
-			self.publish_feedback("Locate(%s,%s): SUCCESS" %(x,y))
+			self.publish_feedback("%s:Locate(%s,%s): SUCCESS" %(node,x,y))
 			return True
 		elif action.operator == MOVETO:
 			(x,y) = action.params
-			self.publish_feedback("Moving to pose of (%s, %s)" %(x,y))
+			self.publish_feedback("%s:MoveTo(%s,%s): START" %(node,x,y))
 			status, msg = turtlebot.moveTo (x,y)
 			if status:
-				self.publish_feedback("MoveTo(%s,%s): SUCCESS" %(x,y))
+				self.publish_feedback("%s:MoveTo(%s,%s): SUCCESS" %(node,x,y))
 				return True
 			else:
-				self.publish_feedback("Move(%s,%s): FAILED: %s" %(x,y, msg))
+				self.publish_feedback("%s:MoveTo(%s,%s): FAILED: %s" %(node,x,y, msg))
 				return False
 		elif action.operator == MOVEABS:
 			print str(self._yaw_with_drift)
 			(x,y,v) = action.params # x,y coordinates on the map and velocity for movement.
+			self.publish_feedback("%s:MoveAbs(%s,%s,%s): START" %(node,x,y,v))
 			status,msg = turtlebot2.moveAbs(x,y,v)
 			if status:
-				self.publish_feedback("MoveAbs(%s,%s,%s): SUCCESS" %(x,y,v))
+				self.publish_feedback("%s:MoveAbs(%s,%s,%s): SUCCESS" %(node,x,y,v))
 				return True
 			else:
-				self.publish_feedback("MoveAbs(%s,%s, %s): FAILED: %s" %(x,y,v,msg))
+				self.publish_feedback("%s:MoveAbs(%s,%s, %s): FAILED: %s" %(node,x,y,v,msg))
 				return False
 		elif action.operator == MOVEREL:
 			(x,y,v) = action.params # x,y distance forward on the map and velocity for movement.
+			self.publish_feedback("%s:MoveRel(%s,%s,%s): START" %(node,x,y,v))
 			status,msg = turtlebot2.moveRel(x,y,v)
 			if status:
-				self.publish_feedback("MoveRel(%s,%s,%s): SUCCESS" %(x,y,v))
+				self.publish_feedback("%s:MoveRel(%s,%s,%s): SUCCESS" %(node,x,y,v))
 				return True
 			else:
-				self.publish_feedback("MoveRel(%s,%s, %s): FAILED: %s" %(x,y,v,msg))
+				self.publish_feedback("%s:MoveRel(%s,%s, %s): FAILED: %s" %(node,x,y,v,msg))
 				return False
 		elif action.operator == TURNABS:
 			(d,r) = action.params # direction and rotational velocity. d = N, S, E, W (North, South, East, West)
+			self.publish_feedback("%s:TurnAbs(%s,%s): SUCCESS" %(node,d,r))
 			status,msg = turtlebot2.turnAbs(d, r, self._init_time, self._init_yaw, self._yaw_with_drift_time, self._yaw_with_drift)
 			if status:
-				self.publish_feedback("TurnAbs(%s,%s): SUCCESS" %(d,r))
+				self.publish_feedback("%s:TurnAbs(%s,%s): SUCCESS" %(node,d,r))
 				return True
 			else:
-				self.publish_feedback("TurnAbs(%s,%s): FAILED: %s" %(d,r,msg))
+				self.publish_feedback("%s:TurnAbs(%s,%s): FAILED: %s" %(node,d,r,msg))
 				return False
 		elif action.operator == TURNREL:
 			(a,r) = action.params # Angle and rotational velocity.
+			self.publish_feedback("%s:TurnRel(%s,%s): START" %(node,a,r))
 			status, msg = turtlebot2.turnRel(a,r)
 			if status:
-				self.publish_feedback("TurnRel(%s,%s): SUCCESS" %(a,r))
+				self.publish_feedback("%s:TurnRel(%s,%s): SUCCESS" %(node,a,r))
 				return True
 			else:
-				self.publish_feedback("TurnRel(%s,%s): FAILED: %s" %(a,r,msg))
+				self.publish_feedback("%s:TurnRel(%s,%s): FAILED: %s" %(node,a,r,msg))
 				return False
 		else:
 			self.publish_feedback("Runtime Error: Unsupported action!");
@@ -204,13 +207,13 @@ class IGServer(object):
 			return (WAITING, None)
 		elif c.operator == DOONCE:
 			(a, n2) = c.params
-			self._success = self.doaction(a)
+			self._success = self.doaction(a,n)
 			result = STEP if self._success else FAIL
 			return (result, (n2, vs, I, [a] + O))
 		elif c.operator == DOUNTIL:
 			(a, cnd, n2) = c.params
 			b = checkcond(cnd)
-			self._sucess = self.doaction(a)
+			self._sucess = self.doaction(a,n)
 			result = STEP if self._success else FAIL
 			if b:
 		  		return (result, (n2, vs, I, [a] + O))

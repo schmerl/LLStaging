@@ -46,13 +46,20 @@ def move(x,y,v,action):
 
 	move_base.send_goal(goal)
 	success = move_base.wait_for_result()
+        
 	if not success:
 		move_base.cancel_goal()
 		rospy.logerr("The base failed to move forward")
 		msg = "The base failed to move forward"
 		status = False
 	else:
-		rospy.loginfo("Successfully executed the vertex")
+		succeeded = move_base.get_state () == GoalStatus.SUCCEEDED
+		if not succeeded:
+			rospy.logerr ("The base failed to move, status=%s" %succeeded)
+			msg = "Move %s failed" %action
+			status = False
+		else:
+			rospy.loginfo("Successfully executed the vertex")
 	
 	publisher.close_move_base_action_client()
 	return status, msg
