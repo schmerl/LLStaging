@@ -1,7 +1,7 @@
 {
     "start_loc" : "l1",
     "start_yaw" : 0.0,
-    "target_loc" : "l7",
+    "target_loc" : "l6",
     "enable_adaptation" : "CP1_NoAdaptation",
 
     "initial_voltage" : 166,
