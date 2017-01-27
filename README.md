@@ -32,11 +32,18 @@ you can access the REST communications API with standard HTTP requests that
 meet the API from the wiki on port 5000. For example, at a new terminal,
 
 ```
-% curl -X POST -d "" localhost:5000/phase1/power/start_challenge_problem
-starting challenge problem
+% curl -H "Content-Type:application/json" -X POST -d '{}' localhost:5000/action/start
+{"ARGUMENTS": {}, "TIME": "2017-01-27T22:51:49.938773"}
 %
 ```
 
 will start the simulation. You can see the debugging output in the terminal
 that's running `vagrant ssh` into the guest machine, or issue futher HTTP
-requests per the REST API.
+requests per the REST API. Here are some example curl requests for different
+parts of the API:
+
+```
+curl -H "Content-Type:application/json" -X POST -d '{"x" : 19.5, "y" : 58.5}' localhost:5000/action/place_obstacle
+curl -H "Content-Type:application/json" -X POST -d '{}' localhost:5000/action/start
+curl -H "Content-Type:application/json" localhost:5000/action/observe
+```
