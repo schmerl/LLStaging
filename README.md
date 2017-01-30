@@ -11,6 +11,8 @@ git clone ...
 git lfs pull
 ```
 
+`brasscomms` is a git submodule, so you will need to run `git submodule init` and `git submodule update` to populate that directory.
+
 After this, the workflow shouldn't change. So, you you add a .deb file to
 installation/debs, then git push should call the lfs hooks and work automagically.
 
