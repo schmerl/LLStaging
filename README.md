@@ -25,6 +25,8 @@ In order to run the simulation, once you've installed vagrant, etc.:
 ```
 vagrant up
 vagrant ssh
+./setup-cp1.sh
+## something we haven't written yet goes here if you want to mock up the LL env
 ./run-cp1.sh
 ```
 
