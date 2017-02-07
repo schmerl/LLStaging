@@ -66,7 +66,7 @@ Vagrant.configure(2) do |config|
   end
 
    config.vm.provision "shell" do |s|
-    s.inline = "cp /vagrant/run-cp1.sh /home/vagrant; chmod +x /home/vagrant/run-cp1.sh"
+    s.inline = "cp /vagrant/run-cp1.sh /home/vagrant/start.sh; chmod +x /home/vagrant/start.sh"
 	s.name = "Copy the CP1 run script"
 	s.privileged = false
   end
