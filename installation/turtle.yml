@@ -50,6 +50,18 @@
      
    - name: Install YAML processor
      pip: name=shyaml
+     
+   - name: Unarchive PRISM
+     unarchive: 
+       src: /vagrant/das/prism-4.3.1-linux64.tar.gz
+       dest: /home/vagrant/das/
+
+   - name: Install PRISM
+     shell: ./install.sh
+     args:
+       chdir: /home/vagrant/das/prism-4.3.1-linux64
+   
+     
 
    # - name: Clone InstructionGraphs |  clone  git
    #   git: repo=https://github.com/anuragkanungo/instructiongraphs.git dest=~/
