@@ -48,6 +48,6 @@ parts of the API:
 
 ```
 curl -H "Content-Type:application/json" -X POST -d '{"TIME" : "2017-02-09T21:25:59.332087", "ARGUMENTS" : {}}' localhost:5000/action/start
-curl -H "Content-Type:application/json" localhost:5000/action/observe
+curl localhost:5000/action/observe
 curl -H "Content-Type:application/json" -X POST -d '{"TIME" : "2017-02-09T21:25:59.332087", "ARGUMENTS" : {"x" : 19.5, "y" : 58.5}}' localhost:5000/action/place_obstacle
 ```
