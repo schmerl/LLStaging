@@ -44,11 +44,15 @@ meet the API from the wiki on port 5000. For example, at a new terminal,
 will start the simulation. You can see the debugging output in the terminal
 that's running `vagrant ssh` into the guest machine, or issue futher HTTP
 requests per the REST API. Here are some example curl requests for different
-parts of the API:
+parts of the API, in wiki page order (which might not be the order that you
+would call them):
 
 ```
+curl localhost:5000/action/query_path
 curl -H "Content-Type:application/json" -X POST -d '{"TIME" : "2017-02-09T21:25:59.332087", "ARGUMENTS" : {}}' localhost:5000/action/start
 curl localhost:5000/action/observe
+curl -H "Content-Type:application/json" -X POST -d '{"TIME" : "2017-02-09T21:25:59.332087", "ARGUMENTS" : {"voltage" : 120}}' localhost:5000/action/set_battery
 curl -H "Content-Type:application/json" -X POST -d '{"TIME" : "2017-02-09T21:25:59.332087", "ARGUMENTS" : {"x" : 19.5, "y" : 11.5}}' localhost:5000/action/place_obstacle
 curl -H "Content-Type:application/json" -X POST -d '{"TIME" : "2017-02-09T21:25:59.332087", "ARGUMENTS" : {"obstacleid" : "Obstacle_0"}}' localhost:5000/action/remove_obstacle
+curl -H "Content-Type:application/json" -X POST -d '{"TIME" : "2017-02-09T21:25:59.332087", "ARGUMENTS" : {"bump" : {"x" : 0, "y": 0, "z" : 0, "p" : 0, "w" : 0, "r" : 0"}}}' localhost:5000/action/perturb_sensor
 ```
