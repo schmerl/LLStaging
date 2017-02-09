@@ -36,7 +36,7 @@ you can access the REST communications API with standard HTTP requests that
 meet the API from the wiki on port 5000. For example, at a new terminal,
 
 ```
-% curl -H "Content-Type:application/json" -X POST -d '{}' localhost:5000/action/start
+% curl -H "Content-Type:application/json" -X POST -d '{"TIME" : "2017-02-09T21:25:59.332087", "ARGUMENTS" : {}}' localhost:5000/action/start
 {"ARGUMENTS": {}, "TIME": "2017-01-27T22:51:49.938773"}
 %
 ```
