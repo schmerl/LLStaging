@@ -51,6 +51,8 @@ You can see the debugging output in a few places:
 
 * the mocked-up log file shared with the TH, at `/test/log`
 
+* the terminal that you're running `curl` commands from
+
 Some example curl requests for the different endpoints given in the API,
 are found in `smoke.sh`, which you can run from the guest machine to smoke
 test the end points. That script gives the examples in wiki page order,
