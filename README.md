@@ -27,7 +27,7 @@ vagrant up
 vagrant ssh
 ./setup-cp1.sh
 ./mockup.sh ## if you aren't MIT/LL but want the config and log to work
-./run-cp1.sh
+./start.sh
 ```
 
 and wait until you see `odom received!` in one of the info messages in the
