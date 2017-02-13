@@ -28,6 +28,7 @@ tokens = [
   "TURNREL",
   "VISIBLE",
   "STOP"
+  "FORWARD"
 ]
 
 # simple tokens
@@ -55,6 +56,7 @@ t_MOVEABS =      r"MoveAbs"
 t_MOVEREL =      r"MoveRel"
 t_TURNABS =      r"TurnAbs"
 t_TURNREL =      r"TurnRel"
+t_FORWARD =      r"Forward"
 # more complex tokens
 
 def t_NUM(t):

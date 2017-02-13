@@ -1,3 +1,5 @@
 *.deb filter=lfs diff=lfs merge=lfs -text
+*.gz filter=lfs diff=lfs merge=lfs -text
 *.py text eol=lf
 *.sh text eol=lf
+.\installation\das\prism-4.3.1-linux64.tar.gz filter=lfs diff=lfs merge=lfs -text

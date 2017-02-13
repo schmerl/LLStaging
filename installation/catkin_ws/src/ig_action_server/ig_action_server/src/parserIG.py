@@ -102,7 +102,8 @@ def p_action(t):
             | MOVEABS LPAR NUM COMMA NUM COMMA NUM RPAR
             | MOVEREL LPAR NUM COMMA NUM COMMA NUM RPAR
             | TURNABS LPAR STRING COMMA NUM RPAR
-            | TURNREL LPAR NUM COMMA NUM RPAR"""
+            | TURNREL LPAR NUM COMMA NUM RPAR
+            | FORWARD LPAR NUM COMMA NUM RPAR"""
   if t[1] == "Move":
     t[0] = Action(MOVE, (t[3], t[5], t[7], t[9], t[11]))
   elif t[1] == "MoveTo":
@@ -117,6 +118,8 @@ def p_action(t):
     t[0] = Action(TURNABS, (t[3], t[5]))
   elif t[1] == "TurnRel":
     t[0] = Action(TURNREL, (t[3], t[5]))
+  elif t[1] == "Forward":
+    t[0] = Action(FORWARD, (t[3], t[5]))
   else:
     t[0] = Action(SAY, (t[3],))
 

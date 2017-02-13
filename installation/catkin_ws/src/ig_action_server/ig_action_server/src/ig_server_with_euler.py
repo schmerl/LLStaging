@@ -19,7 +19,6 @@ from constants import *
 from statics import findn
 import turtlebot_move_base_actions as turtlebot
 import turtlebot_actions_2 as turtlebot2
-import turn_bs as tb_no_movebase
 
 import traceback
 
@@ -27,27 +26,29 @@ from orientation import Orientation
 import time
 
 from messages.msg import euler
-import tf
 
 lexer = lex.lex(module=lexerIG)
 parser = yacc.yacc(module=parserIG)
-
 
 class IGServer(object):
 	_feedback = ig_action_msgs.msg.InstructionGraphFeedback()
 	_result = ig_action_msgs.msg.InstructionGraphResult()
 	_init_time = None
-	_tf = None
+	_init_yaw = None
+	_yaw_with_drift = None
+	_yaw_with_drift_time = None
 
 	def __init__(self, name):
 		self._name = name
 		self._as = actionlib.SimpleActionServer(self._name, ig_action_msgs.msg.InstructionGraphAction, execute_cb=self.execute_cb, auto_start = False)
 		self._as.start()
-		rospy.loginfo('IG action server is running!')	
-		self._tf = tf.TransformListener()
-#		rospy.Subscriber("euler_orientation", euler, self.euler_callback)
-#		rospy.sleep(10)
-		
+		rospy.loginfo('IG action server is running!')
+		rospy.Subscriber("euler_orientation", euler, self.euler_callback)
+		rospy.sleep(10)
+		self._init_yaw = self._yaw_with_drift
+		self._init_time = self._yaw_with_drift_time
+		print str(self._init_yaw)
+
 
 	def execute_cb(self, goal):
 		# Setting the rate of execution.
@@ -158,21 +159,10 @@ class IGServer(object):
 			else:
 				self.publish_feedback("%s:MoveRel(%s,%s, %s): FAILED: %s" %(node,x,y,v,msg))
 				return False
-		elif action.operator == FORWARD:
-			(distance, speed) = action.params
-			self.publish_feedback("%s:Forward(%s,%s): START" %(node, distance, speed))
-			status,msg = tb_no_movebase.forward(distance, speed)
-			if status:
-				self.publish_feedback("%s:Forward(%s,%s): SUCCESS" %(node, distance, speed))
-				return True
-			else
-				self.publish_feedback("%s:Forward(%s,%s): FAILED" %(node, distance, speed))
-				return False
 		elif action.operator == TURNABS:
 			(d,r) = action.params # direction and rotational velocity. d = N, S, E, W (North, South, East, West)
 			self.publish_feedback("%s:TurnAbs(%s,%s): SUCCESS" %(node,d,r))
-			#if self._tf.frameExists("/base_link") and self._tf.frameExists("/map"):
-			(status,msg) = tb_no_movebase.turnAbs(d,r)
+			status,msg = turtlebot2.turnAbs(d, r, self._init_time, self._init_yaw, self._yaw_with_drift_time, self._yaw_with_drift)
 			if status:
 				self.publish_feedback("%s:TurnAbs(%s,%s): SUCCESS" %(node,d,r))
 				return True
@@ -182,7 +172,7 @@ class IGServer(object):
 		elif action.operator == TURNREL:
 			(a,r) = action.params # Angle and rotational velocity.
 			self.publish_feedback("%s:TurnRel(%s,%s): START" %(node,a,r))
-			status, msg = tb_no_movebase.turnDegrees(a, r, True)
+			status, msg = turtlebot2.turnRel(a,r)
 			if status:
 				self.publish_feedback("%s:TurnRel(%s,%s): SUCCESS" %(node,a,r))
 				return True
@@ -264,9 +254,9 @@ class IGServer(object):
 			  config = config2
 		(_, _, _, O) = config
 
-#	def euler_callback(self, msg):
-#		self._yaw_with_drift = msg.yaw
-#		self._yaw_with_drift_time = time.time()
+	def euler_callback(self, msg):
+		self._yaw_with_drift = msg.yaw
+		self._yaw_with_drift_time = time.time()
 
 
 

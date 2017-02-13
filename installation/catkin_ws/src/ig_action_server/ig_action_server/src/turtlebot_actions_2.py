@@ -16,8 +16,8 @@ def moveAbs(x,y,v):
 def moveRel(x,y,v):
 	return move (x,y,v,"Relative");
 
-def turnAbs(d,r, init_time, init_yaw, current_time, current_yaw):
-	return turn2(d, r, init_time, init_yaw, current_time, current_yaw)
+def turnAbs(d,r, init_yaw, tf_listener):
+	return turn2(d, r, init_yaw, tf_listener)
 
 def turnRel(a,r):
 	return turn(a,r)
@@ -77,35 +77,43 @@ def turn(angle, rotation):
 		rospy.sleep(0.5)
 	return status,msg
 
-def turn2(d, r, init_time, init_yaw, current_time, current_yaw):
+def turn2(d, r, init_time, current_yaw, tf_listener):
 	status=True
 	msg="Turned successfully"
-	if init_yaw == None:
+	if current_yaw == None:
 		rospy.logerr("Initialization time is None, the startup was not correctly done!")
 		msg="Initialization time is None, the startup was not correctly done!"
 		return False, msg
 	else:
-		orient = Orientation()
-		correct_yaw = orient.getCorrectedYaw(init_time, init_yaw, current_time, current_yaw)
-		print " Current_yaw ->" + str(correct_yaw)
+		EAST = 0
+		NORTH = radians(90)
+		WEST = radians(180)
+		SOUTH = radians(270)
+		target_angle = EAST
 		if d == 'NORTH':
-			pass
+			target_angle = NORTH
 		elif d == 'SOUTH':
-			init_yaw = init_yaw + radians(180)
+			target_angle = SOUTH
 		elif d == 'EAST':
-			init_yaw = init_yaw + radians(90)
+			target_angle = EAST
 		elif d == 'WEST':
-			init_yaw = init_yaw - radians(90)
+			target_angle = WEST
 		else:
 			rospy.logerr("Direction is not correct")
+			return False
 
-		print "Direction_yaw ->" + str(init_yaw)
-		if correct_yaw > init_yaw:
-			angle = correct_yaw - init_yaw
-			return turn(degrees(angle), -1)
-		else:
-			angle = init_yaw - correct_yaw
-			return turn(degrees(angle), 1)
+		rot = init_yaw - target_angle
+		a2 = target_angle - init_yaw
+		if abs(a2) < abs(rot):
+			rot = a2
+		return turn(degrees(angle),r)
+		# print "Direction_yaw ->" + str(init_yaw)
+		# if correct_yaw > init_yaw:
+		# 	angle = correct_yaw - init_yaw
+		# 	return turn(degrees(angle), -1)
+		# else:
+		# 	angle = init_yaw - correct_yaw
+		# 	return turn(degrees(angle), 1)
 
 def getCmdVel():
 	cmd_vel = rospy.Publisher("cmd_vel_mux/input/navi", Twist, queue_size=10)
