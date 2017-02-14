@@ -1,3 +1,6 @@
 [submodule "installation/catkin_ws/src/brasscomms"]
 	path = installation/catkin_ws/src/brasscomms
 	url = https://github.com/ivoysey/brasscomms.git
+[submodule "installation/das/rainbow-brass"]
+	path = installation/das/rainbow-brass
+	url = https://github.com/schmerl/rainbow-brass
