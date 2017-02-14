@@ -165,7 +165,7 @@ class IGServer(object):
 			if status:
 				self.publish_feedback("%s:Forward(%s,%s): SUCCESS" %(node, distance, speed))
 				return True
-			else
+			else:
 				self.publish_feedback("%s:Forward(%s,%s): FAILED" %(node, distance, speed))
 				return False
 		elif action.operator == TURNABS:
