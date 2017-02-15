@@ -27,7 +27,7 @@ tokens = [
   "TURNABS",
   "TURNREL",
   "VISIBLE",
-  "STOP"
+  "STOP",
   "FORWARD"
 ]
 

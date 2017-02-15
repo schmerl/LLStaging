@@ -9,6 +9,7 @@ from math import radians
 from math import degrees
 import dynamic_reconfigure.client
 from orientation import Orientation
+import tf
 
 def moveAbs(x,y,v):
 	return move (x,y,v,"Absolute");
@@ -67,9 +68,26 @@ def move(x,y,v,action):
 def turn(angle, rotation):
 	status=True
 	msg ="Turned successfully"
-	# setVelocity(rotation, 'ANGULAR');
+	#setVelocity(rotation, 'ANGULAR');
 	twist = Twist()
 	cmd_vel = getCmdVel()
+
+	# listener = tf.TransformListener()
+	# listener.waitForTransform("/base_link", "/odom_combined", rospy.Time(0), rospy.Duration(1))
+	# (stamped_t,stamped_r) = listener.lookupTransform("/base_link", "/odom_combined", rospy.Time(0))
+	# stamped = tf.Transform(stamped_t,stamped_r)
+	# twist.z = rotation
+	# rate = rospy.Rate(10)
+	# done = False
+	# while not done:
+	# 	cmd_vel.publish(twist)
+	# 	rate.sleep()
+	# 	try:
+	# 		(curr_t, curr_r) = listener.lookupTransform("/base_link", "/odom_combined", rospy.Time(0))
+	# 		current = tf.Transform(curr_t, curr_r)
+	# 		relative = stamped.inverse () * current
+	# 		double rot_moved = relative.
+
 	cycles = int(angle/45)
 	twist.angular.z = radians(45)*cycles #0.785398*2*rotation    # 90 deg/s
 	for i in range(0,int(cycles)):
