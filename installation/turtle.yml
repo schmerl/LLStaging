@@ -51,6 +51,10 @@
    - name: Install YAML processor
      pip: name=shyaml
      
+   - name: Install attrs
+     pip: name=attrs
+
+     
    - name: Unarchive PRISM
      unarchive: 
        src: /vagrant/das/prism-4.3.1-linux64.tar.gz

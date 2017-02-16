@@ -48,7 +48,6 @@ Vagrant.configure(2) do |config|
   # overcome webcam issue
   sudo ln -s /dev/null /dev/raw1394
   sudo apt-get -y install emacs
-  sudo pip install attrs
   SCRIPT
 
 
@@ -56,8 +55,16 @@ Vagrant.configure(2) do |config|
   config.vm.provision "shell", inline: $script, privileged: false
 
   config.vm.provision "shell" do |s|
-    s.inline = "cp -r /vagrant/catkin_ws /home/vagrant"
-	s.name = "Copy the base programs for CP1"
+#    s.inline = "mkdir /home/vagrant/catkin_ws & ln -s /vagrant/catkin_ws/src /home/vagrant/catkin_ws/src"
+    s.inline = "rsync -rv --exclude='.git*' /vagrant/catkin_ws ."
+	s.name = "Copy the base programs for cahllenge problems"
+	s.privileged = false
+  end
+  
+  config.vm.provision "shell" do |s|
+#    s.inline = "ln -s /vagrant/das/rainbow-brass /home/vagrant/das/rainbow-brass"
+	s.inline = "rsync -rv --exclude='.git*' /vagrant/das/rainbow-brass das"
+	s.name = "Copy rainbow files for adaptation"
 	s.privileged = false
   end
 
