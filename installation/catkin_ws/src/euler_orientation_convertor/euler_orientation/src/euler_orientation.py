@@ -1,9 +1,9 @@
 #!/usr/bin/python
 ##############################################
 ## The python ros node can be used to convert
-## Quaternion representation from odom and IMU 
+## Quaternion representation from odom and IMU
 ## to eulers using tf transformations.
-## Based on example from Thomas D. 
+## Based on example from Thomas D.
 ## <https://denewiler.us/cv>
 ##############################################
 import roslib; roslib.load_manifest('messages')
@@ -23,7 +23,7 @@ class EulerConvertor():
 
 		rospy.Subscriber("imu", Imu, self.imu_callback)
 		rospy.Subscriber("odom", Odometry, self.odom_callback)
-		publish = rospy.Publisher("euler_orientation", euler, queue_size=None)
+		publish = rospy.Publisher("euler_orientation", euler, queue_size=15)
 		rospy.loginfo("Euler orientation convertor is running")
 
 		while not rospy.is_shutdown():
@@ -33,7 +33,7 @@ class EulerConvertor():
 
 	def imu_callback(self ,msg):
 		orientation = msg.orientation
-		
+
 		self.create_euler(msg.header.stamp, orientation)
 
 	def odom_callback(self, msg):
