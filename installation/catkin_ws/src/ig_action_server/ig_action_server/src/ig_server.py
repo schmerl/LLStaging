@@ -138,7 +138,6 @@ class IGServer(object):
 				self.publish_feedback("%s:MoveTo(%s,%s): FAILED: %s" %(node,x,y, msg))
 				return False
 		elif action.operator == MOVEABS:
-			print str(self._yaw_with_drift)
 			(x,y,v) = action.params # x,y coordinates on the map and velocity for movement.
 			self.publish_feedback("%s:MoveAbs(%s,%s,%s): START" %(node,x,y,v))
 			status,msg = turtlebot2.moveAbs(x,y,v)

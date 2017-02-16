@@ -1,5 +1,5 @@
 {"map": [
-         {"node-id": "l1", "coord" : {"x" : 14.4, "y" : 69}, "connected-to": ["l2" ] },
+         {"node-id": "l1", "coord" : {"x" : 14.8, "y" : 69}, "connected-to": ["l2" ] },
          {"node-id": "l2", "coord" : {"x" : 19.8, "y" : 69}, "connected-to": ["l1", "c1", "c2" ] },
          {"node-id": "l3", "coord" : {"x" : 42.5, "y" : 69}, "connected-to": ["c2", "c3", "l4" ] },
          {"node-id": "l4", "coord" : {"x" : 52.2, "y" : 69}, "connected-to": ["l3", "ls", "l5" ] },

@@ -75,10 +75,6 @@
     <rosparam file="$(find cp_gazebo)/global_costmap.yaml" command="load" ns="global_costmap"/>
   </include>
 
-  <!-- Launch Euler conversion node -->
-  <node name="euler_conversion" pkg="euler_orientation" type="euler_orientation.py" output="screen">
-  </node>
-
   <!-- Launch instruction graph, with initial instruction files -->
   <node name="ig_interpreter" pkg="ig_action_server" type="ig_server.py" output="screen">
 
