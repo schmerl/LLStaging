@@ -27,7 +27,7 @@ def move(x,y,v,action):
 	print "MOVING TO x:" + str(x) + " y:" + str(y)
 	status=True
 	msg = "Successfully executed the vertex"
-	#setVelocity(v, 'LINEAR');
+	setVelocity(v, 'LINEAR');
 	if action == "Absolute":
 		frameType = "map"
 	else:
@@ -142,7 +142,7 @@ def getCmdVel():
 def setVelocity(velocity, type):
 	client = dynamic_reconfigure.client.Client('move_base/DWAPlannerROS')
 	if type == 'LINEAR':
-		params = {'min_vel_x' : velocity, 'max_vel_x' : velocity, 'max_trans_vel': velocity, 'min_trans_vel':velocity}
+		params = {'max_vel_x' : velocity, 'max_trans_vel': velocity}
 	else:
 		params = {'max_rot_vel': velocity, 'min_rot_vel':velocity}
 	config = client.update_configuration(params)

@@ -6,6 +6,7 @@ echo
 echo
 
 echo "start"
+
 curl -H "Content-Type:application/json" -X POST -d '{"TIME" : "2017-02-16T17:35:39.539Z", "ARGUMENTS" : {}}' localhost:8080/action/start
 echo
 echo
@@ -22,6 +23,7 @@ echo
 
 echo "place obstacle"
 curl -H "Content-Type:application/json" -X POST -d '{"TIME" : "2017-02-16T17:35:39.539Z", "ARGUMENTS" : {"x" : 19.5, "y" : 11.5}}' localhost:8080/action/place_obstacle
+
 echo
 echo
 
