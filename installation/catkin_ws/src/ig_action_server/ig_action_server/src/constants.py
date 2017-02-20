@@ -16,6 +16,7 @@ MOVEABS = 16
 MOVEREL = 17
 TURNABS = 18
 TURNREL = 19
+FORWARD = 20
 
 # trystep result constants
 TERMINATED = 11
