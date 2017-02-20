@@ -41,7 +41,7 @@ class Content(Node):
 class Action(Node):
   def __init__(self, operator, params):
     super(Action, self).__init__(operator, params)
-    assert(operator in [MOVE, SAY, MOVETO, LOCATE, MOVEABS, MOVEREL, TURNABS, TURNREL, FORWARD)
+    assert(operator in [MOVE, SAY, MOVETO, LOCATE, MOVEABS, MOVEREL, TURNABS, TURNREL, FORWARD])
 
 class Condition(Node):
   def __init__(self, operator, params):
