@@ -16,4 +16,6 @@ export DISPLAY=:1
 source /opt/ros/indigo/setup.bash
 cd catkin_ws
 source devel/setup.bash
+
+export ROS_LOG_DIR=/test/roslog
 roslaunch cp_gazebo cp1.launch
