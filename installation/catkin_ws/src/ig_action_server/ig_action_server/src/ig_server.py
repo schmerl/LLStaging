@@ -1,7 +1,6 @@
 #! /usr/bin/env python
 
 import roslib; roslib.load_manifest('ig_action_msgs')
-import roslib; roslib.load_manifest('messages')
 import rospy
 
 import actionlib
@@ -23,7 +22,7 @@ import turn_bs as tb_no_movebase
 
 import traceback
 
-from orientation import Orientation
+# from orientation import Orientation
 import time
 
 from messages.msg import euler
