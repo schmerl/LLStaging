@@ -25,7 +25,7 @@ import traceback
 # from orientation import Orientation
 import time
 
-from messages.msg import euler
+## from messages.msg import euler
 import tf
 
 lexer = lex.lex(module=lexerIG)
@@ -42,16 +42,16 @@ class IGServer(object):
 		self._name = name
 		self._as = actionlib.SimpleActionServer(self._name, ig_action_msgs.msg.InstructionGraphAction, execute_cb=self.execute_cb, auto_start = False)
 		self._as.start()
-		rospy.loginfo('IG action server is running!')	
+		rospy.loginfo('IG action server is running!')
 		self._tf = tf.TransformListener()
 #		rospy.Subscriber("euler_orientation", euler, self.euler_callback)
 #		rospy.sleep(10)
-		
+
 
 	def execute_cb(self, goal):
 		# Setting the rate of execution.
 		r =rospy.Rate(1)
-		self._success = True		
+		self._success = True
 
 		# Appending the feedback for goal recieved.
 		self.publish_feedback('Recieved new goal!')
@@ -75,7 +75,7 @@ class IGServer(object):
 			self.publish_feedback('Executing graph')
 			rospy.loginfo('Executing the graph')
 			self.eval(ast)
-		
+
 		# end core code
 		#r.sleep()
 
@@ -92,7 +92,7 @@ class IGServer(object):
 		self._feedback.sequence = feedback
 		self._as.publish_feedback(self._feedback)
 
-	
+
 	def publish_result(self, result):
 		# Appending the results for goal completed.
 		self._result.sequence = result
@@ -113,7 +113,7 @@ class IGServer(object):
 			else:
 				self.publish_feedback("%s:Move(%s,%s,%s,%s,%s): FAILED: %s" %(node,distance, angular, speed, delta_y, rotation, msg))
 				return False
-				
+
 		elif action.operator == SAY:
 			(s,) = action.params
 			self.publish_feedback("%s:Say(\"%s\"): START" %(node,s))
@@ -272,7 +272,3 @@ if __name__ == "__main__":
 	rospy.init_node('ig_action_server')
 	igserver = IGServer('ig_action_server')
 	rospy.spin()
-
-
-
-
