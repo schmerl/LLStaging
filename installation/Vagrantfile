@@ -32,11 +32,12 @@ Vagrant.configure(2) do |config|
   sudo apt-get install openjdk-8-jre-headless -y --force-yes
   sudo /var/lib/dpkg/info/ca-certificates-java.postinst configure ## per https://bugs.launchpad.net/ubuntu/+source/ca-certificates-java/+bug/1396760
   cd /vagrant
-  cp -r das /home/vagrant/
+  #cp -r das /home/vagrant/
   sudo ansible-playbook turtle.yml
   echo "source /opt/ros/indigo/setup.bash" >> ~/.bashrc
   source ~/.bashrc
   source /opt/ros/indigo/setup.bash
+##  echo "export LD_LIBRARY_PATH=~/customlibs/:\$LD_LIBRARY_PATH" >> ~/.bashrc
   sudo rosdep init
   sudo rosdep fix-permissions
   rosdep update
@@ -91,6 +92,8 @@ Vagrant.configure(2) do |config|
 	s.name = "Copy the X config file for use by headless robot"
 	s.privileged = false
   end
+  
+ 
 
   $setup = <<-SETUP
 
@@ -100,5 +103,11 @@ Vagrant.configure(2) do |config|
   SETUP
 
   config.vm.provision "shell", inline: $setup, privileged: false
+  
+  config.vm.provision "shell" do |s|
+    s.inline = "cp -r /vagrant/customlibs/* /home/vagrant/catkin_ws/devel/lib/"
+	s.name = "Copy the custom libraries (Kinect, Joints, Power Sim) to the deployment"
+	s.privileged = false
+  end
 
 end
