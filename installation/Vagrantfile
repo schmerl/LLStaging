@@ -47,7 +47,7 @@ Vagrant.configure(2) do |config|
   sudo apt-get -y install python-flask
   sudo apt-get -y install python-enum34
   # overcome webcam issue
-  sudo ln -s /dev/null /dev/raw1394
+  sudo ln -sf /dev/null /dev/raw1394
   sudo apt-get -y install emacs
   SCRIPT
 
@@ -92,8 +92,8 @@ Vagrant.configure(2) do |config|
 	s.name = "Copy the X config file for use by headless robot"
 	s.privileged = false
   end
-  
- 
+
+
 
   $setup = <<-SETUP
 
@@ -103,7 +103,7 @@ Vagrant.configure(2) do |config|
   SETUP
 
   config.vm.provision "shell", inline: $setup, privileged: false
-  
+
   config.vm.provision "shell" do |s|
     s.inline = "cp -r /vagrant/customlibs/* /home/vagrant/catkin_ws/devel/lib/"
 	s.name = "Copy the custom libraries (Kinect, Joints, Power Sim) to the deployment"
