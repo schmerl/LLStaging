@@ -53,6 +53,9 @@
      
    - name: Install attrs
      pip: name=attrs
+     
+   - name: Install tweepy
+     pip: name=tweepy
 
      
    - name: Unarchive PRISM
