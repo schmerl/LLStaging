@@ -2,10 +2,10 @@
 - hosts: localhost
   tasks:
 
-   # - name: Add Local Packages
-   #   command: sh -c ./update.sh
-   #   become: yes
-   #   become_method: sudo
+   #- name: Add Local Packages
+   #  command: sh -c ./update.sh
+   #  become: yes
+   #  become_method: sudo
 
    #- name: Add apt-key
    #  command: apt-key adv --keyserver hkp://ha.pool.sks-keyservers.net --recv-key 0xB01FA116
