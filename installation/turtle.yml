@@ -42,6 +42,12 @@
    - name: Install Ros-Ar-Track
      apt: pkg=ros-indigo-ar-track-alvar-msgs state=installed force=yes 
      
+   - name: Install Frontier Exploration
+     apt: pkg=ros-indigo-frontier-exploration state=installed force=yes
+     
+   - name: Install navigation stage
+     apt: pkg=ros-indigo-navigation-stage state=installed force=yes
+     
    - name: Python Ply
      apt: pkg=python-ply state=installed force=yes 
      
