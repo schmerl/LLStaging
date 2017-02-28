@@ -5,7 +5,9 @@ from move_base_msgs.msg import MoveBaseAction, MoveBaseGoal
 import actionlib
 from actionlib_msgs.msg import *
 import publisher
-from math import radians
+from math import radians, pi
+import dynamic_reconfigure.client
+from std_msgs.msg import String,Bool
 
 SETUP_DONE = False
 
@@ -170,4 +172,64 @@ def moveAllAtOnce(distance, angular, speed, delta_y, rotation):
       cmd_vel.publish(twist)
       rospy.sleep(0.2)
     return True, ""
+
+def charge(seconds):
+  pub = rospy.Publisher('/energy_monitor/set_charging', Bool, queue_size=10, latch=True)
+  msg = Bool()
+  msg.data = True
+  # Send charge message every half second for number of seconds
+  for i in range(0, int(seconds)*2-1):
+    pub.publish(msg)
+    rospy.sleep(0.5)
+  # Turn off charging, sending it multiple times for 1 second
+  msg.data = False
+  for i in range(0, 4):
+    pub.publish(msg)
+    rospy.sleep(0.25)
+  return True, ""
+
+def recalibrate(mode):
+  return False, "Recalibrate is not yet implemented"
+
+kinect_on = True
+
+def configure_localization(mode):
+  if mode == 2:
+    kinect = True
+    kinect_array = 550
+    update_min_a = 0.0
+    update_min_d = 0.2
+  elif mode == 1:
+    kinect = True
+    kinect_array = 640
+    update_min_a = pi / 6
+    update_min_d = 0.6
+  elif mode == 0:
+    kinect = False
+  else: 
+    return False, "Unsupported mode " %mode
+
+  if not kinect:
+    pub = rospy.Publisher("/sensor/kinect/onoff", String, queue_size = 10, latch=True)
+    msg = String()
+    msg.data = "off"
+    for i in range(0, 4):
+      pub.publish(msg)
+      rospy.sleep(0.25)
+    kinect_on = False
+    return True, ""
+  else:
+    client = dynamic_reconfigure.client.Client('amcl')
+    params = {'kinect_array' : kinect_array, 'update_min_a' : update_min_a, 'update_min_d' : update_min_d}
+    config = client.update_configuration(params)
+    
+    if not kinect_on:
+      pub = rospy.Publisher("/sensor/kinect/onoff", String, queue_size = 10, latch=True)
+      msg = String()
+      msg.data = "on"
+      for i in range(0, 4):
+        pub.publish(msg)
+        rospy.sleep(0.25)
+      kinect_on = True
+
 

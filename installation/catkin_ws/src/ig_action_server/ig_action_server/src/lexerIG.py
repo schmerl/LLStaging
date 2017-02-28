@@ -28,7 +28,10 @@ tokens = [
   "TURNREL",
   "VISIBLE",
   "STOP",
-  "FORWARD"
+  "FORWARD",
+  "CHARGE",
+  "RECALIBRATE",
+  "SETLOCALIZATIONFIDELITY"
 ]
 
 # simple tokens
@@ -57,6 +60,10 @@ t_MOVEREL =      r"MoveRel"
 t_TURNABS =      r"TurnAbs"
 t_TURNREL =      r"TurnRel"
 t_FORWARD =      r"Forward"
+t_CHARGE =    r"Charge"
+t_RECALIBRATE = r"Recalibrate"
+t_SETLOCALIZATIONFIDELITY = r"SetLocalizationFidelity"
+
 # more complex tokens
 
 def t_NUM(t):

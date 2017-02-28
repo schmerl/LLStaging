@@ -25,7 +25,7 @@ import traceback
 # from orientation import Orientation
 import time
 
-## from messages.msg import euler
+from messages.msg import euler
 import tf
 
 lexer = lex.lex(module=lexerIG)
@@ -42,16 +42,16 @@ class IGServer(object):
 		self._name = name
 		self._as = actionlib.SimpleActionServer(self._name, ig_action_msgs.msg.InstructionGraphAction, execute_cb=self.execute_cb, auto_start = False)
 		self._as.start()
-		rospy.loginfo('IG action server is running!')
+		rospy.loginfo('IG action server is running!')	
 		self._tf = tf.TransformListener()
 #		rospy.Subscriber("euler_orientation", euler, self.euler_callback)
 #		rospy.sleep(10)
-
+		
 
 	def execute_cb(self, goal):
 		# Setting the rate of execution.
 		r =rospy.Rate(1)
-		self._success = True
+		self._success = True		
 
 		# Appending the feedback for goal recieved.
 		self.publish_feedback('Recieved new goal!')
@@ -75,7 +75,7 @@ class IGServer(object):
 			self.publish_feedback('Executing graph')
 			rospy.loginfo('Executing the graph')
 			self.eval(ast)
-
+		
 		# end core code
 		#r.sleep()
 
@@ -92,7 +92,7 @@ class IGServer(object):
 		self._feedback.sequence = feedback
 		self._as.publish_feedback(self._feedback)
 
-
+	
 	def publish_result(self, result):
 		# Appending the results for goal completed.
 		self._result.sequence = result
@@ -113,7 +113,7 @@ class IGServer(object):
 			else:
 				self.publish_feedback("%s:Move(%s,%s,%s,%s,%s): FAILED: %s" %(node,distance, angular, speed, delta_y, rotation, msg))
 				return False
-
+				
 		elif action.operator == SAY:
 			(s,) = action.params
 			self.publish_feedback("%s:Say(\"%s\"): START" %(node,s))
@@ -187,6 +187,36 @@ class IGServer(object):
 			else:
 				self.publish_feedback("%s:TurnRel(%s,%s): FAILED: %s" %(node,a,r,msg))
 				return False
+		elif action.operator == CHARGE:
+			secs, = action.params
+			self.publish_feedback("%s:Charge(%s): START" %(node, secs))
+			status,msg = turtlebot.charge(secs)
+			if status:
+				self.publish_feedback("%s:Charge(%s): SUCCESS" %(node, secs))
+				return True
+			else:
+				self.publish_feedback("%s:Charge(%s): FAILED: %s" %(node, secs, msg))
+				return False
+		elif action.operator == RECALIBRATE:
+			mode, = action.params
+			self.publish_feedback("%s:Recalibrate(%s): START" %(node, mode))
+			status,msg = turtlebot.recalibrate(mode)
+			if status:
+				self.publish_feedback("%s:Recalibrate(%s): SUCCESS" %(node, mode))
+				return True
+			else:
+				self.publish_feedback("%s:Recalibrate(%s): FAILED: %s" %(node, mode, msg))
+				return False	
+		elif action.operator == SETLOCALIZATIONFIDELITY:
+			mode, = action.params
+			self.publish_feedback("%s:SetLocalizationFidelity(%s): START" %(node, mode))
+			(status,msg) = turtlebot.configure_localization(mode)
+			if status:
+				self.publish_feedback("%s:SetLocalizationFidelity(%s): SUCCESS" %(node, mode))
+				return True
+			else:
+				self.publish_feedback("%s:SetLocalizationFidelity(%s): FAILED: %s" %(node, mode, msg))
+				return False
 		else:
 			self.publish_feedback("Runtime Error: Unsupported action!");
 			self._success = False
@@ -199,7 +229,7 @@ class IGServer(object):
 			print "Is %s visible?" %cond.params[0]
 			ans = raw_input()
 			return ans in ("yes", "y", "", "\n")
-		elif cond.operator == STOP:
+		elif cond.operatopr == STOP:
 			print "Checking if %s is within %s distance..." %(cond.params[1], cond.params[0])
 			print "Is %s within %s distance?" %(cond.params[1], cond.params[0])
 			ans = raw_input()
@@ -220,7 +250,7 @@ class IGServer(object):
 			return (result, (n2, vs, I, [a] + O))
 		elif c.operator == DOUNTIL:
 			(a, cnd, n2) = c.params
-			b = checkcond(cnd)
+			b = self.checkcond(cnd)
 			self._sucess = self.doaction(a,n)
 			result = STEP if self._success else FAIL
 			if b:
@@ -229,7 +259,7 @@ class IGServer(object):
 		  		return (result, (n, vs, I, [a] + O))
 		elif c.operator == IFELSE:
 			(cnd, n2, n3) = c.params
-			b = checkcond(cnd)
+			b = self.checkcond(cnd)
 			if b:
 		  		return (STEP, (n2, vs, I, O))
 			else:
@@ -272,3 +302,7 @@ if __name__ == "__main__":
 	rospy.init_node('ig_action_server')
 	igserver = IGServer('ig_action_server')
 	rospy.spin()
+
+
+
+
