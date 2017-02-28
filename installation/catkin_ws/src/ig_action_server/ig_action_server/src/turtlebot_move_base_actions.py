@@ -194,6 +194,7 @@ def recalibrate(mode):
 kinect_on = True
 
 def configure_localization(mode):
+  global kinect_on
   if mode == 2:
     kinect = True
     kinect_array = 550
@@ -219,9 +220,9 @@ def configure_localization(mode):
     kinect_on = False
     return True, ""
   else:
-    client = dynamic_reconfigure.client.Client('amcl')
-    params = {'kinect_array' : kinect_array, 'update_min_a' : update_min_a, 'update_min_d' : update_min_d}
-    config = client.update_configuration(params)
+    # client = dynamic_reconfigure.client.Client('amcl')
+    # params = {'kinect_array' : kinect_array, 'update_min_a' : update_min_a, 'update_min_d' : update_min_d}
+    # config = client.update_configuration(params)
     
     if not kinect_on:
       pub = rospy.Publisher("/sensor/kinect/onoff", String, queue_size = 10, latch=True)
@@ -231,5 +232,5 @@ def configure_localization(mode):
         pub.publish(msg)
         rospy.sleep(0.25)
       kinect_on = True
-
+    return True,""
 

@@ -106,7 +106,7 @@ def p_action(t):
             | FORWARD LPAR NUM COMMA NUM RPAR
             | CHARGE LPAR NUM RPAR
             | RECALIBRATE LPAR NUM RPAR
-            | SETLOCALIZATIONFIDELITY LPAR NUM LPAR
+            | SETLOCALIZATIONFIDELITY LPAR NUM RPAR
             """
   if t[1] == "Move":
     t[0] = Action(MOVE, (t[3], t[5], t[7], t[9], t[11]))

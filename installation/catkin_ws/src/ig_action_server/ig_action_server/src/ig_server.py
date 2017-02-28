@@ -25,7 +25,7 @@ import traceback
 # from orientation import Orientation
 import time
 
-from messages.msg import euler
+#from messages.msg import euler
 import tf
 
 lexer = lex.lex(module=lexerIG)
