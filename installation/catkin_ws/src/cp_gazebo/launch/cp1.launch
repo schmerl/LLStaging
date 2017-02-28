@@ -73,6 +73,9 @@
   <node name="ig_interpreter" pkg="ig_action_server" type="ig_server.py" output="screen">
   </node>
 
+  <node name="mars_notifications" pkg="mars_notifications" type="mars_notifications_listener.py">
+  </node>
+
   <node name="brasscomms" pkg="brasscomms" type="brasscomms.py" output="screen">
   </node>
 
