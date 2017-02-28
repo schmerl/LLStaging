@@ -21,7 +21,8 @@ export ROS_LOG_DIR=/test/roslog
 
 if [ `grep CP2 /test/data` ]
 then
-    echo "no roslaunch for CP2 yet!"
+    ## todo: calibration_watcher here
+    roslaunch cp_gazebo cp2.launch
 else
     ## if /test/data is garbage, brasscomms will pick it up and report the
     ## error to the right place, even in the CP2 case.
