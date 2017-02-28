@@ -1,12 +1,3 @@
-#!/bin/bash
-nPid=$1;
-nTimes=100; # change it as you wish
-delay=0.1; # change it as you wish
-strCalc=`top -d $delay -b -n $nTimes -p $nPid \
-  |grep $nPid \
-  |sed -r -e "s;\s\s*; ;g" -e "s;^ *;;" \
-  |cut -d' ' -f9 \
-  |tr '\n' '+' \
-  |sed -r -e "s;(.*)[+]$;\1;" -e "s/.*/scale=2;(&)\/$nTimes/"`;
-cpu_util=`echo "$strCalc" |bc -l`
-echo $cpu_util
+version https://git-lfs.github.com/spec/v1
+oid sha256:88ba64bd453f74e7355f6ce20893d43955866d85354e93dc056744fa4c8b46f1
+size 347
