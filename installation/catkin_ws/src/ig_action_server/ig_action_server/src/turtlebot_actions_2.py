@@ -10,6 +10,7 @@ from math import degrees
 import dynamic_reconfigure.client
 # from orientation import Orientation
 import tf
+from tf import transformations as t
 
 def moveAbs(x,y,v):
 	return move (x,y,v,"Absolute");
@@ -23,7 +24,7 @@ def turnAbs(d,r, init_yaw, tf_listener):
 def turnRel(a,r):
 	return turn(a,r)
 
-def move(x,y,v,action):
+def move(x,y,v,action, w=1.5):
 	print "MOVING TO x:" + str(x) + " y:" + str(y)
 	status=True
 	msg = "Successfully executed the vertex"
@@ -43,7 +44,11 @@ def move(x,y,v,action):
 	if frameType == 'map':
 		goal.target_pose.pose.position.y = y #3 meters
 	
-	goal.target_pose.pose.orientation.w = 1.0 #go forward
+	q = t.quaternion_from_euler(0,0,w)
+	goal.target_pose.pose.orientation.x = q[0]
+	goal.target_pose.pose.orientation.y = q[1]
+	goal.target_pose.pose.orientation.z = q[2]
+	goal.target_pose.pose.orientation.w = q[3]
 
 	move_base.send_goal(goal)
 	success = move_base.wait_for_result()
