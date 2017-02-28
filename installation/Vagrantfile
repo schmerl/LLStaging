@@ -120,7 +120,7 @@ Vagrant.configure(2) do |config|
   end
   
   config.vm.provision "shell" do |s|
-    s.inline = "cp -r /vagrant/bin /home/vagrant/bin"
+    s.inline = "cp -r /vagrant/bin /home/vagrant/"
 	s.name = "Copy binaries for recalibration"
 	s.privileged = false
   end
