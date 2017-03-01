@@ -31,7 +31,8 @@ tokens = [
   "FORWARD",
   "CHARGE",
   "RECALIBRATE",
-  "SETLOCALIZATIONFIDELITY"
+  "SETLOCALIZATIONFIDELITY",
+  "MOVEABSH"
 ]
 
 # simple tokens
@@ -63,6 +64,7 @@ t_FORWARD =      r"Forward"
 t_CHARGE =    r"Charge"
 t_RECALIBRATE = r"Recalibrate"
 t_SETLOCALIZATIONFIDELITY = r"SetLocalizationFidelity"
+t_MOVEABSH = r"MoveAbsH"
 
 # more complex tokens
 

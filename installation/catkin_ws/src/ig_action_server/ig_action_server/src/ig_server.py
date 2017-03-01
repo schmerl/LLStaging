@@ -102,6 +102,7 @@ class IGServer(object):
 		# we currently only support moving and saying in this simulation
 		status = True
 		msg = ""
+		print('Executing %s'%action.operator)
 		if action.operator == MOVE:
 			(distance, angular, speed, delta_y, rotation) = action.params
 			self.publish_feedback("%s:MOVE(%s,%s,%s,%s,%s):START" \
@@ -216,6 +217,16 @@ class IGServer(object):
 				return True
 			else:
 				self.publish_feedback("%s:SetLocalizationFidelity(%s): FAILED: %s" %(node, mode, msg))
+				return False
+		elif action.operator == MOVEABSH:
+			(x,y,v,w) = action.params # x,y coordinates on the map and velocity for movement.
+			self.publish_feedback("%s:MoveAbsH(%s,%s,%s,%s): START" %(node,x,y,v,w))
+			status,msg = turtlebot2.move(x,y,v,'Absolute',w)
+			if status:
+				self.publish_feedback("%s:MoveAbsH(%s,%s,%s,%s): SUCCESS" %(node,x,y,v,w))
+				return True
+			else:
+				self.publish_feedback("%s:MoveAbs(%s,%s,%s, %s): FAILED: %s" %(node,x,y,v,w,msg))
 				return False
 		else:
 			self.publish_feedback("Runtime Error: Unsupported action!");
