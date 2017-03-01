@@ -76,6 +76,9 @@
   <node name="mars_notifications" pkg="mars_notifications" type="mars_notifications_listener.py">
   </node>
 
+  <node name="nuc_cpu" pkg="cp_gazebo" type="brass_cpu_monitor.py">
+  </node>
+
   <node name="brasscomms" pkg="brasscomms" type="brasscomms.py" output="screen">
   </node>
 
