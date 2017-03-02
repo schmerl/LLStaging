@@ -19,12 +19,14 @@ source devel/setup.bash
 
 export ROS_LOG_DIR=/test/roslog
 
-if [ `grep CP2 /test/data` ]
+if [[ `grep CP2 /test/data` ]]
 then
     ## todo: calibration_watcher here
+    echo "using cp2.launch"
     roslaunch cp_gazebo cp2.launch
 else
     ## if /test/data is garbage, brasscomms will pick it up and report the
     ## error to the right place, even in the CP2 case.
+    echo "using cp1.launch"
     roslaunch cp_gazebo cp1.launch
 fi
