@@ -122,10 +122,10 @@ class IGServer(object):
 			self.publish_feedback("%s:Say(\"%s\"): SUCCESS" %(node,s))
 			return True
 		elif action.operator == LOCATE:
-			(x,y) = action.params
-			self.publish_feedback("%s:Locate(%s, %s): START" %(node,x,y))
-			turtlebot.locate(x,y)
-			self.publish_feedback("%s:Locate(%s,%s): SUCCESS" %(node,x,y))
+			(x,y,w) = action.params
+			self.publish_feedback("%s:Locate(%s,%s,%s): START" %(node,x,y,w))
+			turtlebot.locate(x,y,w)
+			self.publish_feedback("%s:Locate(%s,%s,%s): SUCCESS" %(node,x,y,w))
 			return True
 		elif action.operator == MOVETO:
 			(x,y) = action.params
@@ -191,7 +191,7 @@ class IGServer(object):
 		elif action.operator == CHARGE:
 			secs, = action.params
 			self.publish_feedback("%s:Charge(%s): START" %(node, secs))
-			status,msg = turtlebot.charge(secs)
+			status,msg = tb_no_movebase.charge(secs)
 			if status:
 				self.publish_feedback("%s:Charge(%s): SUCCESS" %(node, secs))
 				return True
@@ -302,10 +302,6 @@ class IGServer(object):
 			else:
 			  config = config2
 		(_, _, _, O) = config
-
-#	def euler_callback(self, msg):
-#		self._yaw_with_drift = msg.yaw
-#		self._yaw_with_drift_time = time.time()
 
 
 

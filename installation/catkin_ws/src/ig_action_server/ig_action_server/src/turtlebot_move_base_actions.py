@@ -8,6 +8,8 @@ import publisher
 from math import radians, pi
 import dynamic_reconfigure.client
 from std_msgs.msg import String,Bool
+import tf
+from tf import transformations as t
 
 SETUP_DONE = False
 
@@ -21,7 +23,7 @@ def say(speech):
   if not SETUP_DONE: setup()
   rospy.loginfo(speech)
 
-def locate(x,y):
+def locate(x,y, w):
   if not SETUP_DONE: setup()
   pub = rospy.Publisher('initialpose', PoseWithCovarianceStamped, queue_size=10, latch=True)
 
@@ -33,10 +35,11 @@ def locate(x,y):
   initial_pose.pose.pose.position.x = x
   initial_pose.pose.pose.position.y = y
   initial_pose.pose.pose.position.z = 0
-  initial_pose.pose.pose.orientation.x = 0
-  initial_pose.pose.pose.orientation.y = 0
-  initial_pose.pose.pose.orientation.z = 0
-  initial_pose.pose.pose.orientation.w = 1
+  q = t.quaternion_from_euler(0,0,w)
+  initial_pose.pose.pose.orientation.x = q[0]
+  initial_pose.pose.pose.orientation.y = q[1]
+  initial_pose.pose.pose.orientation.z = q[2]
+  initial_pose.pose.pose.orientation.w = q[3]
   initial_pose.pose.covariance = [0.25, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.25, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.06853891945200942]
 
   pub.publish(initial_pose)
@@ -173,20 +176,7 @@ def moveAllAtOnce(distance, angular, speed, delta_y, rotation):
       rospy.sleep(0.2)
     return True, ""
 
-def charge(seconds):
-  pub = rospy.Publisher('/energy_monitor/set_charging', Bool, queue_size=10, latch=True)
-  msg = Bool()
-  msg.data = True
-  # Send charge message every half second for number of seconds
-  for i in range(0, int(seconds)*2-1):
-    pub.publish(msg)
-    rospy.sleep(0.5)
-  # Turn off charging, sending it multiple times for 1 second
-  msg.data = False
-  for i in range(0, 4):
-    pub.publish(msg)
-    rospy.sleep(0.25)
-  return True, ""
+
 
 def recalibrate(mode):
   return False, "Recalibrate is not yet implemented"

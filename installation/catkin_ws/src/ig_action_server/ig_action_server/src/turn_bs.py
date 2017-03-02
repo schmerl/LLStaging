@@ -7,40 +7,84 @@ from tf import transformations as t
 import numpy
 import math
 
+# def olfforward(distance, speed):
+# 	twist = Twist()
+# 	cmd_vel = rospy.Publisher("cmd_vel_mux/input/teleop", Twist, queue_size=10)
+# 	listener = TransformListener()
+# 	listener.waitForTransform("/base_link", "/odom", rospy.Time(0), rospy.Duration(1))
+# 	(start_t, start_r) = listener.lookupTransform("/base_link", "/odom", rospy.Time())
+# 	start_transform = t.concatenate_matrices(t.translation_matrix(start_t), t.quaternion_matrix(start_r))
+# 	twist.linear.x = abs(speed)
+# 	rate = rospy.Rate(10)
+# 	done = False
+# #	for i in range(int((10*distance)/speed)):
+# #		cmd_vel.publish(twist)
+# #		rate.sleep()
+
+# 	while not done:
+# 		cmd_vel.publish(twist)
+# 		rate.sleep()
+# 		(curr_t, curr_r) = listener.lookupTransform("/base_link", "/odom", rospy.Time(0))
+# 		current_transform = t.concatenate_matrices(t.translation_matrix(curr_t), t.quaternion_matrix(curr_r))
+# 		relative = numpy.dot(t.inverse_matrix(start_transform), current_transform)
+# 		(x, y, z) = t.translation_from_matrix(relative)
+# 		print ("distance=%s, moved=%s,stop=%s"%(str(distance),str(x), str(abs(x)>abs(distance))))
+
+# 		if abs(x) > abs(distance):
+# 			done = True
+# 			break
+# 	return done, "Made it"
+
+# def add_secs_to_time(timeval, secs_to_add):
+#     dummy_date = datetime.date(1, 1, 1)
+#     full_datetime = datetime.datetime.combine(dummy_date, timeval)
+#     added_datetime = full_datetime + datetime.timedelta(seconds=secs_to_add)
+#     return added_datetime.time()
+
 def forward(distance, speed):
 	twist = Twist()
+	t_taken = distance/speed;
 	cmd_vel = rospy.Publisher("cmd_vel_mux/input/teleop", Twist, queue_size=10)
-	listener = TransformListener()
-	listener.waitForTransform("/base_link", "/odom", rospy.Time(0), rospy.Duration(1))
-	(start_t, start_r) = listener.lookupTransform("/base_link", "/odom", rospy.Time())
-	start_transform = t.concatenate_matrices(t.translation_matrix(start_t), t.quaternion_matrix(start_r))
+	# listener = TransformListener()
+	# listener.waitForTransform("/base_link", "/odom", rospy.Time(0), rospy.Duration(1))
+	# (start_t, start_r) = listener.lookupTransform("/base_link", "/odom", rospy.Time())
+	# start_transform = t.concatenate_matrices(t.translation_matrix(start_t), t.quaternion_matrix(start_r))
 	twist.linear.x = abs(speed)
-	rate = rospy.Rate(10)
-	done = False
-#	for i in range(int((10*distance)/speed)):
-#		cmd_vel.publish(twist)
-#		rate.sleep()
 
-	while not done:
+	rate = rospy.Rate(10)
+	now = rospy.get_time()
+	end = now + t_taken
+	while rospy.get_time() < end:
 		cmd_vel.publish(twist)
 		rate.sleep()
-		(curr_t, curr_r) = listener.lookupTransform("/base_link", "/odom", rospy.Time(0))
-		current_transform = t.concatenate_matrices(t.translation_matrix(curr_t), t.quaternion_matrix(curr_r))
-		relative = numpy.dot(t.inverse_matrix(start_transform), current_transform)
-		(x, y, z) = t.translation_from_matrix(relative)
-		print ("distance=%s, moved=%s,stop=%s"%(str(distance),str(x), str(abs(x)>abs(distance))))
+	return True, "Made it"
 
-		if abs(x) > abs(distance):
-			done = True
-			break
-	return done, "Made it"
+def charge(seconds):
+  	pub = rospy.Publisher('/energy_monitor/set_charging', Bool, queue_size=10, latch=True)
+  	msg = Bool()
+	msg.data = True
+	# Send charge message every half second for number of seconds
+	rospy.log('Charging for %d secs' %int(seconds))
+	rate = rospy.Rate(10)
 
+	now = rospy.get_time()
+	end = now + seconds
+	while rospy.get_time() < end:
+		pub.publish(msg)
+	  	rate.sleep()
+	# Turn off charging, sending it multiple times for 1 second
+	msg.data = False
+	for i in range(0, 4):
+	  	pub.publish(msg)
+	  	rate.sleep()
+	return True, ""
 
 def turnDegrees(angle_degrees, angular_vel, clockwise):
 	return turnRadians(radians(angle_degrees), angular_vel, clockwise)
 
 def turnRadians(angle_radians, angular_vel, clockwise):
 	twist = Twist()
+	t_taken = angle_radians/angular_vel;
 	cmd_vel = rospy.Publisher("cmd_vel_mux/input/teleop", Twist, queue_size=10)
 	listener = TransformListener()
 	listener.waitForTransform("/base_link", "/odom", rospy.Time(0), rospy.Duration(1))
@@ -51,18 +95,19 @@ def turnRadians(angle_radians, angular_vel, clockwise):
 	else:
 		twist.angular.z = abs(angular_vel)	
 	rate = rospy.Rate(10)
-	done = False
-	while not done:
+	now = rospy.get_time()
+	end = now + t_taken
+	while rospy.get_time() < now:
 		cmd_vel.publish(twist)
 		rate.sleep()
-		(curr_t,curr_r) = listener.lookupTransform("/base_link", "/odom", rospy.Time(0))
-		current_transform = t.concatenate_matrices(t.translation_matrix(curr_t),t.quaternion_matrix(curr_r))
-		relative = numpy.dot(t.inverse_matrix(start_transform), current_transform)
-		rot_moved, dire, point = t.rotation_from_matrix(relative)
-		print ("angle=%s, moved=%s,stop=%s"%(str(angle_radians),str(rot_moved), str(rot_moved/2>angle_radians)))
-		if abs(rot_moved) > abs(angle_radians):
-			done = True
-			break
+		# (curr_t,curr_r) = listener.lookupTransform("/base_link", "/odom", rospy.Time(0))
+		# current_transform = t.concatenate_matrices(t.translation_matrix(curr_t),t.quaternion_matrix(curr_r))
+		# relative = numpy.dot(t.inverse_matrix(start_transform), current_transform)
+		# rot_moved, dire, point = t.rotation_from_matrix(relative)
+		# print ("angle=%s, moved=%s,stop=%s"%(str(angle_radians),str(rot_moved), str(rot_moved/2>angle_radians)))
+		# if abs(rot_moved) > abs(angle_radians):
+		# 	done = True
+		# 	break
 		
 	return done, "Done!"
 
