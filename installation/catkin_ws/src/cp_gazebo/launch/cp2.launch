@@ -4,9 +4,7 @@
   <arg name="base" value="$(optenv TURTLEBOT_BASE kobuki)"/>
   <arg name="3d_sensor" value="kinect"/>
   <arg name="stacks" value="$(optenv TURTLEBOT_STACKS hexagons)"/>
-  <!-- The param file is turning off various navigation options on move_base to
-       hamper the navigation -->
-  <arg name="custom_param_file" value="$(find cp_gazebo)/param/move_base_params.yaml"/>
+  
 
   <!-- This is the map file that will be used for planning -->
   <arg name="map_file" value="$(find cp_gazebo)/maps/Wean-entire-floor4.yaml"/>
@@ -74,7 +72,6 @@
 
   <!-- Launch move base -->
   <include file="$(find turtlebot_navigation)/launch/includes/move_base.launch.xml">
-    <arg name="custom_param_file" value="$(arg custom_param_file)"/>
   </include>
 
   <!-- Launch instruction graph, with initial instruction files -->

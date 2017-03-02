@@ -1,3 +1,3 @@
-P(V(1, do MoveAbs(52.2, 69.0, 0.7) then 2),
+P(V(1, do MoveAbsH(52.20, 69.00, 0.35, 0.0000) then 2),
 V(2, end)::
 nil)
