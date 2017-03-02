@@ -13,6 +13,10 @@ def ig_client():
 	client = actionlib.SimpleActionClient("ig_action_server", ig_action_msgs.msg.InstructionGraphAction)
 	client.wait_for_server()
 
+	if sys.argv[1] == 'CANCEL':
+		client.cancel_all_goals()
+		return
+
 	try:
 		igfile = open(sys.argv[1], "r")
 		igcode = igfile.read()

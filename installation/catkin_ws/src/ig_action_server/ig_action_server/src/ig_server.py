@@ -2,10 +2,11 @@
 
 import roslib; roslib.load_manifest('ig_action_msgs')
 import rospy
+import threading
 
 import actionlib
 import ig_action_msgs.msg
-
+from actionlib_msgs.msg import GoalStatus
 import ply.lex as lex
 import lexerIG
 import ply.yacc as yacc
@@ -16,21 +17,29 @@ import sys
 
 from constants import *
 from statics import findn
-import turtlebot_move_base_actions as turtlebot
-import turtlebot_actions_2 as turtlebot2
-import turn_bs as tb_no_movebase
+import turtlebot_instructions as turtlebot
 
 import traceback
 
-# from orientation import Orientation
 import time
 
-#from messages.msg import euler
 import tf
+import publisher
 
 lexer = lex.lex(module=lexerIG)
 parser = yacc.yacc(module=parserIG)
 
+
+class CancelTracker(object):
+
+	def __init__(self):
+		self._canceled = False
+
+	def is_canceled(self):
+		return self._canceled
+
+	def cancel(self):
+		self._canceled = True
 
 class IGServer(object):
 	_feedback = ig_action_msgs.msg.InstructionGraphFeedback()
@@ -40,19 +49,31 @@ class IGServer(object):
 
 	def __init__(self, name):
 		self._name = name
-		self._as = actionlib.SimpleActionServer(self._name, ig_action_msgs.msg.InstructionGraphAction, execute_cb=self.execute_cb, auto_start = False)
+		self._as = actionlib.SimpleActionServer(self._name, ig_action_msgs.msg.InstructionGraphAction, execute_cb=self.execute_cb,auto_start = False)
 		self._as.start()
 		rospy.loginfo('IG action server is running!')	
 		self._tf = tf.TransformListener()
+		self._as.register_preempt_callback(self.preempt_cb)
+
 #		rospy.Subscriber("euler_orientation", euler, self.euler_callback)
 #		rospy.sleep(10)
 		
+	# def is_canceled(self,goal):
+
+	# 	status = goal.get_goal_status()
+	# 	return status == GoalStatus.PREEMPTED or  status == GoalStatus.RECALLED
+
+	def preempt_cb(self):
+		rospy.loginfo('Server preempted')
+		self._canceled.cancel()
+		publisher.move_base_action_client().cancel_all_goals()
 
 	def execute_cb(self, goal):
 		# Setting the rate of execution.
 		r =rospy.Rate(1)
-		self._success = True		
-
+		self._success = True
+		self._canceled = CancelTracker()
+		
 		# Appending the feedback for goal recieved.
 		self.publish_feedback('Recieved new goal!')
 		rospy.loginfo('BRASS | IG | Recieved a new goal: %s' % (goal.order))
@@ -74,13 +95,19 @@ class IGServer(object):
 			self.publish_feedback('Received new valid IG: %s' %(goal.order))
 			self.publish_feedback('Executing graph')
 			rospy.loginfo('Executing the graph')
-			self.eval(ast)
+			if self._canceled.is_canceled():
+			   self.publish_result('Execution for goal canceled')
+			else:
+			   self.eval(ast)
 		
 		# end core code
 		#r.sleep()
 
 		# On success setting results topic
-		if self._success:
+		if self._canceled.is_canceled():
+			self.publish_result('Execution for goal canceled');
+			rospy.loginfo('BRASS | IG | Goal canceled')
+		elif self._success:
 			self.publish_result('Execution for goal completed successfully')
 			rospy.loginfo('BRASS | IG | Goal completed successfully')
 		else:
@@ -100,6 +127,8 @@ class IGServer(object):
 
 	def doaction(self, action, node):
 		# we currently only support moving and saying in this simulation
+		if self._canceled.is_canceled():
+			return True, "Canceled"
 		status = True
 		msg = ""
 		print('Executing %s'%action.operator)
@@ -107,7 +136,7 @@ class IGServer(object):
 			(distance, angular, speed, delta_y, rotation) = action.params
 			self.publish_feedback("%s:MOVE(%s,%s,%s,%s,%s):START" \
 				%(node,distance, angular, speed, delta_y, rotation))
-			status,msg = turtlebot.move(distance, angular, speed, delta_y, rotation)
+			status,msg = False, "Not implemented" #turtlebot.move(distance, angular, speed, delta_y, rotation)
 			if status:
 				self.publish_feedback("%s:Move(%s,%s,%s,%s,%s):SUCCESS" %(node,distance, angular, speed, delta_y, rotation))
 				return True
@@ -140,7 +169,7 @@ class IGServer(object):
 		elif action.operator == MOVEABS:
 			(x,y,v) = action.params # x,y coordinates on the map and velocity for movement.
 			self.publish_feedback("%s:MoveAbs(%s,%s,%s): START" %(node,x,y,v))
-			status,msg = turtlebot2.moveAbs(x,y,v)
+			status,msg = turtlebot.moveAbs(x,y,v)
 			if status:
 				self.publish_feedback("%s:MoveAbs(%s,%s,%s): SUCCESS" %(node,x,y,v))
 				return True
@@ -150,7 +179,7 @@ class IGServer(object):
 		elif action.operator == MOVEREL:
 			(x,y,v) = action.params # x,y distance forward on the map and velocity for movement.
 			self.publish_feedback("%s:MoveRel(%s,%s,%s): START" %(node,x,y,v))
-			status,msg = turtlebot2.moveRel(x,y,v)
+			status,msg = turtlebot.moveRel(x,y,v)
 			if status:
 				self.publish_feedback("%s:MoveRel(%s,%s,%s): SUCCESS" %(node,x,y,v))
 				return True
@@ -160,7 +189,7 @@ class IGServer(object):
 		elif action.operator == FORWARD:
 			(distance, speed) = action.params
 			self.publish_feedback("%s:Forward(%s,%s): START" %(node, distance, speed))
-			status,msg = tb_no_movebase.forward(distance, speed)
+			status,msg = turtlebot.forward(distance, speed, self._canceled)
 			if status:
 				self.publish_feedback("%s:Forward(%s,%s): SUCCESS" %(node, distance, speed))
 				return True
@@ -171,7 +200,7 @@ class IGServer(object):
 			(d,r) = action.params # direction and rotational velocity. d = N, S, E, W (North, South, East, West)
 			self.publish_feedback("%s:TurnAbs(%s,%s): SUCCESS" %(node,d,r))
 			#if self._tf.frameExists("/base_link") and self._tf.frameExists("/map"):
-			(status,msg) = tb_no_movebase.turnAbs(d,r)
+			(status,msg) = turtlebot.turnAbs(d,r)
 			if status:
 				self.publish_feedback("%s:TurnAbs(%s,%s): SUCCESS" %(node,d,r))
 				return True
@@ -181,7 +210,7 @@ class IGServer(object):
 		elif action.operator == TURNREL:
 			(a,r) = action.params # Angle and rotational velocity.
 			self.publish_feedback("%s:TurnRel(%s,%s): START" %(node,a,r))
-			status, msg = tb_no_movebase.turnDegrees(a, r, True)
+			status, msg = turtlebot.turnDegrees(a, r, True)
 			if status:
 				self.publish_feedback("%s:TurnRel(%s,%s): SUCCESS" %(node,a,r))
 				return True
@@ -191,7 +220,7 @@ class IGServer(object):
 		elif action.operator == CHARGE:
 			secs, = action.params
 			self.publish_feedback("%s:Charge(%s): START" %(node, secs))
-			status,msg = tb_no_movebase.charge(secs)
+			status,msg = turtlebot.charge(secs, self._canceled)
 			if status:
 				self.publish_feedback("%s:Charge(%s): SUCCESS" %(node, secs))
 				return True
@@ -221,7 +250,7 @@ class IGServer(object):
 		elif action.operator == MOVEABSH:
 			(x,y,v,w) = action.params # x,y coordinates on the map and velocity for movement.
 			self.publish_feedback("%s:MoveAbsH(%s,%s,%s,%s): START" %(node,x,y,v,w))
-			status,msg = turtlebot2.move(x,y,v,'Absolute',w)
+			status,msg = turtlebot.move(x,y,v,'Absolute',w)
 			if status:
 				self.publish_feedback("%s:MoveAbsH(%s,%s,%s,%s): SUCCESS" %(node,x,y,v,w))
 				return True
@@ -250,6 +279,8 @@ class IGServer(object):
 		(n, vs, I, O) = config
 		v = findn(vs, n)
 		(n, c) = v.params
+		if self._canceled.is_canceled():
+			return (TERMINATED,None)
 		if c.operator == END:
 			return (TERMINATED, None)
 		elif I == [] and (c.operator in (DOUNTIL, IFELSE)):
@@ -288,6 +319,9 @@ class IGServer(object):
 		config = (n, [v]+vs, [True], [])
 		while True:
 			(status, config2) = self.trystep(config)
+			if self._canceled.is_canceled():
+			  config = config2
+			  break;
 			if status == WAITING:
 			  print "Robot is waiting for input! But this shouldn't happen in this simulation! What's going on?"
 			  break
