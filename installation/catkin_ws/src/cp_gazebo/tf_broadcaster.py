@@ -6,8 +6,8 @@ import numpy
 import tf
 from nav_msgs.msg import Odometry
 from geometry_msgs.msg import PoseStamped
-translation = (-.087, -.0125, .2870)
-rotation = (0, 0, 0, 1)
+translation = [-.087, -.0125, .2870]
+rotation = [0, 0, 0, 1]
 
 def q_conjugate(q):
     x, y, z, w = q
@@ -38,20 +38,7 @@ def handle_calibration_update(msg):
 
 def handle_turtle_pose(msg):
     br = tf.TransformBroadcaster() 
-    quaternion = numpy.empty((4, ), dtype=numpy.float64)
-    quaternion[0] = msg.pose.pose.orientation.x
-    quaternion[1] = msg.pose.pose.orientation.y
-    quaternion[2] = msg.pose.pose.orientation.z
-    quaternion[3] = msg.pose.pose.orientation.w
-    #br.sendTransform((msg.pose.pose.position.x,
-                      #msg.pose.pose.position.y,
-                      #msg.pose.pose.position.z),
-                      #quaternion,
-                      #rospy.Time.now(),
-                      #'base_link',
-                      #'map')
-    trans = qv_mult(quaternion, translation)
-    quaternion = q_mult(rotation, quaternion)
+    
     br.sendTransform((translation[0],
                       translation[1],
                       translation[2]),
