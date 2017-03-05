@@ -21,7 +21,6 @@ export ROS_LOG_DIR=/test/roslog
 
 if [[ `grep CP2 /test/data` ]]
 then
-    ## todo: calibration_watcher here
     echo "using cp2.launch"
     roslaunch cp_gazebo cp2.launch
 else
