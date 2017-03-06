@@ -30,11 +30,11 @@ installation/debs, then git push should call the lfs hooks and work automagicall
 
 **Installation**
 
-Vagrant installation can be found at: https://www.vagrantup.com/docs/installation/
-
-In order to run the simulation, once you've installed vagrant, etc.:
+You need to install Vagrant (https://www.vagrantup.com/docs/installation/), and VirtualBox (https://www.virtualbox.org/wiki/Downloads)
+After installing Vagrant and Virtualbox and pulling from github, run the simulation by:
 
 ```
+cd installation ## from within the LLStaging directory on your local machine
 vagrant up
 vagrant ssh
 ./setup-cp1.sh
