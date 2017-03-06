@@ -37,7 +37,6 @@ After installing Vagrant and Virtualbox and pulling from github, run the simulat
 cd installation ## from within the LLStaging directory on your local machine
 vagrant up
 vagrant ssh
-./setup-cp1.sh
 ./mockup.sh ## if you aren't MIT/LL but want the config and log to work
 ./start.sh
 ```
