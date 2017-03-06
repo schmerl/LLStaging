@@ -23,7 +23,7 @@ and `git submodule update` from within these directories, to pupulate them.
 
 You will also need to 
 run `git pull origin master` in each of these directories **every time you want to pull the latest 
-version of those repositoiries**.
+version of those repositories**.
 
 After this, the workflow shouldn't change. So, you you add a .deb file to
 installation/debs, then git push should call the lfs hooks and work automagically.
