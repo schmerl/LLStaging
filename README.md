@@ -4,7 +4,7 @@ cmu-robotics
 **Important note**: This repository uses Git LFS and Git Submodules so the workflow for interacting with
 this repo is very different.
 
-** Git: ** In order for Git LFS to work properly, you must have a modern version of git. This is known to work with 2.11.0 and to fail around 2.5.?, but we don't know where the exact threshold is.
+**Git:** In order for Git LFS to work properly, you must have a modern version of git. This is known to work with 2.11.0 and to fail around 2.5.?, but we don't know where the exact threshold is.
 
 **Git LFS:**  Install Git LFS (https://git-lfs.github.com/).
 
