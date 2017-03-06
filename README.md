@@ -2,7 +2,7 @@ cmu-robotics
 ============
 
 **Important note**: This repository uses Git LFS and Git Submodules so the workflow for interacting with
-this repo is very differnt.
+this repo is very different.
 
 **Git LFS:**  Install Git LFS (https://git-lfs.github.com/).
 
