@@ -7,6 +7,7 @@ import threading
 import actionlib
 import ig_action_msgs.msg
 from actionlib_msgs.msg import GoalStatus
+from mars_notifications.msg import UserNotification
 import ply.lex as lex
 import lexerIG
 import ply.yacc as yacc
@@ -46,6 +47,7 @@ class IGServer(object):
 	_result = ig_action_msgs.msg.InstructionGraphResult()
 	_init_time = None
 	_tf = None
+	_canceled = None
 
 	def __init__(self, name):
 		self._name = name
@@ -54,6 +56,8 @@ class IGServer(object):
 		rospy.loginfo('IG action server is running!')	
 		self._tf = tf.TransformListener()
 		self._as.register_preempt_callback(self.preempt_cb)
+		self._notify_user = rospy.Publisher("/notify_user", UserNotification, queue_size=1)
+
 
 #		rospy.Subscriber("euler_orientation", euler, self.euler_callback)
 #		rospy.sleep(10)
@@ -70,6 +74,9 @@ class IGServer(object):
 
 	def execute_cb(self, goal):
 		# Setting the rate of execution.
+		if not self._canceled is None and not self._canceled.is_canceled():
+			rospy.loginfo('Received a set of instructions without canceling the previous ones')
+			return
 		r =rospy.Rate(1)
 		self._success = True
 		self._canceled = CancelTracker()
@@ -269,6 +276,14 @@ class IGServer(object):
 			else:
 				self.publish_feedback("%s:MoveAbs(%s,%s,%s, %s): FAILED: %s" %(node,x,y,v,w,msg))
 				return False
+		elif action.operator == DEADLINE:
+			dl, = action.params
+			un = UserNotification()
+			un.new_deadline = str(dl)
+			un.user_notification = 'Setting deadline to %s' %dl
+			self._notify_user.publish(un)
+			rospy.sleep(2)
+			return True
 		else:
 			self.publish_feedback("Runtime Error: Unsupported action!");
 			self._success = False
