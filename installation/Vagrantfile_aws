@@ -1,0 +1,156 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# This requires AWS provider plugin
+require "vagrant-aws"
+
+Vagrant.configure(2) do |config|
+
+  config.vm.box = "aws"
+  #config.vm.box_version = "=20160802.0.1"
+  ## For headless comment above line and uncomment below one
+  #config.vm.box = "ubuntu/trusty64"
+  #config.vm.network "forwarded_port", guest: 80, host: 8080
+
+  #config.vm.network "private_network", ip: "192.168.33.20"
+
+  ## the BRASSCOMMS layer runs on 5000; this allows you to access it from
+  ## outside the guest machine, which is convenient.
+  #config.vm.network "forwarded_port", guest: 5000, host: 8080
+
+  config.vm.provider :aws do |aws, override|
+
+    # retrieve AWS authentication information from environment variables
+    aws.access_key_id = ENV['AWS_ACCESS_KEY_ID'] # set this env variable
+    aws.secret_access_key = ENV['AWS_SECRET_ACCESS_KEY'] # set this env variable
+    
+    # specify region
+    aws.region = "us-east-1" # I assume N. Virginia is close to Pittsburgh
+    aws.availability_zone = "us-east-1b"
+
+    # AMI
+    aws.ami = "ami-332ffe25" # trusty 14.04 LTS
+    aws.instance_type = "t2.medium" # 2 cpu, 4 ram, see this: https://aws.amazon.com/ec2/instance-types/
+
+    # SSH key pair
+    aws.keypair_name = "ssh-keypair" # change this
+
+    # Volume and sercurity group
+    aws.block_device_mapping = [{ 'DeviceName' => '/dev/sda1', 'Ebs.VolumeSize' => 10 }]
+    aws.security_groups = ["default"]
+
+    # Credentials for login
+    override.ssh.username = "ubuntu"
+    override.ssh.private_key_path = "~/.ssh/id_rsa.pub" # change this
+
+  #config.vm.provider "virtualbox" do |vb|
+  #  vb.memory = "4096"
+  #  vb.name = "cmu-mars"
+  #  vb.cpus = 4
+  end
+
+
+ $script = <<-SCRIPT
+  mkdir -p ~/das
+   sudo apt-get install software-properties-common -y --force-yes
+  sudo apt-add-repository ppa:ansible/ansible -y
+  sudo add-apt-repository ppa:openjdk-r/ppa
+  if ! [[ `grep file:/vagrant/debs /etc/apt/sources.list` ]]
+  then
+      sudo sh -c 'echo "deb file:/vagrant/debs ./" >> /etc/apt/sources.list'
+  fi
+  sudo apt-get update -y
+  sudo apt-get install ansible -y --force-yes
+  sudo apt-get install -f
+##  sudo apt-get install dpkg-dev -y --force-yes
+  sudo apt-get install openjdk-8-jre-headless -y --force-yes
+
+  sudo /var/lib/dpkg/info/ca-certificates-java.postinst configure ## per https://bugs.launchpad.net/ubuntu/+source/ca-certificates-java/+bug/1396760
+  cd /vagrant
+  #cp -r das /home/vagrant/
+  sudo ansible-playbook turtle.yml
+  echo "source /opt/ros/indigo/setup.bash" >> ~/.bashrc
+  source ~/.bashrc
+  source /opt/ros/indigo/setup.bash
+  echo "export LD_LIBRARY_PATH=~/das/prism-4.3.1-linux64/lib/:\$LD_LIBRARY_PATH" >> ~/.bashrc
+  #done in script echo "export ROS_LOG_DIR=/test" >> ~/.bashrc
+  sudo rosdep init
+  sudo rosdep fix-permissions
+  rosdep update
+  sudo cp /vagrant/tcpros_service.py /opt/ros/indigo/lib/python2.7/dist-packages/rospy/impl/
+  sudo apt-get update
+  sudo apt-get install xserver-xorg-video-dummy
+  sudo apt-get -y install python-flask
+  sudo apt-get -y install python-enum34
+  # overcome webcam issue
+  sudo ln -sf /dev/null /dev/raw1394
+  sudo apt-get -y install emacs
+  # Packages for kinect perturbation and recalibration
+  sudo apt-get install libgoogle-glog-dev libgflags-dev libsuitesparse-dev imagemagick libturbojpeg autoconf libudev-dev doxygen opencl-headers -y --force-yes
+
+  SCRIPT
+
+
+
+  config.vm.provision "shell", inline: $script, privileged: false
+
+  config.vm.provision "shell" do |s|
+#    s.inline = "mkdir /home/vagrant/catkin_ws & ln -s /vagrant/catkin_ws/src /home/vagrant/catkin_ws/src"
+    s.inline = "rsync -rv --exclude='.git*' /vagrant/catkin_ws ."
+	s.name = "Copy the base programs for cahllenge problems"
+	s.privileged = false
+  end
+
+  config.vm.provision "shell" do |s|
+#    s.inline = "ln -s /vagrant/das/rainbow-brass /home/vagrant/das/rainbow-brass"
+	s.inline = "rsync -rv --exclude='.git*' /vagrant/das/rainbow-brass das"
+	s.name = "Copy rainbow files for adaptation"
+	s.privileged = false
+  end
+
+   config.vm.provision "shell" do |s|
+    s.inline = "cp /vagrant/setup-cp1.sh /home/vagrant; chmod +x /home/vagrant/setup-cp1.sh"
+	s.name = "Copy the setup script"
+	s.privileged = false
+  end
+
+   config.vm.provision "shell" do |s|
+    s.inline = "cp /vagrant/run-cp1.sh /home/vagrant/start.sh; chmod +x /home/vagrant/start.sh"
+	s.name = "Copy the start script"
+	s.privileged = false
+  end
+
+   config.vm.provision "shell" do |s|
+    s.inline = "cp /vagrant/mockup.sh /home/vagrant; chmod +x /home/vagrant/mockup.sh"
+	s.name = "Copy the CP1 run script"
+	s.privileged = false
+  end
+
+  config.vm.provision "shell" do |s|
+    s.inline = "cp /vagrant/xorg.conf /home/vagrant"
+	s.name = "Copy the X config file for use by headless robot"
+	s.privileged = false
+  end
+
+  config.vm.provision "shell" do |s|
+    s.inline = "cp -r /vagrant/bin /home/vagrant/"
+	s.name = "Copy binaries for recalibration"
+	s.privileged = false
+  end
+
+  $setup = <<-SETUP
+
+  echo "Setting up challenge problem 1"
+  rm -f /home/vagrant/catkin_ws/src/CMakeLists.txt
+  ./setup-cp1.sh
+  echo "source catkin_ws/devel/setup.bash" >> .bashrc
+  SETUP
+
+  config.vm.provision "shell", inline: $setup, privileged: false
+
+  config.vm.provision "shell" do |s|
+    s.inline = "cp -r /vagrant/customlibs/* /home/vagrant/catkin_ws/devel/lib/"
+	s.name = "Copy the custom libraries (Kinect, Joints, Power Sim) to the deployment"
+	s.privileged = false
+  end
+end
