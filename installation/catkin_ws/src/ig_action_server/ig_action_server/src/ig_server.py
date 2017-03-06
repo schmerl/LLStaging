@@ -137,6 +137,9 @@ class IGServer(object):
 			self.publish_feedback("%s:MOVE(%s,%s,%s,%s,%s):START" \
 				%(node,distance, angular, speed, delta_y, rotation))
 			status,msg = False, "Not implemented" #turtlebot.move(distance, angular, speed, delta_y, rotation)
+			if self._canceled.is_canceled():
+				self.publish_feedback("%s:Move(%s,%s,%s,%s,%s):CANCELED" %(node,distance, angular, speed, delta_y, rotation))
+				return False
 			if status:
 				self.publish_feedback("%s:Move(%s,%s,%s,%s,%s):SUCCESS" %(node,distance, angular, speed, delta_y, rotation))
 				return True
@@ -190,6 +193,9 @@ class IGServer(object):
 			(distance, speed) = action.params
 			self.publish_feedback("%s:Forward(%s,%s): START" %(node, distance, speed))
 			status,msg = turtlebot.forward(distance, speed, self._canceled)
+			if self._canceled.is_canceled():
+				self.publish_feedback("%s:Forward(%s,%s): CANCELED" %(node, distance, speed))
+				return False
 			if status:
 				self.publish_feedback("%s:Forward(%s,%s): SUCCESS" %(node, distance, speed))
 				return True
@@ -221,6 +227,9 @@ class IGServer(object):
 			secs, = action.params
 			self.publish_feedback("%s:Charge(%s): START" %(node, secs))
 			status,msg = turtlebot.charge(secs, self._canceled)
+			if self._canceled.is_canceled():
+				self.publish_feedback("%s:Charge(%s): CANCELED" %(node, secs))
+				return False
 			if status:
 				self.publish_feedback("%s:Charge(%s): SUCCESS" %(node, secs))
 				return True
@@ -251,6 +260,9 @@ class IGServer(object):
 			(x,y,v,w) = action.params # x,y coordinates on the map and velocity for movement.
 			self.publish_feedback("%s:MoveAbsH(%s,%s,%s,%s): START" %(node,x,y,v,w))
 			status,msg = turtlebot.move(x,y,v,'Absolute',w)
+			if self._canceled.is_canceled():
+				self.publish_feedback("%s:MoveAbsH(%s,%s,%s,%s): CANCELED" %(node,x,y,v,w))
+				return False
 			if status:
 				self.publish_feedback("%s:MoveAbsH(%s,%s,%s,%s): SUCCESS" %(node,x,y,v,w))
 				return True
