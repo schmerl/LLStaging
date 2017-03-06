@@ -1,8 +1,10 @@
 cmu-robotics
 ============
 
-**Note about LFS**: This repository uses Git LFS for large file storage (https://git-lfs.github.com/).
-This needs to be installed on the pulling machine, and it changes the workflow slightly.
+**Important note**: This repository uses Git LFS and Git Submodules so the workflow for interacting with
+this repo is very differnt.
+
+**Git LFS:**  Install Git LFS (https://git-lfs.github.com/).
 
 To check out the files you need to do the following:
 ```
@@ -11,7 +13,17 @@ git clone ...
 git lfs pull
 ```
 
-`brasscomms` is a git submodule, so you will need to run `git submodule init` and `git submodule update` to populate that directory.
+**Submodules**:
+
+`brasscomms` (`installation/catkin_ws/src/brasscomms`) and `rainbow-brass` (`installation/das/rainbow-brass`) 
+are git submodules. 
+
+The first time you pull from this repo, you will need to run `git submodule init` 
+and `git submodule update` from within these directories, to pupulate them. 
+
+You will also need to 
+run `git pull origin master` in each of these directories **every time you want to pull the latest 
+version of those repositoiries**.
 
 After this, the workflow shouldn't change. So, you you add a .deb file to
 installation/debs, then git push should call the lfs hooks and work automagically.
