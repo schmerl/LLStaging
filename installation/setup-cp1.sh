@@ -7,6 +7,9 @@ find . -name "*.sh" | xargs chmod +x
 chmod +x /home/vagrant/bin/*
 cd ../
 chmod +x *.sh
+cd das/
+find . -name "*.sh" | xargs chmod +x
+cd ../
 source /opt/ros/indigo/setup.bash
 cd catkin_ws/src
 catkin_init_workspace
