@@ -42,7 +42,6 @@ vagrant ssh
 ./mockup.sh ## if you aren't MIT/LL but want the config and log to work
 ./start.sh
 ```
-
 and wait until you see `odom received!` in one of the info messages in the
 output. Then, from either the host machine or inside the vagrant guest,
 you can access the REST communications API with standard HTTP requests that
@@ -54,13 +53,13 @@ meet the API from the wiki on port 5000. For example, at a new terminal,
 %
 ```
 
-will start the simulation.
+will start the simulation. Note that the `mockup.sh` script places the simple JSON config file from our wikipage to `/test/data`. You will need to edit that file to induce different test conditions, as well as use `curl` to perturb or observe the test as it's running.
 
 You can see the debugging output in a few places:
 
 * the terminal that's running `vagrant ssh` into the guest machine
 
-* the ROS log files, usually in `~/.ros/log/latest/*`
+* the ROS log files, in `/test/roslog/latest/*`
 
 * the mocked-up log file shared with the TH, at `/test/log`
 
