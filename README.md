@@ -69,3 +69,19 @@ Some example curl requests for the different endpoints given in the API,
 are found in `smoke.sh`, which you can run from the guest machine to smoke
 test the end points. That script gives the examples in wiki page order,
 which might not be the order that you would call them in a real use case.
+
+**Running tests**
+
+When thinking about doing a test, you should be aware of a couple of things:
+
+1. Only action/set_battery and action/place_obstacle are pertinent in CP1.
+
+2. LL are only going to place an obstacle before the test starts.
+
+3. You can get the initial path that the robot is to travel by invoking action/query_path. This gives you a set of waypoints that the robot will pass.
+
+4. place_obstacle takes coordinates, and you can find the mapping of waypoints and coordinates here: https://github.com/schmerl/LLStaging/blob/master/installation/catkin_ws/src/cp_gazebo/maps/Wean-entire-floor4-waypoint-locations.json (node-id == waypoint)
+
+5. Interesting tests are where CP1_NoAdaptation fails and CP1_Adaptation doesn't. If CP1_NoAdaptation succeeds (i.e, the robot gets to its target), then LL will not run the CP1_Adaptation on that case. So try to keep that in mind when thinking about perturbations.
+
+6. It would be interesting to have pairs of runs - CP1_NoAdaptation and CP1_Adaptation on the same perturbation
