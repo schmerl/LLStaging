@@ -6,6 +6,8 @@ this repo is very different.
 
 **Git:** In order for Git LFS to work properly, you must have a modern version of git. This is known to work with 2.11.0 and to fail around 2.5.?, but we don't know where the exact threshold is.
 
+**SSH:** Clone/fetch the repo using SSH, not HTTPS, to avoid rate limiting. Your clone may fail altogether with HTTPS.
+
 **Git LFS:**  Install Git LFS (https://git-lfs.github.com/).
 
 To check out the files you need to do the following:
