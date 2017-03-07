@@ -63,11 +63,12 @@ You can see the debugging output in a few places:
 * the ROS log files, in `/test/roslog/latest/*`
 
 * the mocked-up log file shared with the TH, at `/test/log`
+  * The error `Fatal: couldn't connect to TH to send DAS_READY` is normal in our own testing.
 
 * the terminal that you're running `curl` commands from
 
 Some example curl requests for the different endpoints given in the API,
-are found in `smoke.sh`, which you can run from the guest machine to smoke
+are found in `LLStaging/smoke.sh`, which you can run from the guest machine to smoke
 test the end points. That script gives the examples in wiki page order,
 which might not be the order that you would call them in a real use case.
 
