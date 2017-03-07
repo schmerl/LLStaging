@@ -13,7 +13,7 @@
   <!-- Start the gazebo world, so that obstacles can be mapped -->
   <!-- NOTE: The maze in the world might not be needed if the map server is required -->
   <include file="$(find gazebo_ros)/launch/empty_world.launch">
-    <arg name="world_name" value="$(find cp_gazebo)/worlds/Wean-complete-floor4.world"/>
+    <arg name="world_name" value="$(find cp_gazebo)/worlds/Wean-complete-floor4-cp2.world"/>
     <arg name="gui" value="false"/>
     <arg name="headless" value="true"/>
   </include>
