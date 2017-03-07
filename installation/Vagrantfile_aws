@@ -6,7 +6,7 @@ require "vagrant-aws"
 
 Vagrant.configure(2) do |config|
 
-  config.vm.box = "aws"
+  config.vm.box = "aws-dummy"
   #config.vm.box_version = "=20160802.0.1"
   ## For headless comment above line and uncomment below one
   #config.vm.box = "ubuntu/trusty64"
@@ -26,22 +26,26 @@ Vagrant.configure(2) do |config|
     
     # specify region
     aws.region = "us-east-1" # I assume N. Virginia is close to Pittsburgh
-    aws.availability_zone = "us-east-1b"
+    aws.availability_zone = "us-east-1a"
 
     # AMI
     aws.ami = "ami-332ffe25" # trusty 14.04 LTS
-    aws.instance_type = "t2.medium" # 2 cpu, 4 ram, see this: https://aws.amazon.com/ec2/instance-types/
+    aws.instance_type = "t2.micro" # 2 cpu, 4 ram, see this: https://aws.amazon.com/ec2/instance-types/
 
     # SSH key pair
-    aws.keypair_name = "ssh-keypair" # change this
+    aws.keypair_name = "id_rsa_pooyan" # change this
 
     # Volume and sercurity group
     aws.block_device_mapping = [{ 'DeviceName' => '/dev/sda1', 'Ebs.VolumeSize' => 10 }]
-    aws.security_groups = ["default"]
+    aws.security_groups = ["brass-sg"]
+    aws.tags = {
+    'Name' => 'BRASS EC2 instance',
+    'Environment' => 'vagrant-sandbox'
+    } 
 
     # Credentials for login
     override.ssh.username = "ubuntu"
-    override.ssh.private_key_path = "~/.ssh/id_rsa.pub" # change this
+    override.ssh.private_key_path = "~/.ssh/id_rsa" # change this
 
   #config.vm.provider "virtualbox" do |vb|
   #  vb.memory = "4096"
@@ -51,8 +55,7 @@ Vagrant.configure(2) do |config|
 
 
  $script = <<-SCRIPT
-  mkdir -p ~/das
-   sudo apt-get install software-properties-common -y --force-yes
+  sudo apt-get install software-properties-common -y --force-yes
   sudo apt-add-repository ppa:ansible/ansible -y
   sudo add-apt-repository ppa:openjdk-r/ppa
   if ! [[ `grep file:/vagrant/debs /etc/apt/sources.list` ]]
@@ -72,7 +75,7 @@ Vagrant.configure(2) do |config|
   echo "source /opt/ros/indigo/setup.bash" >> ~/.bashrc
   source ~/.bashrc
   source /opt/ros/indigo/setup.bash
-  echo "export LD_LIBRARY_PATH=~/das/prism-4.3.1-linux64/lib/:\$LD_LIBRARY_PATH" >> ~/.bashrc
+  echo "export LD_LIBRARY_PATH=/home/vagrant/das/prism-4.3.1-linux64/lib/:\$LD_LIBRARY_PATH" >> ~/.bashrc
   #done in script echo "export ROS_LOG_DIR=/test" >> ~/.bashrc
   sudo rosdep init
   sudo rosdep fix-permissions
@@ -87,6 +90,9 @@ Vagrant.configure(2) do |config|
   sudo apt-get -y install emacs
   # Packages for kinect perturbation and recalibration
   sudo apt-get install libgoogle-glog-dev libgflags-dev libsuitesparse-dev imagemagick libturbojpeg autoconf libudev-dev doxygen opencl-headers -y --force-yes
+  sudo mkdir /home/vagrant
+  sudo chown ubuntu:ubuntu /home/vagrant
+  mkdir -p /home/vagrant/das
 
   SCRIPT
 
@@ -96,14 +102,14 @@ Vagrant.configure(2) do |config|
 
   config.vm.provision "shell" do |s|
 #    s.inline = "mkdir /home/vagrant/catkin_ws & ln -s /vagrant/catkin_ws/src /home/vagrant/catkin_ws/src"
-    s.inline = "rsync -rv --exclude='.git*' /vagrant/catkin_ws ."
+    s.inline = "rsync -rv --exclude='.git*' /vagrant/catkin_ws /home/vagrant"
 	s.name = "Copy the base programs for cahllenge problems"
 	s.privileged = false
   end
 
   config.vm.provision "shell" do |s|
 #    s.inline = "ln -s /vagrant/das/rainbow-brass /home/vagrant/das/rainbow-brass"
-	s.inline = "rsync -rv --exclude='.git*' /vagrant/das/rainbow-brass das"
+	s.inline = "rsync -rv --exclude='.git*' /vagrant/das/rainbow-brass /home/vagrant/das"
 	s.name = "Copy rainbow files for adaptation"
 	s.privileged = false
   end
@@ -142,8 +148,9 @@ Vagrant.configure(2) do |config|
 
   echo "Setting up challenge problem 1"
   rm -f /home/vagrant/catkin_ws/src/CMakeLists.txt
+  cd /home/vagrant
   ./setup-cp1.sh
-  echo "source catkin_ws/devel/setup.bash" >> .bashrc
+  echo "source catkin_ws/devel/setup.bash" >> ~/.bashrc
   SETUP
 
   config.vm.provision "shell", inline: $setup, privileged: false

@@ -28,7 +28,7 @@ run `git pull origin master` in each of these directories **every time you want 
 version of those repositories**.
 
 After this, the workflow shouldn't change. So, you you add a .deb file to
-installation/debs, then git push should call the lfs hooks and work automagically.
+installation/debs, then git push should call the lfs hooks and work automatically.
 
 **Installation**
 
@@ -69,6 +69,18 @@ are found in `smoke.sh`, which you can run from the guest machine to smoke
 test the end points. That script gives the examples in wiki page order,
 which might not be the order that you would call them in a real use case.
 
+**Installation on Amazon Cloud**
+
+* use `Vagrantfile_aws` as the Vagrantfile
+
+* set the following enviromental variables using your Amazon cloud credentials: `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY`
+
+* upload your public key in the Amazon cloud console and set the SSH key pair `aws.keypair_name`
+
+* set your private key path `override.ssh.private_key_path`
+
+* the rest is similar to the virtualbox installation above
+
 **Running tests**
 
 When thinking about doing a test, you should be aware of a couple of things:
@@ -84,3 +96,5 @@ When thinking about doing a test, you should be aware of a couple of things:
 5. Interesting tests are where CP1_NoAdaptation fails and CP1_Adaptation doesn't. If CP1_NoAdaptation succeeds (i.e, the robot gets to its target), then LL will not run the CP1_Adaptation on that case. So try to keep that in mind when thinking about perturbations.
 
 6. It would be interesting to have pairs of runs - CP1_NoAdaptation and CP1_Adaptation on the same perturbation
+
+
