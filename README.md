@@ -100,10 +100,11 @@ When thinking about doing a test, you should be aware of a couple of things:
 
 6. It would be interesting to have pairs of runs - CP1_NoAdaptation and CP1_Adaptation on the same perturbation
 
-**Running multiple tests**
+**Running multiple consecutive tests**
 
 1. `Ctrl+C` in the terminal where you ran `start.sh`.
   * It may take some time till it escalates to SIGKILL 
 2. Move the contents of `/test` somewhere safe. 
-3. Recreate `/test` and put the `data` file with the new mission description in it.
-4. Run `start.sh` 
+3. Recreate the `/test` directory.
+4. In `/test`, create a `data` file in  with the new mission description in it and an empty `log` file. Can be done with `mockup.sh`. 
+5. Run `start.sh` 
