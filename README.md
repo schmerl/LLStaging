@@ -47,7 +47,8 @@ vagrant ssh
 and wait until you see `odom received!` in one of the info messages in the
 output. Then, from either the host machine or inside the vagrant guest,
 you can access the REST communications API with standard HTTP requests that
-meet the API from the wiki on port 8080. For example, at a new terminal,
+meet the API from the wiki on port 5000 (from guest) or 8080 (from host). 
+For example, at a new terminal on the host,
 
 ```
 % curl -H "Content-Type:application/json" -X POST -d '{"TIME" : "2017-03-07T15:55:19.729Z", "ARGUMENTS" : {}}' localhost:8080/action/start
