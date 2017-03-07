@@ -50,7 +50,7 @@ you can access the REST communications API with standard HTTP requests that
 meet the API from the wiki on port 5000. For example, at a new terminal,
 
 ```
-% curl -H "Content-Type:application/json" -X POST -d '{"TIME" : "2017-02-09T21:25:59.332087", "ARGUMENTS" : {}}' localhost:5000/action/start
+% curl -H "Content-Type:application/json" -X POST -d '{"TIME" : "2017-03-07T15:55:19.729Z", "ARGUMENTS" : {}}' localhost:5000/action/start
 %
 ```
 
@@ -63,11 +63,12 @@ You can see the debugging output in a few places:
 * the ROS log files, in `/test/roslog/latest/*`
 
 * the mocked-up log file shared with the TH, at `/test/log`
+  * The error `Fatal: couldn't connect to TH to send DAS_READY` is normal in our own testing.
 
 * the terminal that you're running `curl` commands from
 
 Some example curl requests for the different endpoints given in the API,
-are found in `smoke.sh`, which you can run from the guest machine to smoke
+are found in `LLStaging/smoke.sh`, which you can run from the guest machine to smoke
 test the end points. That script gives the examples in wiki page order,
 which might not be the order that you would call them in a real use case.
 
@@ -99,4 +100,10 @@ When thinking about doing a test, you should be aware of a couple of things:
 
 6. It would be interesting to have pairs of runs - CP1_NoAdaptation and CP1_Adaptation on the same perturbation
 
+**Running multiple tests**
 
+1. `Ctrl+C` in the terminal where you ran `start.sh`.
+  * It may take some time till it escalates to SIGKILL 
+2. Move the contents of `/test` somewhere safe. 
+3. Recreate `/test` and put the `data` file with the new mission description in it.
+4. Run `start.sh` 
