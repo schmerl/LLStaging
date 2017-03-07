@@ -107,5 +107,5 @@ When thinking about doing a test, you should be aware of a couple of things:
   * It may take some time till it escalates to SIGKILL 
 2. Move the contents of `/test` somewhere safe. 
 3. Recreate the `/test` directory.
-4. In `/test`, create a `data` file in  with the new mission description in it and an empty `log` file. Can be done with `mockup.sh`. 
+4. In `/test`, create a `data` file in  with the new mission description in it and make sure the directory is writable by `vagrant`. This can be set up originally once with `mockup.sh`, but running that script will overwrite `/test/data`.
 5. Run `start.sh` 
