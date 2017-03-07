@@ -1,8 +1,12 @@
 cmu-robotics
 ============
 
-**Note about LFS**: This repository uses Git LFS for large file storage (https://git-lfs.github.com/).
-This needs to be installed on the pulling machine, and it changes the workflow slightly.
+**Important note**: This repository uses Git LFS and Git Submodules so the workflow for interacting with
+this repo is very different.
+
+**Git:** In order for Git LFS to work properly, you must have a modern version of git. This is known to work with 2.11.0 and to fail around 2.5.?, but we don't know where the exact threshold is.
+
+**Git LFS:**  Install Git LFS (https://git-lfs.github.com/).
 
 To check out the files you need to do the following:
 ```
@@ -11,25 +15,33 @@ git clone ...
 git lfs pull
 ```
 
-`brasscomms` is a git submodule, so you will need to run `git submodule init` and `git submodule update` to populate that directory.
+**Submodules**:
+
+`brasscomms` (`installation/catkin_ws/src/brasscomms`) and `rainbow-brass` (`installation/das/rainbow-brass`) 
+are git submodules. 
+
+The first time you pull from this repo, you will need to run `git submodule init` 
+and `git submodule update` from within these directories, to pupulate them. 
+
+You will also need to 
+run `git pull origin master` in each of these directories **every time you want to pull the latest 
+version of those repositories**.
 
 After this, the workflow shouldn't change. So, you you add a .deb file to
 installation/debs, then git push should call the lfs hooks and work automagically.
 
 **Installation**
 
-Vagrant installation can be found at: https://www.vagrantup.com/docs/installation/
-
-In order to run the simulation, once you've installed vagrant, etc.:
+You need to install Vagrant (https://www.vagrantup.com/docs/installation/), and VirtualBox (https://www.virtualbox.org/wiki/Downloads)
+After installing Vagrant and Virtualbox and pulling from github, run the simulation by:
 
 ```
+cd installation ## from within the LLStaging directory on your local machine
 vagrant up
 vagrant ssh
-./setup-cp1.sh
 ./mockup.sh ## if you aren't MIT/LL but want the config and log to work
 ./start.sh
 ```
-
 and wait until you see `odom received!` in one of the info messages in the
 output. Then, from either the host machine or inside the vagrant guest,
 you can access the REST communications API with standard HTTP requests that
@@ -41,13 +53,13 @@ meet the API from the wiki on port 5000. For example, at a new terminal,
 %
 ```
 
-will start the simulation.
+will start the simulation. Note that the `mockup.sh` script places the simple JSON config file from our wikipage to `/test/data`. You will need to edit that file to induce different test conditions, as well as use `curl` to perturb or observe the test as it's running.
 
 You can see the debugging output in a few places:
 
 * the terminal that's running `vagrant ssh` into the guest machine
 
-* the ROS log files, usually in `~/.ros/log/latest/*`
+* the ROS log files, in `/test/roslog/latest/*`
 
 * the mocked-up log file shared with the TH, at `/test/log`
 
