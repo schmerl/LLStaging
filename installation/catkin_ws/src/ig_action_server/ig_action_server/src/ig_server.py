@@ -120,6 +120,7 @@ class IGServer(object):
 		else:
 			self.publish_result('Execution for goal failed')
 			rospy.loginfo('BRASS | IG | Goal failed')
+	        self._canceled = None
 
 	def publish_feedback(self, feedback):
 		# Appending the feedback for goal recieved.

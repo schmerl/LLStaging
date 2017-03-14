@@ -131,8 +131,15 @@ def calculateTurnAngleDegrees(target, yaw):
 	(rad, clockwise) = calculateTurnAngleRadians(radians(target), radians(yaw))
 	return (degrees(rad), clockwise)
 
+recalibrate_pub = rospy.Publisher("/calibration/commands", String, queue_size=1)
+
+
 def recalibrate(mode):
-  return False, "Recalibrate is not yet implemented"
+  global recalibrate_pub
+  msg = String()
+  msg.data = 'recalibrate'
+  recalibrate_pub.publish(msg) 
+  return "OK", True
 
 kinect_on = True
 
