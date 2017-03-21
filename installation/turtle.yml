@@ -70,6 +70,11 @@
      unarchive:
        src: /vagrant/das/prism-4.3.1-linux64.tar.gz
        dest: /home/vagrant/das/
+       owner: vagrant
+       group: vagrant
+
+#   - name: Make sure prism is right ownership
+#     file: dest=/home/vagrant/das/prism-4.3.1-linux64 state=directory owner=vagrant group=vagrant recurse=yes
 
    - name: Install PRISM
      shell: ./install.sh
@@ -80,3 +85,8 @@
      unarchive:
         src: /vagrant/brass_cal.tgz
         dest: /home/vagrant/
+        owner: vagrant
+        group: vagrant
+
+#   - name: Permission on Calibration static data
+#     file: dest=/home/vagrant/brass_cal state=directory owner=vagrant group=vagrant recurse=yes
