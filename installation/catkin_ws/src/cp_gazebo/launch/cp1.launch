@@ -3,7 +3,7 @@
   <!-- Parameters for the kobuki base with the kinect sensor -->
   <arg name="base" value="$(optenv TURTLEBOT_BASE kobuki)"/>
   <arg name="3d_sensor" value="$(optenv TURTLEBOT_3D_SENSOR kinect)"/>
-  <arg name="stacks" value="$(optenv TURTLEBOT_STACKS circles)"/>
+  <arg name="stacks" value="$(optenv TURTLEBOT_STACKS hexagon)"/>
   <!-- The param file is turning off various navigation options on move_base to
        hamper the navigation -->
   <arg name="custom_param_file" value="$(find cp_gazebo)/param/move_base_params.yaml"/>
@@ -20,14 +20,20 @@
     <arg name="headless" value="true"/>
   </include>
 
+
   <!-- Spawn the turtlebot -->
+  <arg name="urdf_file" default="$(find xacro)/xacro.py '$(find cp_gazebo)robot_description/cp1-kinetic/urdf/kobuki_hexagons_kinect.urdf.xacro'" />
+  <param name="robot_description" command="$(arg urdf_file)" />
+
+  <!--
   <arg name="urdf_file" default="$(find xacro)/xacro.py '$(find cp_gazebo)/robot_description/cp1/urdf/kobuki_hexagons_kinect.urdf.xacro'" />
   <param name="robot_description" command="$(arg urdf_file)" />
-  
+ -->
+
   <!-- Gazebo model spawner -->
   <node name="spawn_turtlebot_model" pkg="gazebo_ros" type="spawn_model"
         args="-x -40 -y 26.5 -unpause -urdf -param robot_description -model mobile_base"/>
-  
+ 
   <!-- Velocity muxer -->
   <node pkg="nodelet" type="nodelet" name="mobile_base_nodelet_manager" args="manager"/>
   <node pkg="nodelet" type="nodelet" name="cmd_vel_mux"
@@ -51,6 +57,8 @@
     <remap from="scan" to="/scan"/>
   </node>
 
+
+
   <!-- start the map server -->
   <node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)"/>
 
@@ -58,7 +66,7 @@
   <arg name="initial_pose_x" default="0.0"/> 
   <arg name="initial_pose_y" default="0.0"/> 
   <arg name="initial_pose_a" default="0.0"/>
-  <include file="$(find turtlebot_navigation)/launch/includes/amcl.launch.xml">
+  <include file="$(find turtlebot_navigation)/launch/includes/amcl/kinect_amcl.launch.xml">
     <arg name="initial_pose_x" value="15.5"/>
     <arg name="initial_pose_y" value="69"/>
     <arg name="initial_pose_a" value="$(arg initial_pose_a)"/>
@@ -76,9 +84,9 @@
   <node name="mars_notifications" pkg="mars_notifications" type="mars_notifications_listener.py">
   </node>
 
-  <node name="nuc_cpu" pkg="cp_gazebo" type="brass_cpu_monitor.py">
+ <!-- <node name="nuc_cpu" pkg="cp_gazebo" type="brass_cpu_monitor.py">
   </node>
-
+-->
   <node name="brasscomms" pkg="brasscomms" type="brasscomms.py" output="screen">
   </node>
 
